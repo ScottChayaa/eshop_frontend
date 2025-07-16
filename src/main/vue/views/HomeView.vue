@@ -2,10 +2,12 @@
   <v-container fluid class="pa-4">
     <!-- 輪播圖 -->
     <v-carousel 
-      height="300"
-      class="mb-6"
+      height="400"
+      class="mb-6 rounded-lg"
       cycle
-      interval="4000"
+      interval="5000"
+      show-arrows
+      hide-delimiter-background
     >
       <v-carousel-item
         v-for="(banner, i) in banners"
@@ -13,9 +15,18 @@
         :src="banner.image"
         cover
       >
+        <div class="carousel-overlay"></div>
         <div class="carousel-content">
-          <h2 class="text-h4 text-white mb-2">{{ banner.title }}</h2>
-          <p class="text-h6 text-white">{{ banner.subtitle }}</p>
+          <h2 class="text-h3 text-white mb-2 font-weight-bold">{{ banner.title }}</h2>
+          <p class="text-h6 text-white mb-4">{{ banner.subtitle }}</p>
+          <v-btn 
+            color="primary" 
+            size="large" 
+            class="text-none"
+            rounded
+          >
+            立即購買
+          </v-btn>
         </div>
       </v-carousel-item>
     </v-carousel>
@@ -98,19 +109,29 @@ export default {
     
     const banners = ref([
       {
-        image: 'https://via.placeholder.com/800x300/FFA101/FFFFFF?text=熱銷商品',
+        image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&h=400&q=80',
         title: '夏季特賣',
         subtitle: '全館商品 8 折起'
       },
       {
-        image: 'https://via.placeholder.com/800x300/B3DEE5/31525B?text=新品上市',
+        image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&h=400&q=80',
         title: '新品上市',
         subtitle: '搶先體驗最新商品'
       },
       {
-        image: 'https://via.placeholder.com/800x300/FAE6B1/31525B?text=會員優惠',
+        image: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&h=400&q=80',
         title: '會員專屬',
         subtitle: '註冊即享專屬優惠'
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&h=400&q=80',
+        title: '3C數位',
+        subtitle: '最新科技產品熱賣中'
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&h=400&q=80',
+        title: '生活精品',
+        subtitle: '提升生活品質的好選擇'
       }
     ])
 
@@ -195,9 +216,20 @@ export default {
 <style scoped>
 .carousel-content {
   position: absolute;
-  bottom: 50px;
-  left: 50px;
-  z-index: 1;
+  bottom: 60px;
+  left: 60px;
+  z-index: 3;
+  max-width: 500px;
+}
+
+.carousel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(49, 82, 91, 0.7), rgba(255, 161, 1, 0.3));
+  z-index: 2;
 }
 
 .category-card {
@@ -207,5 +239,33 @@ export default {
 
 .category-card:hover {
   transform: translateY(-5px);
+}
+
+/* 響應式設計 */
+@media (max-width: 600px) {
+  .carousel-content {
+    bottom: 30px;
+    left: 20px;
+    right: 20px;
+    max-width: none;
+  }
+  
+  .carousel-content h2 {
+    font-size: 1.5rem !important;
+  }
+  
+  .carousel-content p {
+    font-size: 1rem !important;
+  }
+}
+
+/* 輪播圖圓角效果 */
+.v-carousel {
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+.v-carousel-item {
+  border-radius: 12px !important;
 }
 </style>
