@@ -8,7 +8,7 @@
       <v-toolbar-title>
         <router-link to="/" class="text-decoration-none text-white">
           <v-icon class="mr-2">mdi-storefront</v-icon>
-          eshop_frontend
+          購物模板
         </router-link>
       </v-toolbar-title>
       
