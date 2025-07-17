@@ -1,0 +1,40 @@
+// hß#š©
+@import 'variables';
+
+// ú,Ín
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: $font-size-base;
+  line-height: 1.6;
+  color: $dark-color;
+  background-color: #ffffff;
+}
+
+// ÿÉ- - K_*H
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+
+  @media (min-width: $breakpoint-sm) {
+    padding: 0 $spacing-lg;
+  }
+}
+
+// ( utility classes
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mb-1 { margin-bottom: $spacing-xs; }
+.mb-2 { margin-bottom: $spacing-sm; }
+.mb-3 { margin-bottom: $spacing-md; }
+.mb-4 { margin-bottom: $spacing-lg; }
+.mb-5 { margin-bottom: $spacing-xl; }
