@@ -115,11 +115,6 @@ This file provides essential guidance to Claude Code (claude.ai/code) when worki
 /user/register       # 註冊
 ```
 
-### 🎯 **DEVELOPMENT STATUS**
-- **Setup**: ✅ Completed
-- **Core Features**: 🔄 Planning
-- **Testing**: ⏸️ Pending
-- **Documentation**: ⏸️ Pending
 
 ## 📋 NEED HELP? START HERE
 
@@ -141,16 +136,6 @@ npm run lint
 npm run type-check
 ```
 
-### 📁 **Project Structure Guide**
-```
-src/main/vue/
-├── components/     # 可重用組件
-├── views/         # 頁面組件
-├── store/         # Vuex 狀態管理
-├── router/        # Vue Router 路由配置
-├── services/      # API 服務層
-└── utils/         # 工具函數
-```
 
 ## 🎯 RULE COMPLIANCE CHECK
 
