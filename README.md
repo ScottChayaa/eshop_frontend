@@ -49,15 +49,6 @@ src/main/vue/
 └── utils/         # 工具函數
 ```
 
-## 🛠️ Development Guidelines
-
-- **Always search first** before creating new files
-- **Extend existing** functionality rather than duplicating  
-- **Use Task agents** for operations >30 seconds
-- **Single source of truth** for all functionality
-- **Vue3 best practices** - Composition API, TypeScript support
-- **Scalable** - start simple, grow as needed
-
 ## 🎯 核心功能
 1. **商品管理**：商品瀏覽、搜尋、篩選、排序
 2. **購物車**：加入商品、數量調整、移除商品
