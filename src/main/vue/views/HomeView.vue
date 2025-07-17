@@ -1,14 +1,15 @@
 <template>
-  <v-container fluid class="pa-4">
+  <v-container class="pa-4 content-container">
     <!-- 輪播圖 -->
-    <v-carousel 
-      height="400"
-      class="mb-6 rounded-lg"
-      cycle
-      interval="5000"
-      show-arrows
-      hide-delimiter-background
-    >
+    <div class="carousel-wrapper mb-6">
+      <v-carousel 
+        height="400"
+        class="rounded-lg"
+        cycle
+        interval="5000"
+        show-arrows
+        hide-delimiter-background
+      >
       <v-carousel-item
         v-for="(banner, i) in banners"
         :key="i"
@@ -29,7 +30,8 @@
           </v-btn>
         </div>
       </v-carousel-item>
-    </v-carousel>
+      </v-carousel>
+    </div>
 
     <!-- 商品分類 -->
     <v-row class="mb-6">
@@ -42,6 +44,8 @@
         cols="6" 
         sm="4" 
         md="3"
+        lg="3"
+        xl="2"
       >
         <v-card 
           class="category-card" 
@@ -74,7 +78,8 @@
           cols="6" 
           sm="4" 
           md="3"
-          lg="2.4"
+          lg="3"
+          xl="2.4"
         >
           <v-card class="product-card-skeleton" height="350">
             <v-skeleton-loader
@@ -93,7 +98,8 @@
           cols="6" 
           sm="4" 
           md="3"
-          lg="2.4"
+          lg="3"
+          xl="2.4"
         >
           <ProductCard :product="product" />
         </v-col>
@@ -114,6 +120,8 @@
           cols="6" 
           sm="4" 
           md="3"
+          lg="3"
+          xl="3"
         >
           <v-card class="product-card-skeleton" height="350">
             <v-skeleton-loader
@@ -132,6 +140,8 @@
           cols="6" 
           sm="4" 
           md="3"
+          lg="3"
+          xl="3"
         >
           <ProductCard :product="product" />
         </v-col>
@@ -430,11 +440,35 @@ export default {
   background-color: rgba(255, 255, 255, 0.8);
 }
 
+/* 容器寬度限制 */
+.content-container {
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+}
+
+/* 輪播圖容器 */
+.carousel-wrapper {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
 /* 優化商品卡片布局 */
 @media (min-width: 1280px) {
-  .v-col-lg-2-4 {
+  .v-col-xl-2-4 {
     flex: 0 0 20% !important;
     max-width: 20% !important;
+  }
+}
+
+/* 大螢幕優化 */
+@media (min-width: 1920px) {
+  .content-container {
+    max-width: 1600px !important;
+  }
+  
+  .carousel-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
   }
 }
 
