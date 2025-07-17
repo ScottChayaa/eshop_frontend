@@ -20,7 +20,7 @@ export default defineConfig({
   server: {
     host: '0.0.0.0', // 讓外部設備（如 Windows host）可以訪問
     port: 3000,
-    open: true,
+    open: false,
     watch: {
       usePolling: true, // 解決 WSL 文件監聽問題
       interval: 100
