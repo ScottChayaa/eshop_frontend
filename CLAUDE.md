@@ -73,6 +73,123 @@ This file provides essential guidance to Claude Code (claude.ai/code) when worki
 
 > **⚠️ DO NOT PROCEED until all checkboxes are explicitly verified**
 
+## 🐙 GITHUB SETUP & AUTO-BACKUP
+
+> **🤖 FOR CLAUDE CODE: When initializing any project, automatically ask about GitHub setup**
+
+### 🎯 **GITHUB SETUP PROMPT** (AUTOMATIC)
+> **⚠️ CLAUDE CODE MUST ALWAYS ASK THIS QUESTION when setting up a new project:**
+
+```
+🐙 GitHub Repository Setup
+Would you like to set up a remote GitHub repository for this project?
+
+Options:
+1. ✅ YES - Create new GitHub repo and enable auto-push backup
+2. ✅ YES - Connect to existing GitHub repo and enable auto-push backup  
+3. ❌ NO - Skip GitHub setup (local git only)
+
+[Wait for user choice before proceeding]
+```
+
+### 🚀 **OPTION 1: CREATE NEW GITHUB REPO**
+If user chooses to create new repo, execute:
+
+```bash
+# Ensure GitHub CLI is available
+gh --version || echo "⚠️ GitHub CLI (gh) required. Install: brew install gh"
+
+# Authenticate if needed
+gh auth status || gh auth login
+
+# Create new GitHub repository
+echo "Enter repository name (or press Enter for current directory name):"
+read repo_name
+repo_name=${repo_name:-$(basename "$PWD")}
+
+# Create repository
+gh repo create "$repo_name" --public --description "Vue3 購物網站 - 基於Claude Code開發" --confirm
+
+# Add remote and push
+git remote add origin "https://github.com/$(gh api user --jq .login)/$repo_name.git"
+git branch -M main
+git push -u origin main
+
+echo "✅ GitHub repository created and connected: https://github.com/$(gh api user --jq .login)/$repo_name"
+```
+
+### 🔗 **OPTION 2: CONNECT TO EXISTING REPO**
+If user chooses to connect to existing repo, execute:
+
+```bash
+# Get repository URL from user
+echo "Enter your GitHub repository URL (https://github.com/username/repo-name):"
+read repo_url
+
+# Extract repo info and add remote
+git remote add origin "$repo_url"
+git branch -M main
+git push -u origin main
+
+echo "✅ Connected to existing GitHub repository: $repo_url"
+```
+
+### 🔄 **AUTO-PUSH CONFIGURATION**
+For both options, configure automatic backup:
+
+```bash
+# Create git hook for auto-push (optional but recommended)
+cat > .git/hooks/post-commit << 'EOF'
+#!/bin/bash
+# Auto-push to GitHub after every commit
+echo "🔄 Auto-pushing to GitHub..."
+git push origin main
+if [ $? -eq 0 ]; then
+    echo "✅ Successfully backed up to GitHub"
+else
+    echo "⚠️ GitHub push failed - manual push may be required"
+fi
+EOF
+
+chmod +x .git/hooks/post-commit
+
+echo "✅ Auto-push configured - GitHub backup after every commit"
+```
+
+### 📋 **GITHUB BACKUP WORKFLOW** (MANDATORY)
+> **⚠️ CLAUDE CODE MUST FOLLOW THIS PATTERN:**
+
+```bash
+# After every commit, always run:
+git push origin main
+
+# This ensures:
+# ✅ Remote backup of all changes
+# ✅ Collaboration readiness  
+# ✅ Version history preservation
+# ✅ Disaster recovery protection
+```
+
+### 🎯 **CLAUDE CODE GITHUB COMMANDS**
+Essential GitHub operations for Claude Code:
+
+```bash
+# Check GitHub connection status
+gh auth status && git remote -v
+
+# Create new repository (if needed)
+gh repo create [repo-name] --public --confirm
+
+# Push changes (after every commit)
+git push origin main
+
+# Check repository status
+gh repo view
+
+# Clone repository (for new setup)
+gh repo clone username/repo-name
+```
+
 ## 🏗️ PROJECT OVERVIEW
 
 ### 🎯 **eshop_frontend - Vue3 電商前端專案**
@@ -115,6 +232,54 @@ This file provides essential guidance to Claude Code (claude.ai/code) when worki
 /user/register       # 註冊
 ```
 
+### 🎯 **DEVELOPMENT STATUS**
+- **Setup**: ✅ Completed
+- **Core Features**: 🔄 Planning
+- **Testing**: ⏸️ Pending
+- **Documentation**: ⏸️ Pending
+
+## 📁 **Project Structure Guide**
+```
+src/main/vue/
+├── components/     # 可重用組件
+│   ├── common/     # 通用組件 (按鈕、輸入框等)
+│   ├── layout/     # 版面組件 (Header、Footer、Sidebar)
+│   └── ui/         # UI組件 (卡片、模態框等)
+├── views/         # 頁面組件
+│   ├── home/      # 首頁相關
+│   ├── product/   # 商品相關頁面
+│   ├── cart/      # 購物車相關
+│   ├── user/      # 會員相關頁面
+│   └── admin/     # 管理後台 (如需要)
+├── store/         # Vuex 狀態管理
+│   ├── modules/   # 模組化 Store
+│   │   ├── auth.js    # 認證相關
+│   │   ├── cart.js    # 購物車狀態
+│   │   ├── product.js # 商品狀態
+│   │   └── user.js    # 使用者狀態
+│   └── index.js   # Store 主檔案
+├── router/        # Vue Router 路由配置
+│   ├── index.js   # 主路由檔案
+│   └── guards.js  # 路由守衛
+├── services/      # API 服務層
+│   ├── api.js     # API 基礎配置
+│   ├── auth.js    # 認證服務
+│   ├── product.js # 商品服務
+│   └── user.js    # 使用者服務
+├── utils/         # 工具函數
+│   ├── helpers.js # 通用輔助函數
+│   ├── constants.js # 常數定義
+│   └── validators.js # 表單驗證
+├── assets/        # 靜態資源
+│   ├── styles/    # 樣式檔案
+│   │   ├── variables.scss # SCSS 變數
+│   │   └── global.scss    # 全域樣式
+│   ├── images/    # 圖片資源
+│   └── fonts/     # 字型檔案
+└── plugins/       # Vue 插件
+    ├── vuetify.js # Vuetify 配置
+    └── axios.js   # Axios 配置
+```
 
 ## 📋 NEED HELP? START HERE
 
@@ -134,6 +299,72 @@ npm run lint
 
 # Type check (if using TypeScript)
 npm run type-check
+
+# Preview production build
+npm run preview
+
+# Install dependencies
+npm install
+
+# Update dependencies
+npm update
+
+# Clean install (remove node_modules and package-lock.json)
+rm -rf node_modules package-lock.json && npm install
+```
+
+### 🛠️ **Development Workflow Commands**
+```bash
+# Start development with hot reload
+npm run dev
+
+# Build and watch for changes
+npm run build --watch
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage
+npm run test:coverage
+
+# Format code
+npm run format
+
+# Fix linting errors
+npm run lint:fix
+```
+
+### 🚀 **Vue3 Specific Commands**
+```bash
+# Generate Vue component
+vue create component ComponentName
+
+# Add Vue CLI plugin
+vue add @vue/plugin-name
+
+# Serve built files locally
+npm run serve
+
+# Analyze bundle size
+npm run analyze
+
+# Check for Vue 3 compatibility
+vue-compat-check
+```
+
+### 🐛 **Debugging Commands**
+```bash
+# Debug with Vue DevTools
+npm run dev -- --debug
+
+# Build with source maps
+npm run build -- --sourcemap
+
+# Check bundle analyzer
+npm run build && npx webpack-bundle-analyzer dist/assets/*.js
+
+# Performance profiling
+npm run dev -- --profile
 ```
 
 
