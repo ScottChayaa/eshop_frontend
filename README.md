@@ -58,7 +58,9 @@ Vue3 前端購物網站開發專案 - 基於Vue3的現代化電商前端應用�
 
 ### 後端資料處理
 - **開發階段**：使用 Mock API 模擬後端資料
-- **Mock 工具**：JSON Server 或 Mock Service Worker (MSW)
+- **Mock 工具**：
+  - **MSW (Mock Service Worker)**：負責自動化測試，攔截瀏覽器請求進行模擬
+  - **JSON Server**：負責手動開發和測試，提供真實 HTTP API 服務
 - **假資料產生**：Faker.js
 - **API 結構預留**：預先設計 API 介面規格，方便後續整合真實後端
 
@@ -152,6 +154,30 @@ src/main/vue/
 - 結構化資料標記
 - Google Analytics 4 整合
 
+## 🧪 測試策略
+
+### 測試工具組合
+- **Vitest**：單元測試框架，用於測試邏輯函數和組件
+- **Vue Test Utils**：Vue 組件測試工具
+- **MSW (Mock Service Worker)**：自動化測試 Mock API，攔截瀏覽器請求
+- **JSON Server**：手動開發測試，提供真實 HTTP API 服務
+- **Cypress**：端到端測試框架
+
+### 測試分工策略
+| 測試類型 | 工具 | 用途 |
+|---------|------|------|
+| **自動化測試** | MSW | 單元測試、整合測試中的 API 模擬 |
+| **手動開發測試** | JSON Server | 開發階段的 API 測試和資料持久化 |
+| **組件測試** | Vue Test Utils | Vue 組件功能和互動測試 |
+| **端到端測試** | Cypress | 完整使用者操作流程測試 |
+
+### 測試覆蓋範圍
+- 認證系統 (登入/登出/權限控制)
+- 狀態管理 (Vuex Store modules)
+- API 服務層 (請求/響應/錯誤處理)
+- UI 組件 (Layout/互動/響應式)
+- 路由守衛 (權限控制/導航)
+
 ## 📝 規劃總結
 
 ### 重點摘要
@@ -160,4 +186,5 @@ src/main/vue/
 - 現代簡約風格，溫暖色調配置
 - 手機優先設計，底部固定導航
 - Google OAuth 登入整合
-- Mock API 開發階段資料模擬
+- 雙 Mock API 策略 (MSW + JSON Server)
+- 完整測試覆蓋和驗證機制

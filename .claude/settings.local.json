@@ -16,7 +16,12 @@
       "Bash(npm run dev:*)",
       "Bash(ls:*)",
       "Bash(echo \"Additional WSL troubleshooting commands:\n\n# 1. 檢查 WSL 版本\nwsl --version\n\n# 2. 重新啟動 WSL (在 Windows PowerShell 中執行)\n# wsl --shutdown\n# wsl\n\n# 3. 檢查網絡連接\nnetstat -tulpn | grep 3000\")",
-      "Bash(touch:*)"
+      "Bash(touch:*)",
+      "Bash(npm run build:*)",
+      "Bash(node:*)",
+      "Bash(npm install:*)",
+      "Bash(npx msw init:*)",
+      "Bash(npm test:*)"
     ],
     "deny": []
   }

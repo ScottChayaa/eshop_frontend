@@ -1,0 +1,83 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@example.com",
+      "password": "Admin123456",
+      "name": "管理員",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "email": "user@example.com",
+      "password": "User123456",
+      "name": "一般使用者",
+      "role": "user"
+    },
+    {
+      "id": 3,
+      "email": "test@example.com",
+      "password": "Test123456",
+      "name": "測試使用者",
+      "role": "user"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "iPhone 15 Pro",
+      "description": "最新款 iPhone 15 Pro，配備 A17 Pro 晶片",
+      "price": 36900,
+      "category": "electronics",
+      "stock": 50,
+      "image": "/images/iphone15pro.jpg"
+    },
+    {
+      "id": 2,
+      "name": "MacBook Air M2",
+      "description": "搭載 M2 晶片的 MacBook Air",
+      "price": 37900,
+      "category": "electronics",
+      "stock": 30,
+      "image": "/images/macbook-air-m2.jpg"
+    },
+    {
+      "id": 3,
+      "name": "AirPods Pro (第 2 代)",
+      "description": "主動式降噪無線耳機",
+      "price": 7490,
+      "category": "electronics",
+      "stock": 100,
+      "image": "/images/airpods-pro-2.jpg"
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "userId": 2,
+      "items": [
+        {
+          "productId": 1,
+          "name": "iPhone 15 Pro",
+          "price": 36900,
+          "quantity": 1
+        }
+      ],
+      "total": 36900,
+      "status": "pending",
+      "createdAt": "2024-01-10T10:30:00.000Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "電子產品",
+      "slug": "electronics"
+    },
+    {
+      "id": 2,
+      "name": "服飾配件",
+      "slug": "clothing"
+    }
+  ]
+}

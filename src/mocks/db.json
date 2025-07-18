@@ -1,0 +1,292 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@example.com",
+      "password": "Admin123456",
+      "name": "管理員",
+      "role": "admin",
+      "avatar": null,
+      "phone": "0912345678",
+      "address": "台北市大安區信義路四段1號",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "email": "user@example.com",
+      "password": "User123456",
+      "name": "一般使用者",
+      "role": "user",
+      "avatar": null,
+      "phone": "0987654321",
+      "address": "台北市信義區市府路1號",
+      "createdAt": "2024-01-02T00:00:00.000Z",
+      "updatedAt": "2024-01-02T00:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "email": "test@example.com",
+      "password": "Test123456",
+      "name": "測試使用者",
+      "role": "user",
+      "avatar": null,
+      "phone": "0911222333",
+      "address": "台北市中正區重慶南路一段122號",
+      "createdAt": "2024-01-03T00:00:00.000Z",
+      "updatedAt": "2024-01-03T00:00:00.000Z"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "iPhone 15 Pro",
+      "description": "最新款 iPhone 15 Pro，配備 A17 Pro 晶片",
+      "price": 36900,
+      "originalPrice": 39900,
+      "category": "electronics",
+      "brand": "Apple",
+      "stock": 50,
+      "images": [
+        "/images/iphone15pro-1.jpg",
+        "/images/iphone15pro-2.jpg"
+      ],
+      "specifications": {
+        "screen": "6.1 吋",
+        "storage": "128GB",
+        "camera": "48MP 主鏡頭"
+      },
+      "tags": ["新品", "熱賣"],
+      "rating": 4.8,
+      "reviewCount": 156,
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "name": "MacBook Air M2",
+      "description": "搭載 M2 晶片的 MacBook Air，效能與續航力的完美結合",
+      "price": 37900,
+      "originalPrice": 39900,
+      "category": "electronics",
+      "brand": "Apple",
+      "stock": 30,
+      "images": [
+        "/images/macbook-air-m2-1.jpg",
+        "/images/macbook-air-m2-2.jpg"
+      ],
+      "specifications": {
+        "screen": "13.6 吋",
+        "memory": "8GB",
+        "storage": "256GB SSD"
+      },
+      "tags": ["推薦", "高效能"],
+      "rating": 4.9,
+      "reviewCount": 89,
+      "createdAt": "2024-01-02T00:00:00.000Z",
+      "updatedAt": "2024-01-02T00:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "name": "AirPods Pro (第 2 代)",
+      "description": "主動式降噪無線耳機，提供絕佳音質體驗",
+      "price": 7490,
+      "originalPrice": 7990,
+      "category": "electronics",
+      "brand": "Apple",
+      "stock": 100,
+      "images": [
+        "/images/airpods-pro-2-1.jpg",
+        "/images/airpods-pro-2-2.jpg"
+      ],
+      "specifications": {
+        "battery": "最長 6 小時聆聽時間",
+        "charging": "MagSafe 充電盒",
+        "features": "主動式降噪、透明模式"
+      },
+      "tags": ["無線", "降噪"],
+      "rating": 4.7,
+      "reviewCount": 234,
+      "createdAt": "2024-01-03T00:00:00.000Z",
+      "updatedAt": "2024-01-03T00:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "name": "Nike Air Max 90",
+      "description": "經典復古跑鞋，舒適透氣的運動鞋款",
+      "price": 3600,
+      "originalPrice": 4000,
+      "category": "clothing",
+      "brand": "Nike",
+      "stock": 75,
+      "images": [
+        "/images/nike-air-max-90-1.jpg",
+        "/images/nike-air-max-90-2.jpg"
+      ],
+      "specifications": {
+        "material": "皮革 + 網布",
+        "sole": "Air-Sole 氣墊",
+        "sizes": ["US 7", "US 8", "US 9", "US 10"]
+      },
+      "tags": ["運動", "經典"],
+      "rating": 4.6,
+      "reviewCount": 178,
+      "createdAt": "2024-01-04T00:00:00.000Z",
+      "updatedAt": "2024-01-04T00:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "name": "Uniqlo 發熱衣",
+      "description": "HEATTECH 極暖發熱衣，保暖舒適",
+      "price": 590,
+      "originalPrice": 690,
+      "category": "clothing",
+      "brand": "Uniqlo",
+      "stock": 200,
+      "images": [
+        "/images/uniqlo-heattech-1.jpg",
+        "/images/uniqlo-heattech-2.jpg"
+      ],
+      "specifications": {
+        "material": "聚酯纖維、壓克力纖維",
+        "sizes": ["S", "M", "L", "XL"],
+        "colors": ["黑色", "白色", "灰色"]
+      },
+      "tags": ["保暖", "舒適"],
+      "rating": 4.5,
+      "reviewCount": 567,
+      "createdAt": "2024-01-05T00:00:00.000Z",
+      "updatedAt": "2024-01-05T00:00:00.000Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "userId": 2,
+      "items": [
+        {
+          "productId": 1,
+          "name": "iPhone 15 Pro",
+          "price": 36900,
+          "quantity": 1
+        },
+        {
+          "productId": 3,
+          "name": "AirPods Pro (第 2 代)",
+          "price": 7490,
+          "quantity": 1
+        }
+      ],
+      "total": 44390,
+      "status": "pending",
+      "shippingAddress": {
+        "name": "一般使用者",
+        "phone": "0987654321",
+        "address": "台北市信義區市府路1號"
+      },
+      "paymentMethod": "credit_card",
+      "createdAt": "2024-01-10T10:30:00.000Z",
+      "updatedAt": "2024-01-10T10:30:00.000Z"
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "items": [
+        {
+          "productId": 5,
+          "name": "Uniqlo 發熱衣",
+          "price": 590,
+          "quantity": 2
+        }
+      ],
+      "total": 1180,
+      "status": "shipped",
+      "shippingAddress": {
+        "name": "測試使用者",
+        "phone": "0911222333",
+        "address": "台北市中正區重慶南路一段122號"
+      },
+      "paymentMethod": "cash_on_delivery",
+      "createdAt": "2024-01-08T14:20:00.000Z",
+      "updatedAt": "2024-01-09T09:15:00.000Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "電子產品",
+      "slug": "electronics",
+      "description": "手機、電腦、3C 產品",
+      "image": "/images/category-electronics.jpg",
+      "productCount": 3
+    },
+    {
+      "id": 2,
+      "name": "服飾配件",
+      "slug": "clothing",
+      "description": "服裝、鞋子、配件",
+      "image": "/images/category-clothing.jpg",
+      "productCount": 2
+    },
+    {
+      "id": 3,
+      "name": "書籍文具",
+      "slug": "books",
+      "description": "書籍、文具用品",
+      "image": "/images/category-books.jpg",
+      "productCount": 0
+    },
+    {
+      "id": 4,
+      "name": "居家生活",
+      "slug": "home",
+      "description": "家具、家電、生活用品",
+      "image": "/images/category-home.jpg",
+      "productCount": 0
+    },
+    {
+      "id": 5,
+      "name": "運動休閒",
+      "slug": "sports",
+      "description": "運動器材、戶外用品",
+      "image": "/images/category-sports.jpg",
+      "productCount": 0
+    }
+  ],
+  "cart": [
+    {
+      "id": 1,
+      "userId": 2,
+      "productId": 1,
+      "quantity": 1,
+      "createdAt": "2024-01-15T08:30:00.000Z"
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "productId": 4,
+      "quantity": 2,
+      "createdAt": "2024-01-15T10:45:00.000Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "userId": 2,
+      "title": "訂單已出貨",
+      "message": "您的訂單 #1 已經出貨，預計 2-3 個工作天送達",
+      "type": "order",
+      "read": false,
+      "createdAt": "2024-01-10T16:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "title": "新品上架",
+      "message": "Apple 最新產品現已上架，快來選購！",
+      "type": "promotion",
+      "read": true,
+      "createdAt": "2024-01-05T12:00:00.000Z"
+    }
+  ]
+}
