@@ -1,40 +1,437 @@
-// h�#��
-@import 'variables';
+/**
+ * 全域樣式定義
+ * @description 提供專案的基礎樣式和通用類別
+ */
 
-// �,�n
-* {
+// 匯入變數檔案
+@import './variables.scss';
+
+// ==================== 基礎重置 ====================
+// CSS Reset
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Noto Sans TC', sans-serif;
-  font-size: $font-size-base;
-  line-height: 1.6;
-  color: $dark-color;
-  background-color: #ffffff;
+html {
+  font-size: 16px; // 1rem = 16px
+  scroll-behavior: smooth;
 }
 
-// ��- - K_*H
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 $spacing-md;
+body {
+  font-family: $font-family-primary;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+  color: $text-primary;
+  background-color: $background-primary;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  @media (min-width: $breakpoint-sm) {
-    padding: 0 $spacing-lg;
+// ==================== 基礎元素樣式 ====================
+// 標題
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-tight;
+  margin-bottom: $spacing-4;
+  color: $text-primary;
+}
+
+h1 { font-size: $font-size-4xl; }
+h2 { font-size: $font-size-3xl; }
+h3 { font-size: $font-size-2xl; }
+h4 { font-size: $font-size-xl; }
+h5 { font-size: $font-size-lg; }
+h6 { font-size: $font-size-base; }
+
+// 段落
+p {
+  margin-bottom: $spacing-4;
+  color: $text-primary;
+}
+
+// 連結
+a {
+  color: $secondary-color;
+  text-decoration: none;
+  transition: color $duration-200 $ease-in-out;
+
+  &:hover {
+    color: darken($secondary-color, 10%);
+    text-decoration: underline;
+  }
+
+  &:focus {
+    outline: 2px solid $secondary-color;
+    outline-offset: 2px;
   }
 }
 
-// ( utility classes
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
+// 按鈕
+button {
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: all $duration-200 $ease-in-out;
 
-.mb-1 { margin-bottom: $spacing-xs; }
-.mb-2 { margin-bottom: $spacing-sm; }
-.mb-3 { margin-bottom: $spacing-md; }
-.mb-4 { margin-bottom: $spacing-lg; }
-.mb-5 { margin-bottom: $spacing-xl; }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// 輸入框
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  border: $border-width-1 solid $border-color;
+  border-radius: $input-border-radius;
+  padding: $input-padding-x;
+  transition: border-color $duration-200 $ease-in-out;
+
+  &:focus {
+    outline: none;
+    border-color: $secondary-color;
+    box-shadow: 0 0 0 3px rgba($secondary-color, 0.1);
+  }
+
+  &:disabled {
+    background-color: $gray-100;
+    cursor: not-allowed;
+  }
+}
+
+// 圖片
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// 列表
+ul, ol {
+  margin-bottom: $spacing-4;
+  padding-left: $spacing-6;
+}
+
+li {
+  margin-bottom: $spacing-1;
+}
+
+// ==================== 版面容器 ====================
+// 主容器
+.container {
+  width: 100%;
+  max-width: $container-xl;
+  margin: 0 auto;
+  padding-left: $spacing-4;
+  padding-right: $spacing-4;
+
+  @media (min-width: $breakpoint-sm) {
+    max-width: $container-sm;
+  }
+
+  @media (min-width: $breakpoint-md) {
+    max-width: $container-md;
+  }
+
+  @media (min-width: $breakpoint-lg) {
+    max-width: $container-lg;
+  }
+
+  @media (min-width: $breakpoint-xl) {
+    max-width: $container-xl;
+  }
+
+  @media (min-width: $breakpoint-2xl) {
+    max-width: $container-2xl;
+  }
+}
+
+// 流體容器
+.container-fluid {
+  width: 100%;
+  padding-left: $spacing-4;
+  padding-right: $spacing-4;
+}
+
+// ==================== 工具類別 ====================
+// 文字對齊
+.text-left { text-align: left !important; }
+.text-center { text-align: center !important; }
+.text-right { text-align: right !important; }
+.text-justify { text-align: justify !important; }
+
+// 文字大小
+.text-xs { font-size: $font-size-xs !important; }
+.text-sm { font-size: $font-size-sm !important; }
+.text-base { font-size: $font-size-base !important; }
+.text-lg { font-size: $font-size-lg !important; }
+.text-xl { font-size: $font-size-xl !important; }
+.text-2xl { font-size: $font-size-2xl !important; }
+.text-3xl { font-size: $font-size-3xl !important; }
+.text-4xl { font-size: $font-size-4xl !important; }
+
+// 文字粗細
+.font-light { font-weight: $font-weight-light !important; }
+.font-normal { font-weight: $font-weight-normal !important; }
+.font-medium { font-weight: $font-weight-medium !important; }
+.font-semibold { font-weight: $font-weight-semibold !important; }
+.font-bold { font-weight: $font-weight-bold !important; }
+
+// 文字色彩
+.text-primary { color: $primary-color !important; }
+.text-secondary { color: $secondary-color !important; }
+.text-accent { color: $accent-color !important; }
+.text-dark { color: $dark-color !important; }
+.text-success { color: $success-color !important; }
+.text-warning { color: $warning-color !important; }
+.text-error { color: $error-color !important; }
+.text-info { color: $info-color !important; }
+.text-muted { color: $text-secondary !important; }
+
+// 背景色彩
+.bg-primary { background-color: $primary-color !important; }
+.bg-secondary { background-color: $secondary-color !important; }
+.bg-accent { background-color: $accent-color !important; }
+.bg-dark { background-color: $dark-color !important; }
+.bg-success { background-color: $success-color !important; }
+.bg-warning { background-color: $warning-color !important; }
+.bg-error { background-color: $error-color !important; }
+.bg-info { background-color: $info-color !important; }
+.bg-white { background-color: $white !important; }
+.bg-light { background-color: $gray-100 !important; }
+
+// ==================== 間距工具類別 ====================
+// Margin
+.m-0 { margin: $spacing-0 !important; }
+.m-1 { margin: $spacing-1 !important; }
+.m-2 { margin: $spacing-2 !important; }
+.m-3 { margin: $spacing-3 !important; }
+.m-4 { margin: $spacing-4 !important; }
+.m-5 { margin: $spacing-5 !important; }
+.m-6 { margin: $spacing-6 !important; }
+.m-8 { margin: $spacing-8 !important; }
+
+// Margin Top
+.mt-0 { margin-top: $spacing-0 !important; }
+.mt-1 { margin-top: $spacing-1 !important; }
+.mt-2 { margin-top: $spacing-2 !important; }
+.mt-3 { margin-top: $spacing-3 !important; }
+.mt-4 { margin-top: $spacing-4 !important; }
+.mt-5 { margin-top: $spacing-5 !important; }
+.mt-6 { margin-top: $spacing-6 !important; }
+.mt-8 { margin-top: $spacing-8 !important; }
+
+// Margin Bottom
+.mb-0 { margin-bottom: $spacing-0 !important; }
+.mb-1 { margin-bottom: $spacing-1 !important; }
+.mb-2 { margin-bottom: $spacing-2 !important; }
+.mb-3 { margin-bottom: $spacing-3 !important; }
+.mb-4 { margin-bottom: $spacing-4 !important; }
+.mb-5 { margin-bottom: $spacing-5 !important; }
+.mb-6 { margin-bottom: $spacing-6 !important; }
+.mb-8 { margin-bottom: $spacing-8 !important; }
+
+// Margin Left & Right
+.ml-0 { margin-left: $spacing-0 !important; }
+.ml-1 { margin-left: $spacing-1 !important; }
+.ml-2 { margin-left: $spacing-2 !important; }
+.ml-3 { margin-left: $spacing-3 !important; }
+.ml-4 { margin-left: $spacing-4 !important; }
+
+.mr-0 { margin-right: $spacing-0 !important; }
+.mr-1 { margin-right: $spacing-1 !important; }
+.mr-2 { margin-right: $spacing-2 !important; }
+.mr-3 { margin-right: $spacing-3 !important; }
+.mr-4 { margin-right: $spacing-4 !important; }
+
+// Margin X & Y
+.mx-auto { margin-left: auto !important; margin-right: auto !important; }
+.my-0 { margin-top: $spacing-0 !important; margin-bottom: $spacing-0 !important; }
+.my-1 { margin-top: $spacing-1 !important; margin-bottom: $spacing-1 !important; }
+.my-2 { margin-top: $spacing-2 !important; margin-bottom: $spacing-2 !important; }
+.my-3 { margin-top: $spacing-3 !important; margin-bottom: $spacing-3 !important; }
+.my-4 { margin-top: $spacing-4 !important; margin-bottom: $spacing-4 !important; }
+
+// Padding
+.p-0 { padding: $spacing-0 !important; }
+.p-1 { padding: $spacing-1 !important; }
+.p-2 { padding: $spacing-2 !important; }
+.p-3 { padding: $spacing-3 !important; }
+.p-4 { padding: $spacing-4 !important; }
+.p-5 { padding: $spacing-5 !important; }
+.p-6 { padding: $spacing-6 !important; }
+.p-8 { padding: $spacing-8 !important; }
+
+// Padding Top, Bottom, Left, Right (簡化版)
+.pt-0 { padding-top: $spacing-0 !important; }
+.pt-2 { padding-top: $spacing-2 !important; }
+.pt-4 { padding-top: $spacing-4 !important; }
+.pt-6 { padding-top: $spacing-6 !important; }
+
+.pb-0 { padding-bottom: $spacing-0 !important; }
+.pb-2 { padding-bottom: $spacing-2 !important; }
+.pb-4 { padding-bottom: $spacing-4 !important; }
+.pb-6 { padding-bottom: $spacing-6 !important; }
+
+.pl-0 { padding-left: $spacing-0 !important; }
+.pl-2 { padding-left: $spacing-2 !important; }
+.pl-4 { padding-left: $spacing-4 !important; }
+
+.pr-0 { padding-right: $spacing-0 !important; }
+.pr-2 { padding-right: $spacing-2 !important; }
+.pr-4 { padding-right: $spacing-4 !important; }
+
+// ==================== 顯示工具類別 ====================
+.d-none { display: none !important; }
+.d-block { display: block !important; }
+.d-inline { display: inline !important; }
+.d-inline-block { display: inline-block !important; }
+.d-flex { display: flex !important; }
+.d-grid { display: grid !important; }
+
+// Flexbox 工具
+.flex-row { flex-direction: row !important; }
+.flex-column { flex-direction: column !important; }
+.justify-start { justify-content: flex-start !important; }
+.justify-center { justify-content: center !important; }
+.justify-end { justify-content: flex-end !important; }
+.justify-between { justify-content: space-between !important; }
+.justify-around { justify-content: space-around !important; }
+.items-start { align-items: flex-start !important; }
+.items-center { align-items: center !important; }
+.items-end { align-items: flex-end !important; }
+.items-stretch { align-items: stretch !important; }
+
+// ==================== 邊框工具類別 ====================
+.border { border: $border-width-1 solid $border-color !important; }
+.border-0 { border: none !important; }
+.border-top { border-top: $border-width-1 solid $border-color !important; }
+.border-bottom { border-bottom: $border-width-1 solid $border-color !important; }
+.border-left { border-left: $border-width-1 solid $border-color !important; }
+.border-right { border-right: $border-width-1 solid $border-color !important; }
+
+// 圓角
+.rounded-none { border-radius: $border-radius-none !important; }
+.rounded-sm { border-radius: $border-radius-sm !important; }
+.rounded { border-radius: $border-radius-base !important; }
+.rounded-md { border-radius: $border-radius-md !important; }
+.rounded-lg { border-radius: $border-radius-lg !important; }
+.rounded-xl { border-radius: $border-radius-xl !important; }
+.rounded-full { border-radius: $border-radius-full !important; }
+
+// ==================== 陰影工具類別 ====================
+.shadow-none { box-shadow: none !important; }
+.shadow-sm { box-shadow: $shadow-sm !important; }
+.shadow { box-shadow: $shadow-base !important; }
+.shadow-md { box-shadow: $shadow-md !important; }
+.shadow-lg { box-shadow: $shadow-lg !important; }
+.shadow-xl { box-shadow: $shadow-xl !important; }
+
+// ==================== 響應式工具類別 ====================
+// 隱藏/顯示
+@media (max-width: #{$breakpoint-sm - 1}) {
+  .d-sm-none { display: none !important; }
+  .d-sm-block { display: block !important; }
+}
+
+@media (min-width: $breakpoint-sm) {
+  .d-sm-none { display: none !important; }
+  .d-sm-block { display: block !important; }
+}
+
+@media (min-width: $breakpoint-md) {
+  .d-md-none { display: none !important; }
+  .d-md-block { display: block !important; }
+}
+
+@media (min-width: $breakpoint-lg) {
+  .d-lg-none { display: none !important; }
+  .d-lg-block { display: block !important; }
+}
+
+// ==================== 動畫工具類別 ====================
+.transition { transition: all $duration-200 $ease-in-out !important; }
+.transition-none { transition: none !important; }
+.transition-colors { transition: color $duration-200 $ease-in-out, background-color $duration-200 $ease-in-out, border-color $duration-200 $ease-in-out !important; }
+
+// 懸停效果
+.hover-lift {
+  transition: transform $duration-200 $ease-in-out;
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.hover-scale {
+  transition: transform $duration-200 $ease-in-out;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// ==================== 自定義組件基礎樣式 ====================
+// 卡片基礎樣式
+.card {
+  background-color: $white;
+  border-radius: $card-border-radius;
+  box-shadow: $card-shadow;
+  padding: $card-padding;
+  transition: box-shadow $duration-200 $ease-in-out;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+}
+
+// 按鈕基礎樣式
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $button-padding-x-md;
+  border-radius: $border-radius-base;
+  font-weight: $font-weight-medium;
+  text-align: center;
+  cursor: pointer;
+  transition: all $duration-200 $ease-in-out;
+  border: none;
+  text-decoration: none;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// 輸入框基礎樣式
+.form-input {
+  width: 100%;
+  height: $input-height-md;
+  padding: $input-padding-x;
+  border: $input-border-width solid $border-color;
+  border-radius: $input-border-radius;
+  font-size: $font-size-base;
+  transition: border-color $duration-200 $ease-in-out;
+
+  &:focus {
+    outline: none;
+    border-color: $secondary-color;
+    box-shadow: 0 0 0 3px rgba($secondary-color, 0.1);
+  }
+
+  &::placeholder {
+    color: $text-disabled;
+  }
+}
