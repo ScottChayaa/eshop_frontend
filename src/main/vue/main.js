@@ -14,22 +14,22 @@ const vuetify = createVuetify({
   components,
   directives,
   theme: {
-    defaultTheme: 'light',
+    defaultTheme: 'customLight',
     themes: {
-      light: {
+      customLight: {
         dark: false,
         colors: {
-          primary: '#FFA101',     // 橘黃
-          secondary: '#B3DEE5',   // 淺藍
-          accent: '#FAE6B1',      // 淺黃
+          primary: '#FAE6B1',     // 淺黃
+          secondary: '#FFA101',   // 橘黃
+          accent: '#B3DEE5',      // 淺藍
           error: '#FF5252',
           info: '#2196F3',
           success: '#4CAF50',
           warning: '#FFC107',
-          background: '#FAE6B1',  // 淺黃背景
+          background: '#FFFFFF',
           surface: '#FFFFFF',
-          'on-primary': '#FFFFFF',
-          'on-secondary': '#31525B',
+          'on-primary': '#31525B',
+          'on-secondary': '#FFFFFF',
           'on-accent': '#31525B',
           'on-background': '#31525B',
           'on-surface': '#31525B'

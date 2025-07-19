@@ -25,7 +25,8 @@
       "Bash(curl:*)",
       "Bash(timeout 5 npm run build)",
       "Bash(find:*)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "Bash(timeout:*)"
     ],
     "deny": []
   }
