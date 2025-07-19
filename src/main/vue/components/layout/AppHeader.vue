@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app height="64" color="surface" elevation="2">
+  <v-app-bar app height="64" color="surface" elevation="4">
     <v-container class="d-flex align-center">
       <div class="d-flex align-center">
         <v-btn
