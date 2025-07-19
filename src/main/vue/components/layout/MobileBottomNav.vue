@@ -4,7 +4,7 @@
     color="secondary"
     bg-color="surface"
     elevation="8"
-    height="70"
+    height="65"
     class="mobile-bottom-nav"
     grow
   >
@@ -149,6 +149,9 @@ export default {
   right: 0 !important;
   z-index: 1000 !important;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
+  /* 確保背景不透明 */
+  background: var(--v-theme-surface) !important;
+  backdrop-filter: none !important;
 }
 
 /* PC版隱藏 */
@@ -161,25 +164,29 @@ export default {
 .nav-btn {
   min-width: 0 !important;
   flex-direction: column !important;
-  height: 100% !important;
-  padding: 4px 8px !important;
+  height: 65px !important;
+  padding: 6px 4px 8px 4px !important;
+  min-height: 65px !important;
 }
 
 .nav-btn :deep(.v-btn__content) {
   flex-direction: column !important;
   height: 100% !important;
+  gap: 2px !important;
+  padding: 0 !important;
 }
 
 .nav-btn .v-icon {
-  font-size: 20px !important;
-  margin-bottom: 2px !important;
+  font-size: 24px !important;
+  margin-bottom: 0 !important;
 }
 
 .nav-label {
-  font-size: 10px !important;
-  line-height: 1.2 !important;
+  font-size: 11px !important;
+  line-height: 1.1 !important;
   text-transform: none !important;
   font-weight: 500 !important;
+  margin-top: 1px !important;
 }
 
 /* 活動狀態樣式 */
@@ -196,14 +203,30 @@ export default {
   position: relative;
 }
 
-/* 確保在所有主題下都有正確的對比度 */
+/* 確保在所有主題下都有正確的對比度和不透明背景 */
 .mobile-bottom-nav {
   background: var(--v-theme-surface) !important;
   color: var(--v-theme-on-surface) !important;
 }
 
+/* 強制確保背景不透明 */
+.mobile-bottom-nav :deep(.v-bottom-navigation) {
+  background: var(--v-theme-surface) !important;
+  backdrop-filter: none !important;
+}
+
 /* 深色模式適配 */
 .v-theme--customDark .mobile-bottom-nav {
   border-top-color: rgba(255, 255, 255, 0.1);
+  background: var(--v-theme-surface) !important;
+}
+
+/* 確保按鈕垂直居中 */
+.nav-btn :deep(.v-btn__overlay) {
+  opacity: 0.1 !important;
+}
+
+.nav-btn:hover :deep(.v-btn__overlay) {
+  opacity: 0.08 !important;
 }
 </style>

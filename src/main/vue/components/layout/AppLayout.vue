@@ -220,7 +220,7 @@ export default {
 /* 手機版主內容區域底部間距 */
 @media (max-width: 767px) {
   .main-container {
-    padding-bottom: 80px !important; /* 為底部導航列留出空間 */
+    padding-bottom: 75px !important; /* 為底部導航列留出空間 */
   }
 }
 
