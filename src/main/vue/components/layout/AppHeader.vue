@@ -35,6 +35,7 @@
       <div class="d-none d-md-flex align-center mr-4">
         <SearchInput 
           @search="handleSearch"
+          density="compact"
           class="mr-4"
         />
       </div>
@@ -42,18 +43,8 @@
       <div class="d-flex align-center">
         <!-- PC版顯示所有按鈕 -->
         <template v-if="$vuetify.display.mdAndUp">
-          <v-btn
-            icon
-            @click="toggleTheme"
-            class="mr-2"
-          >
-            <v-icon>{{ themeIcon }}</v-icon>
-          </v-btn>
-
           <CartButton class="mr-2" />
-
-          <UserMenu v-if="isAuthenticated" />
-          <LoginButton v-else />
+          <UserButton />
         </template>
         
         <!-- 手機版只顯示購物車 -->
@@ -75,48 +66,30 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
-import { useStore } from 'vuex'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useTheme } from 'vuetify'
 import SearchInput from '../common/SearchInput.vue'
 import CartButton from '../common/CartButton.vue'
-import UserMenu from '../common/UserMenu.vue'
-import LoginButton from '../common/LoginButton.vue'
+import UserButton from '../common/UserButton.vue'
 
 export default {
   name: 'AppHeader',
   components: {
     SearchInput,
     CartButton,
-    UserMenu,
-    LoginButton
+    UserButton
   },
   emits: ['toggle-sidebar', 'navigate'],
   setup(props, { emit }) {
-    const store = useStore()
     const router = useRouter()
-    const theme = useTheme()
     
     const showSearchOnMobile = ref(false)
 
-    const isAuthenticated = computed(() => 
-      store.getters['auth/isAuthenticated']
-    )
-
-    const themeIcon = computed(() => 
-      theme.global.name.value === 'customLight' ? 'mdi-weather-night' : 'mdi-weather-sunny'
-    )
 
     const toggleSidebar = () => {
       emit('toggle-sidebar')
     }
 
-    const toggleTheme = () => {
-      const newTheme = theme.global.name.value === 'customLight' ? 'customDark' : 'customLight'
-      theme.global.name.value = newTheme
-      localStorage.setItem('theme', newTheme)
-    }
 
     const handleSearch = (query) => {
       if (query.trim()) {
@@ -126,11 +99,8 @@ export default {
     }
 
     return {
-      isAuthenticated,
-      themeIcon,
       showSearchOnMobile,
       toggleSidebar,
-      toggleTheme,
       handleSearch
     }
   }

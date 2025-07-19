@@ -6,10 +6,11 @@
     class="cart-button"
   >
     <v-badge
-      :content="cartItemCount"
+      :content="cartItemCount > 0 ? '' : undefined"
       :model-value="cartItemCount > 0"
       color="error"
       overlap
+      dot
     >
       <v-icon>{{ cartIcon }}</v-icon>
     </v-badge>
