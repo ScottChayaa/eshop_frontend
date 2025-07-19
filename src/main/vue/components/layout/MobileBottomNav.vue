@@ -149,9 +149,11 @@ export default {
   right: 0 !important;
   z-index: 1000 !important;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
-  /* 確保背景不透明 */
+  /* 確保背景完全不透明 */
+  background-color: var(--v-theme-surface) !important;
   background: var(--v-theme-surface) !important;
   backdrop-filter: none !important;
+  opacity: 1 !important;
 }
 
 /* PC版隱藏 */
@@ -209,10 +211,19 @@ export default {
   color: var(--v-theme-on-surface) !important;
 }
 
-/* 強制確保背景不透明 */
+/* 強制確保背景不透明 - 針對 Vuetify 組件內部 */
 .mobile-bottom-nav :deep(.v-bottom-navigation) {
+  background-color: var(--v-theme-surface) !important;
   background: var(--v-theme-surface) !important;
   backdrop-filter: none !important;
+  opacity: 1 !important;
+}
+
+/* 確保父容器也不透明 */
+.mobile-bottom-nav :deep(.v-bottom-navigation__content) {
+  background-color: var(--v-theme-surface) !important;
+  background: var(--v-theme-surface) !important;
+  opacity: 1 !important;
 }
 
 /* 深色模式適配 */

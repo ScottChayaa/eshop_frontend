@@ -46,6 +46,7 @@
       @click="scrollToTop"
       app
       appear
+      class="scroll-to-top-fab"
     ></v-fab>
 
     <v-snackbar
@@ -272,6 +273,13 @@ export default {
 @media (max-width: 600px) {
   .main-container {
     padding: 8px !important;
+  }
+}
+
+/* 手機版隱藏右下角懸浮球 */
+@media (max-width: 767px) {
+  .scroll-to-top-fab {
+    display: none !important;
   }
 }
 </style>
