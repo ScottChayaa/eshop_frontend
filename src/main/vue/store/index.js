@@ -6,6 +6,7 @@ import products from './modules/products'
 import ui from './modules/ui'
 import search from './modules/search'
 import favorites from './modules/favorites'
+import forms from './modules/forms'
 
 export default createStore({
   modules: {
@@ -15,7 +16,8 @@ export default createStore({
     products,
     ui,
     search,
-    favorites
+    favorites,
+    forms
   },
   strict: process.env.NODE_ENV !== 'production'
 })
