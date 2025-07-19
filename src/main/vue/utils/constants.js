@@ -5,7 +5,7 @@
 
 // API 相關配置
 export const API_CONFIG = {
-  BASE_URL: process.env.VUE_APP_API_URL || 'http://localhost:8080',
+  BASE_URL: import.meta.env.VITE_APP_API_URL || 'http://localhost:8080',
   TIMEOUT: 10000,
   RETRY_ATTEMPTS: 3
 }

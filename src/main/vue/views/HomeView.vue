@@ -1,5 +1,14 @@
 <template>
   <v-container class="pa-4 content-container">
+    <!-- 測試內容 - 確保頁面載入 -->
+    <div class="test-content mb-6">
+      <h1 class="text-h3 mb-4">🛍️ 歡迎來到 eshop_frontend</h1>
+      <p class="text-h6 mb-4">Vue3 購物網站首頁測試</p>
+      <v-alert color="success" variant="tonal">
+        ✅ 頁面成功載入！HomeView 組件正常運作
+      </v-alert>
+    </div>
+
     <!-- 輪播圖 -->
     <div class="carousel-wrapper mb-6">
       <v-carousel 
