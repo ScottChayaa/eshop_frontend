@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app height="64" color="surface" elevation="1">
+  <v-app-bar app height="64" color="surface" elevation="2">
     <v-container class="d-flex align-center">
       <div class="d-flex align-center">
         <v-btn
@@ -112,11 +112,5 @@ export default {
   color: #31525B !important;
 }
 
-.v-app-bar {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-}
-
-.theme--dark .v-app-bar {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-}
+/* 移除底線，使用 elevation 陰影效果 */
 </style>
