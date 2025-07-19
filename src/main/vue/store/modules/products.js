@@ -83,15 +83,21 @@ const mutations = {
 }
 
 const actions = {
-  async loadProducts({ commit }) {
+  async loadProducts({ commit }, params = {}) {
     commit('SET_LOADING', true)
     
     try {
-      // 這裡應該調用 API 獲取商品
-      // const response = await api.getProducts()
+      // 導入 ProductService
+      const { default: productService } = await import('../../services/product.js')
       
-      // Mock 商品資料
-      const mockProducts = [
+      // 調用真實的 API
+      const response = await productService.getProducts(params)
+      commit('SET_PRODUCTS', response.data)
+      
+      // 如果沒有資料，使用 Mock 資料作為後備
+      if (!response.data || response.data.length === 0) {
+        // Mock 商品資料
+        const mockProducts = [
         {
           id: 1,
           name: 'iPhone 15 Pro',
@@ -158,7 +164,8 @@ const actions = {
         }
       ]
       
-      commit('SET_PRODUCTS', mockProducts)
+        commit('SET_PRODUCTS', mockProducts)
+      }
     } catch (error) {
       console.error('載入商品失敗:', error)
     } finally {
@@ -168,8 +175,17 @@ const actions = {
   
   async loadCategories({ commit }) {
     try {
-      // Mock 分類資料
-      const mockCategories = [
+      // 導入 ProductService
+      const { default: productService } = await import('../../services/product.js')
+      
+      // 調用真實的 API
+      const categories = await productService.getCategories()
+      commit('SET_CATEGORIES', categories)
+      
+      // 如果沒有資料，使用 Mock 資料作為後備
+      if (!categories || categories.length === 0) {
+        // Mock 分類資料
+        const mockCategories = [
         { id: 1, name: '服飾', icon: 'mdi-tshirt-crew' },
         { id: 2, name: '3C產品', icon: 'mdi-laptop' },
         { id: 3, name: '居家生活', icon: 'mdi-home' },
@@ -180,22 +196,29 @@ const actions = {
         { id: 8, name: '其他', icon: 'mdi-dots-horizontal' }
       ]
       
-      commit('SET_CATEGORIES', mockCategories)
+        commit('SET_CATEGORIES', mockCategories)
+      }
     } catch (error) {
       console.error('載入分類失敗:', error)
     }
   },
   
-  async loadProduct({ commit }, productId) {
+  async loadProduct({ commit, state }, productId) {
     commit('SET_LOADING', true)
     
     try {
-      // 這裡應該調用 API 獲取單一商品
-      // const response = await api.getProduct(productId)
+      // 導入 ProductService
+      const { default: productService } = await import('../../services/product.js')
       
-      // Mock 從 products 中找到對應商品
-      const product = state.products.find(p => p.id === parseInt(productId))
+      // 調用真實的 API
+      const product = await productService.getProduct(productId)
       commit('SET_CURRENT_PRODUCT', product)
+      
+      // 如果 API 沒有資料，從現有 products 中尋找
+      if (!product) {
+        const fallbackProduct = state.products.find(p => p.id === parseInt(productId))
+        commit('SET_CURRENT_PRODUCT', fallbackProduct)
+      }
     } catch (error) {
       console.error('載入商品失敗:', error)
     } finally {

@@ -110,7 +110,6 @@ npm test -- src/test/layout.test.js
 
 1. Store 模組測試：使用了未定義的 mutations
 
-
     - 這些是模擬測試，等實際 Store 建立後會修正
 
 2. localStorage 問題：部分測試檔案需要調整
