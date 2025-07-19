@@ -59,7 +59,7 @@
                 />
                 
                 <router-link
-                  to="/user/forgot-password"
+                  to="/forgot-password"
                   class="text-decoration-none text-secondary"
                 >
                   忘記密碼？
@@ -106,7 +106,7 @@
               <div class="text-center">
                 <span class="text-body-2">還沒有帳號？</span>
                 <router-link
-                  to="/user/register"
+                  to="/register"
                   class="text-decoration-none text-secondary ml-1 font-weight-medium"
                 >
                   立即註冊

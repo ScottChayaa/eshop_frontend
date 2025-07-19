@@ -23,7 +23,9 @@
       "Bash(npx msw init:*)",
       "Bash(npm test:*)",
       "Bash(curl:*)",
-      "Bash(timeout 5 npm run build)"
+      "Bash(timeout 5 npm run build)",
+      "Bash(find:*)",
+      "Bash(pkill:*)"
     ],
     "deny": []
   }

@@ -162,7 +162,7 @@
               <div class="text-center">
                 <span class="text-body-2">已經有帳號了？</span>
                 <router-link
-                  to="/user/login"
+                  to="/login"
                   class="text-decoration-none text-secondary ml-1 font-weight-medium"
                 >
                   立即登入

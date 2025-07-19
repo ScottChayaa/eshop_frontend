@@ -153,7 +153,7 @@
 <script>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import ProductCard from '@/components/ProductCard.vue'
+import ProductCard from '../components/ProductCard.vue'
 
 export default {
   name: 'HomeView',

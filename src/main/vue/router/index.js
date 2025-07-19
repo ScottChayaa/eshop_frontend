@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@/views/HomeView.vue'
+import HomeView from '../views/HomeView.vue'
 
 const routes = [
   {
@@ -13,7 +13,7 @@ const routes = [
   {
     path: '/category/:id',
     name: 'Category',
-    component: () => import('@/views/CategoryView.vue'),
+    component: () => import('../views/CategoryView.vue'),
     meta: {
       title: '商品分類 - eshop_frontend'
     }
@@ -21,7 +21,7 @@ const routes = [
   {
     path: '/product/:id',
     name: 'Product',
-    component: () => import('@/views/ProductView.vue'),
+    component: () => import('../views/ProductView.vue'),
     meta: {
       title: '商品詳情 - eshop_frontend'
     }
@@ -29,7 +29,7 @@ const routes = [
   {
     path: '/cart',
     name: 'Cart',
-    component: () => import('@/views/CartView.vue'),
+    component: () => import('../views/CartView.vue'),
     meta: {
       title: '購物車 - eshop_frontend'
     }
@@ -37,7 +37,7 @@ const routes = [
   {
     path: '/checkout',
     name: 'Checkout',
-    component: () => import('@/views/CheckoutView.vue'),
+    component: () => import('../views/CheckoutView.vue'),
     meta: {
       title: '結帳 - eshop_frontend',
       requiresAuth: true
@@ -46,7 +46,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/LoginView.vue'),
+    component: () => import('../views/LoginView.vue'),
     meta: {
       title: '登入 - eshop_frontend'
     }
@@ -54,15 +54,23 @@ const routes = [
   {
     path: '/register',
     name: 'Register',
-    component: () => import('@/views/RegisterView.vue'),
+    component: () => import('../views/RegisterView.vue'),
     meta: {
       title: '註冊 - eshop_frontend'
     }
   },
   {
+    path: '/forgot-password',
+    name: 'ForgotPassword',
+    component: () => import('../views/ForgotPasswordView.vue'),
+    meta: {
+      title: '忘記密碼 - eshop_frontend'
+    }
+  },
+  {
     path: '/profile',
     name: 'Profile',
-    component: () => import('@/views/ProfileView.vue'),
+    component: () => import('../views/ProfileView.vue'),
     meta: {
       title: '會員中心 - eshop_frontend',
       requiresAuth: true
@@ -71,7 +79,7 @@ const routes = [
   {
     path: '/orders',
     name: 'Orders',
-    component: () => import('@/views/OrdersView.vue'),
+    component: () => import('../views/OrdersView.vue'),
     meta: {
       title: '訂單查詢 - eshop_frontend',
       requiresAuth: true
@@ -80,7 +88,7 @@ const routes = [
   {
     path: '/categories',
     name: 'Categories',
-    component: () => import('@/views/CategoriesView.vue'),
+    component: () => import('../views/CategoriesView.vue'),
     meta: {
       title: '所有分類 - eshop_frontend'
     }
@@ -88,7 +96,7 @@ const routes = [
   {
     path: '/promotions',
     name: 'Promotions',
-    component: () => import('@/views/PromotionsView.vue'),
+    component: () => import('../views/PromotionsView.vue'),
     meta: {
       title: '促銷活動 - eshop_frontend'
     }
@@ -96,7 +104,7 @@ const routes = [
   {
     path: '/notifications',
     name: 'Notifications',
-    component: () => import('@/views/NotificationsView.vue'),
+    component: () => import('../views/NotificationsView.vue'),
     meta: {
       title: '通知中心 - eshop_frontend'
     }
@@ -104,7 +112,7 @@ const routes = [
   {
     path: '/search',
     name: 'Search',
-    component: () => import('@/views/SearchView.vue'),
+    component: () => import('../views/SearchView.vue'),
     meta: {
       title: '搜尋結果 - eshop_frontend'
     }
@@ -112,7 +120,7 @@ const routes = [
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
-    component: () => import('@/views/NotFoundView.vue'),
+    component: () => import('../views/NotFoundView.vue'),
     meta: {
       title: '頁面不存在 - eshop_frontend'
     }
