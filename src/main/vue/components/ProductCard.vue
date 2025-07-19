@@ -50,14 +50,25 @@
           </div>
         </div>
         
-        <v-btn 
-          icon 
-          size="small" 
-          color="primary"
-          @click.stop="addToCart"
-        >
-          <v-icon>mdi-cart-plus</v-icon>
-        </v-btn>
+        <div class="d-flex">
+          <v-btn 
+            icon 
+            size="small" 
+            color="grey-lighten-1"
+            @click.stop="addToFavorites"
+            class="mr-1"
+          >
+            <v-icon>mdi-heart-outline</v-icon>
+          </v-btn>
+          <v-btn 
+            icon 
+            size="small" 
+            color="primary"
+            @click.stop="addToCart"
+          >
+            <v-icon>mdi-cart-plus</v-icon>
+          </v-btn>
+        </div>
       </div>
     </v-card-actions>
   </v-card>
@@ -75,7 +86,8 @@ export default {
       required: true
     }
   },
-  setup(props) {
+  emits: ['add-to-cart', 'add-to-favorites'],
+  setup(props, { emit }) {
     const router = useRouter()
     const store = useStore()
 
@@ -88,14 +100,18 @@ export default {
     }
 
     const addToCart = () => {
-      store.dispatch('cart/addItem', props.product)
-      // 可以加入 toast 通知
+      emit('add-to-cart', props.product)
+    }
+
+    const addToFavorites = () => {
+      emit('add-to-favorites', props.product)
     }
 
     return {
       formatPrice,
       goToProduct,
-      addToCart
+      addToCart,
+      addToFavorites
     }
   }
 }
