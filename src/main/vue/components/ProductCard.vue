@@ -16,58 +16,23 @@
       </template>
     </v-img>
     
-    <v-card-text class="pb-0">
+    <v-card-text class="pb-2">
       <div class="text-subtitle1 font-weight-medium text-truncate" style="color: #31525B">
         {{ product.name }}
-      </div>
-      
-      <div class="d-flex align-center mt-2">
-        <v-rating 
-          :model-value="product.rating" 
-          color="amber"
-          density="compact"
-          readonly
-          size="small"
-        ></v-rating>
-        <span class="text-caption ml-2" style="color: #31525B">
-          ({{ product.reviews }})
-        </span>
       </div>
     </v-card-text>
     
     <v-card-actions class="pt-0">
-      <div class="d-flex align-center justify-space-between w-100">
-        <div>
-          <div class="text-h6 font-weight-bold" style="color: #FFA101">
-            NT$ {{ formatPrice(product.price) }}
-          </div>
-          <div 
-            v-if="product.originalPrice && product.originalPrice > product.price"
-            class="text-caption text-decoration-line-through"
-            style="color: #999"
-          >
-            NT$ {{ formatPrice(product.originalPrice) }}
-          </div>
+      <div class="w-100">
+        <div class="text-h6 font-weight-bold" style="color: #FFA101">
+          NT$ {{ formatPrice(product.price) }}
         </div>
-        
-        <div class="d-flex">
-          <v-btn 
-            icon 
-            size="small" 
-            color="grey-lighten-1"
-            @click.stop="addToFavorites"
-            class="mr-1"
-          >
-            <v-icon>mdi-heart-outline</v-icon>
-          </v-btn>
-          <v-btn 
-            icon 
-            size="small" 
-            color="primary"
-            @click.stop="addToCart"
-          >
-            <v-icon>mdi-cart-plus</v-icon>
-          </v-btn>
+        <div 
+          v-if="product.originalPrice && product.originalPrice > product.price"
+          class="text-caption text-decoration-line-through"
+          style="color: #999"
+        >
+          NT$ {{ formatPrice(product.originalPrice) }}
         </div>
       </div>
     </v-card-actions>
@@ -76,7 +41,6 @@
 
 <script>
 import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
 
 export default {
   name: 'ProductCard',
@@ -86,10 +50,8 @@ export default {
       required: true
     }
   },
-  emits: ['add-to-cart', 'add-to-favorites'],
-  setup(props, { emit }) {
+  setup(props) {
     const router = useRouter()
-    const store = useStore()
 
     const formatPrice = (price) => {
       return new Intl.NumberFormat('zh-TW').format(price)
@@ -99,19 +61,9 @@ export default {
       router.push(`/product/${props.product.id}`)
     }
 
-    const addToCart = () => {
-      emit('add-to-cart', props.product)
-    }
-
-    const addToFavorites = () => {
-      emit('add-to-favorites', props.product)
-    }
-
     return {
       formatPrice,
-      goToProduct,
-      addToCart,
-      addToFavorites
+      goToProduct
     }
   }
 }
