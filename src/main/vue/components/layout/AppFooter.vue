@@ -1,8 +1,7 @@
 <template>
   <v-footer 
-    app 
     color="surface" 
-    class="pa-8"
+    class="pa-8 desktop-footer"
     elevation="4"
   >
     <v-container>
@@ -164,10 +163,10 @@ export default {
     ]
 
     const memberServices = [
-      { name: '會員登入', path: '/user/login' },
-      { name: '會員註冊', path: '/user/register' },
-      { name: '個人資料', path: '/user/profile' },
-      { name: '訂單查詢', path: '/user/orders' }
+      { name: '會員登入', path: '/login' },
+      { name: '會員註冊', path: '/register' },
+      { name: '個人資料', path: '/profile' },
+      { name: '訂單查詢', path: '/orders' }
     ]
 
     const legalLinks = [
@@ -210,11 +209,19 @@ export default {
   color: #FFA101 !important;
 }
 
-.v-footer {
+/* PC版正常顯示，手機版隱藏 */
+.desktop-footer {
   border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-.theme--dark .v-footer {
+/* 手機版隱藏 footer */
+@media (max-width: 767px) {
+  .desktop-footer {
+    display: none !important;
+  }
+}
+
+.theme--dark .desktop-footer {
   border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 </style>

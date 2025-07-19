@@ -33,6 +33,9 @@
     </v-main>
     
     <AppFooter />
+    
+    <!-- 手機版底部導航 -->
+    <MobileBottomNav />
 
     <v-fab
       v-model="showFab"
@@ -73,6 +76,7 @@ import { useDisplay } from 'vuetify'
 import AppHeader from './AppHeader.vue'
 import AppSidebar from './AppSidebar.vue'
 import AppFooter from './AppFooter.vue'
+import MobileBottomNav from './MobileBottomNav.vue'
 import { scrollToTop as scrollToTopUtil } from '../../utils/helpers.js'
 
 export default {
@@ -80,7 +84,8 @@ export default {
   components: {
     AppHeader,
     AppSidebar,
-    AppFooter
+    AppFooter,
+    MobileBottomNav
   },
   setup() {
     const route = useRoute()
@@ -208,6 +213,15 @@ export default {
 
 .main-container {
   min-height: inherit;
+  /* 手機版底部留空間給導航列 */
+  padding-bottom: 0;
+}
+
+/* 手機版主內容區域底部間距 */
+@media (max-width: 767px) {
+  .main-container {
+    padding-bottom: 80px !important; /* 為底部導航列留出空間 */
+  }
 }
 
 .page-content {
