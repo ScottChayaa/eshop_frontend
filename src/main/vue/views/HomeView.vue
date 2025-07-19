@@ -35,9 +35,9 @@
     </div>
 
     <!-- 商品分類 -->
-    <v-row class="mb-6">
+    <v-row class="mb-4">
       <v-col cols="12">
-        <h2 class="text-h5 mb-4" style="color: #31525B">商品分類</h2>
+        <h2 class="text-h5 mb-3" style="color: #31525B">商品分類</h2>
       </v-col>
       <v-col 
         v-for="category in categories" 
@@ -47,6 +47,7 @@
         md="3"
         lg="3"
         xl="2"
+        class="pa-2"
       >
         <v-card 
           class="category-card" 
@@ -66,9 +67,9 @@
     </v-row>
 
     <!-- 熱門商品 -->
-    <v-row class="mb-6">
+    <v-row class="mb-4">
       <v-col cols="12">
-        <h2 class="text-h5 mb-4" style="color: #31525B">熱門商品</h2>
+        <h2 class="text-h5 mb-3" style="color: #31525B">熱門商品</h2>
       </v-col>
       
       <!-- Loading 狀態 -->
@@ -81,6 +82,7 @@
           md="3"
           lg="3"
           xl="2.4"
+          class="pa-2"
         >
           <v-card class="product-card-skeleton" height="350">
             <v-skeleton-loader
@@ -101,6 +103,7 @@
           md="3"
           lg="3"
           xl="2.4"
+          class="pa-2"
         >
           <ProductCard :product="product" />
         </v-col>
@@ -110,7 +113,7 @@
     <!-- 最新商品 -->
     <v-row>
       <v-col cols="12">
-        <h2 class="text-h5 mb-4" style="color: #31525B">最新商品</h2>
+        <h2 class="text-h5 mb-3" style="color: #31525B">最新商品</h2>
       </v-col>
       
       <!-- Loading 狀態 -->
@@ -123,6 +126,7 @@
           md="3"
           lg="3"
           xl="3"
+          class="pa-2"
         >
           <v-card class="product-card-skeleton" height="350">
             <v-skeleton-loader
@@ -143,6 +147,7 @@
           md="3"
           lg="3"
           xl="3"
+          class="pa-2"
         >
           <ProductCard :product="product" />
         </v-col>

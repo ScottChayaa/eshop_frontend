@@ -40,18 +40,26 @@
       </div>
 
       <div class="d-flex align-center">
-        <v-btn
-          icon
-          @click="toggleTheme"
-          class="mr-2"
-        >
-          <v-icon>{{ themeIcon }}</v-icon>
-        </v-btn>
+        <!-- PC版顯示所有按鈕 -->
+        <template v-if="$vuetify.display.mdAndUp">
+          <v-btn
+            icon
+            @click="toggleTheme"
+            class="mr-2"
+          >
+            <v-icon>{{ themeIcon }}</v-icon>
+          </v-btn>
 
-        <CartButton class="mr-2" />
+          <CartButton class="mr-2" />
 
-        <UserMenu v-if="isAuthenticated" />
-        <LoginButton v-else />
+          <UserMenu v-if="isAuthenticated" />
+          <LoginButton v-else />
+        </template>
+        
+        <!-- 手機版只顯示購物車 -->
+        <template v-else>
+          <CartButton />
+        </template>
       </div>
     </v-container>
 

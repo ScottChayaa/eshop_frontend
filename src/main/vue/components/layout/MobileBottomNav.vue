@@ -166,9 +166,8 @@ export default {
   min-width: 0 !important;
   flex-direction: column !important;
   height: 65px !important;
-  padding: 6px 2px 8px 2px !important;
+  padding: 6px 4px 8px 4px !important;
   min-height: 65px !important;
-  margin: 0 1px !important;
 }
 
 .nav-btn :deep(.v-btn__content) {
