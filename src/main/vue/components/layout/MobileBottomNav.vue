@@ -2,11 +2,10 @@
   <v-bottom-navigation 
     v-model="activeTab" 
     color="secondary"
-    bg-color="surface"
-    elevation="8"
     height="65"
     class="mobile-bottom-nav"
     grow
+    style="background-color: #FFFFFF !important; background: #FFFFFF !important;"
   >
     <v-btn 
       :value="0"
@@ -149,9 +148,9 @@ export default {
   right: 0 !important;
   z-index: 1000 !important;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
-  /* 確保背景完全不透明 */
-  background-color: var(--v-theme-surface) !important;
-  background: var(--v-theme-surface) !important;
+  /* 確保背景完全不透明 - 使用白色作為後備 */
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
   backdrop-filter: none !important;
   opacity: 1 !important;
 }
@@ -213,23 +212,47 @@ export default {
 
 /* 強制確保背景不透明 - 針對 Vuetify 組件內部 */
 .mobile-bottom-nav :deep(.v-bottom-navigation) {
-  background-color: var(--v-theme-surface) !important;
-  background: var(--v-theme-surface) !important;
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
   backdrop-filter: none !important;
   opacity: 1 !important;
 }
 
 /* 確保父容器也不透明 */
 .mobile-bottom-nav :deep(.v-bottom-navigation__content) {
-  background-color: var(--v-theme-surface) !important;
-  background: var(--v-theme-surface) !important;
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
   opacity: 1 !important;
+}
+
+/* 覆蓋所有可能的背景設定 */
+.mobile-bottom-nav :deep(*) {
+  backdrop-filter: none !important;
+}
+
+/* 確保組件內所有元素背景 */
+.mobile-bottom-nav:before,
+.mobile-bottom-nav:after,
+.mobile-bottom-nav :deep(.v-bottom-navigation):before,
+.mobile-bottom-nav :deep(.v-bottom-navigation):after {
+  background: transparent !important;
 }
 
 /* 深色模式適配 */
 .v-theme--customDark .mobile-bottom-nav {
   border-top-color: rgba(255, 255, 255, 0.1);
-  background: var(--v-theme-surface) !important;
+  background-color: #1E1E1E !important;
+  background: #1E1E1E !important;
+}
+
+.v-theme--customDark .mobile-bottom-nav :deep(.v-bottom-navigation) {
+  background-color: #1E1E1E !important;
+  background: #1E1E1E !important;
+}
+
+.v-theme--customDark .mobile-bottom-nav :deep(.v-bottom-navigation__content) {
+  background-color: #1E1E1E !important;
+  background: #1E1E1E !important;
 }
 
 /* 確保按鈕垂直居中 */
