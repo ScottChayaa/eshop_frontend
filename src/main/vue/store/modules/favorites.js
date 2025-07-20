@@ -151,7 +151,7 @@ const getters = {
   favoriteCount: (state) => state.favoriteItems.length,
   loading: (state) => state.loading,
   error: (state) => state.error,
-  isFavorited: (state) => (productId) => {
+  isFavorite: (state) => (productId) => {
     return state.favoriteItems.includes(productId)
   },
   hasFavorites: (state) => state.favoriteItems.length > 0

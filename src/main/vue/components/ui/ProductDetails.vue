@@ -367,11 +367,21 @@ export default {
       }
     }
 
-    const toggleFavorite = () => {
-      if (isFavorite.value) {
-        store.dispatch('favorites/removeFavorite', props.product.id)
-      } else {
-        store.dispatch('favorites/addFavorite', props.product)
+    const toggleFavorite = async () => {
+      try {
+        await store.dispatch('favorites/toggleFavorite', props.product.id)
+        
+        // 顯示成功訊息
+        const message = isFavorite.value ? '已從收藏中移除' : '已加入收藏'
+        store.dispatch('ui/showSnackbar', {
+          message,
+          color: 'success'
+        })
+      } catch (error) {
+        store.dispatch('ui/showSnackbar', {
+          message: error.message || '操作失敗，請稍後再試',
+          color: 'error'
+        })
       }
     }
 

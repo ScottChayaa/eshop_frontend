@@ -157,8 +157,9 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import ProductCard from '../components/ProductCard.vue'
 
 export default {
@@ -168,7 +169,8 @@ export default {
   },
   setup() {
     const router = useRouter()
-    const isLoading = ref(true) // 添加 loading 狀態
+    const store = useStore()
+    const isLoading = ref(true)
     
     const banners = ref([
       {
@@ -209,187 +211,40 @@ export default {
       { id: 8, name: '其他', icon: 'mdi-dots-horizontal', color: '#B3DEE5' }
     ])
 
-    const popularProducts = ref([])
-    const newProducts = ref([])
+    // 從 store 獲取商品資料
+    const allProducts = computed(() => store.getters['products/products'])
+    const loading = computed(() => store.getters['products/loading'])
+    
+    // 計算熱門商品和最新商品
+    const popularProducts = computed(() => {
+      if (!allProducts.value.length) return []
+      return allProducts.value
+        .filter(product => product.rating >= 4.5)
+        .slice(0, 10)
+    })
+    
+    const newProducts = computed(() => {
+      if (!allProducts.value.length) return []
+      return allProducts.value
+        .sort((a, b) => b.id - a.id)
+        .slice(0, 8)
+    })
 
     const goToCategory = (categoryId) => {
       router.push(`/category/${categoryId}`)
     }
 
-    const loadProducts = () => {
-        // Mock 商品資料 - 使用 Unsplash 真實圖片
-        const mockProducts = [
-            {
-            id: 1,
-            name: 'iPhone 15 Pro',
-            price: 36900,
-            originalPrice: 39900,
-            image: 'https://images.unsplash.com/photo-1484788984921-03950022c9ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.5,
-            reviews: 128
-            },
-            {
-            id: 2,
-            name: 'MacBook Pro 14"',
-            price: 59900,
-            originalPrice: 65900,
-            image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.8,
-            reviews: 95
-            },
-            {
-            id: 3,
-            name: 'AirPods Pro',
-            price: 7490,
-            originalPrice: 8490,
-            image: 'https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.6,
-            reviews: 203
-            },
-            {
-            id: 4,
-            name: 'iPad Air',
-            price: 19900,
-            originalPrice: 22900,
-            image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.4,
-            reviews: 87
-            },
-            {
-            id: 5,
-            name: 'Apple Watch Series 9',
-            price: 12900,
-            originalPrice: 14900,
-            image: 'https://images.unsplash.com/photo-1551816230-ef5deaed4a26?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.3,
-            reviews: 156
-            },
-            {
-            id: 6,
-            name: 'Samsung Galaxy S24',
-            price: 28900,
-            originalPrice: 32900,
-            image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.2,
-            reviews: 89
-            },
-            {
-            id: 7,
-            name: 'Sony WH-1000XM5',
-            price: 9990,
-            originalPrice: 11990,
-            image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.7,
-            reviews: 234
-            },
-            {
-            id: 8,
-            name: 'Nintendo Switch OLED',
-            price: 10780,
-            originalPrice: 11980,
-            image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.6,
-            reviews: 167
-            },
-            {
-            id: 9,
-            name: 'Dyson V15 Detect',
-            price: 18900,
-            originalPrice: 21900,
-            image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.4,
-            reviews: 92
-            },
-            {
-            id: 10,
-            name: 'Canon EOS R5',
-            price: 89900,
-            originalPrice: 99900,
-            image: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.9,
-            reviews: 78
-            },
-            {
-            id: 11,
-            name: 'Tesla Model Y 輪胎',
-            price: 8500,
-            originalPrice: 9500,
-            image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.1,
-            reviews: 45
-            },
-            {
-            id: 12,
-            name: 'IKEA 北歐風沙發',
-            price: 15900,
-            originalPrice: 18900,
-            image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.0,
-            reviews: 124
-            },
-            {
-            id: 13,
-            name: 'Adidas Ultra Boost 22',
-            price: 4990,
-            originalPrice: 5990,
-            image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.3,
-            reviews: 198
-            },
-            {
-            id: 14,
-            name: 'Yeti 保溫瓶',
-            price: 1290,
-            originalPrice: 1590,
-            image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.5,
-            reviews: 267
-            },
-            {
-            id: 15,
-            name: 'Lego 建築系列',
-            price: 3990,
-            originalPrice: 4590,
-            image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.8,
-            reviews: 89
-            },
-            {
-            id: 16,
-            name: 'Beats Studio Buds',
-            price: 3990,
-            originalPrice: 4990,
-            image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.2,
-            reviews: 145
-            },
-            {
-            id: 17,
-            name: 'Kindle Paperwhite',
-            price: 4290,
-            originalPrice: 4990,
-            image: 'https://images.unsplash.com/photo-1555631545-9dc21031669b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.7,
-            reviews: 312
-            },
-            {
-            id: 18,
-            name: 'Philips 智能燈泡',
-            price: 890,
-            originalPrice: 1190,
-            image: 'https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300&q=80',
-            rating: 4.1,
-            reviews: 87
-            }
-        ]
-        
-        // 熱門商品顯示 10 筆
-        popularProducts.value = mockProducts.slice(0, 10)
-        // 最新商品顯示 8 筆 (從後面取)
-        newProducts.value = mockProducts.slice(-8).reverse()
-        
-        // 清除 loading 狀態
+    const loadProducts = async () => {
+      try {
+        // 載入 store 中的商品資料
+        await store.dispatch('products/loadProducts')
+        // 載入分類資料
+        await store.dispatch('products/loadCategories')
+      } catch (error) {
+        console.error('載入商品資料失敗:', error)
+      } finally {
         isLoading.value = false
+      }
     }
 
     onMounted(() => {
@@ -401,7 +256,7 @@ export default {
       categories,
       popularProducts,
       newProducts,
-      isLoading,
+      isLoading: computed(() => isLoading.value || loading.value),
       goToCategory
     }
   }
