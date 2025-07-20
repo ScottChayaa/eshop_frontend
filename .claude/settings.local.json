@@ -27,7 +27,9 @@
       "Bash(find:*)",
       "Bash(pkill:*)",
       "Bash(timeout:*)",
-      "Bash(npm run lint)"
+      "Bash(npm run lint)",
+      "Bash(npm run check-js-errors:*)",
+      "Bash(npm run check-errors:*)"
     ],
     "deny": []
   }
