@@ -6,36 +6,97 @@ const state = {
 const getters = {
   items: state => state.items,
   itemCount: state => state.items.reduce((sum, item) => sum + item.quantity, 0),
-  totalPrice: state => state.items.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-  isOpen: state => state.isOpen
+  totalPrice: state => state.items.reduce((sum, item) => {
+    // 使用變體價格（如果存在）或商品價格
+    const itemPrice = item.variant?.price || item.price
+    return sum + (itemPrice * item.quantity)
+  }, 0),
+  isOpen: state => state.isOpen,
+  
+  // 格式化的購物車項目（包含規格資訊）
+  formattedItems: state => state.items.map(item => ({
+    ...item,
+    // 格式化規格顯示
+    specsDisplay: item.selectedSpecs ? 
+      Object.entries(item.selectedSpecs)
+        .map(([key, value]) => `${key}: ${value}`)
+        .join(', ') : 
+      null,
+    // 計算項目總價
+    itemTotal: (item.variant?.price || item.price) * item.quantity,
+    // 唯一識別碼
+    key: item.cartItemKey || generateCartItemKey(item)
+  })),
+  
+  // 是否有商品在購物車中
+  hasItems: state => state.items.length > 0,
+  
+  // 運費計算
+  shippingFee: (state, getters) => {
+    const total = getters.totalPrice
+    const freeShippingThreshold = 990
+    
+    if (total >= freeShippingThreshold) {
+      return 0
+    }
+    
+    // 檢查是否所有商品都支援超商取貨
+    const hasOnlyConvenienceStoreItems = state.items.every(item => 
+      item.supportConvenienceStore !== false
+    )
+    
+    return hasOnlyConvenienceStoreItems ? 60 : 100
+  },
+  
+  // 最終總價（包含運費）
+  finalTotal: (state, getters) => getters.totalPrice + getters.shippingFee,
+  
+  // 距離免運費還需多少金額
+  amountToFreeShipping: (state, getters) => {
+    const freeShippingThreshold = 990
+    const remaining = freeShippingThreshold - getters.totalPrice
+    return remaining > 0 ? remaining : 0
+  }
 }
 
 const mutations = {
   ADD_ITEM(state, product) {
-    const existingItem = state.items.find(item => item.id === product.id)
+    // 為有規格的商品建立唯一識別
+    const cartItemKey = generateCartItemKey(product)
+    const existingItem = state.items.find(item => 
+      generateCartItemKey(item) === cartItemKey
+    )
     
     if (existingItem) {
-      existingItem.quantity += 1
+      existingItem.quantity += (product.quantity || 1)
     } else {
       state.items.push({
         ...product,
-        quantity: 1
+        quantity: product.quantity || 1,
+        cartItemKey, // 加入唯一識別
+        addedAt: new Date().toISOString() // 加入時間戳記
       })
     }
   },
   
-  REMOVE_ITEM(state, productId) {
-    const index = state.items.findIndex(item => item.id === productId)
+  REMOVE_ITEM(state, itemKey) {
+    const index = state.items.findIndex(item => 
+      (item.cartItemKey || generateCartItemKey(item)) === itemKey
+    )
     if (index > -1) {
       state.items.splice(index, 1)
     }
   },
   
-  UPDATE_QUANTITY(state, { productId, quantity }) {
-    const item = state.items.find(item => item.id === productId)
+  UPDATE_QUANTITY(state, { itemKey, quantity }) {
+    const item = state.items.find(item => 
+      (item.cartItemKey || generateCartItemKey(item)) === itemKey
+    )
     if (item) {
       if (quantity <= 0) {
-        const index = state.items.findIndex(item => item.id === productId)
+        const index = state.items.findIndex(item => 
+          (item.cartItemKey || generateCartItemKey(item)) === itemKey
+        )
         state.items.splice(index, 1)
       } else {
         item.quantity = quantity
@@ -56,19 +117,55 @@ const mutations = {
   }
 }
 
+// 輔助函數：生成購物車項目唯一識別碼
+const generateCartItemKey = (product) => {
+  let key = `${product.id}`
+  
+  // 如果有選擇的規格，加入到識別碼中
+  if (product.selectedSpecs) {
+    const specsString = Object.keys(product.selectedSpecs)
+      .sort()
+      .map(key => `${key}:${product.selectedSpecs[key]}`)
+      .join('|')
+    key += `_${specsString}`
+  }
+  
+  // 如果有變體資訊，加入變體 ID
+  if (product.variant && product.variant.id) {
+    key += `_v${product.variant.id}`
+  }
+  
+  return key
+}
+
 const actions = {
-  addItem({ commit }, product) {
+  addItem({ commit, state }, product) {
+    // 驗證商品資料
+    if (!product || !product.id) {
+      throw new Error('商品資料不完整')
+    }
+
+    // 如果商品有規格但未選擇，拋出錯誤
+    if (product.variants && product.variants.length > 0 && !product.selectedSpecs) {
+      throw new Error('請選擇商品規格')
+    }
+
     commit('ADD_ITEM', product)
-    // 可以在這裡加入本地存儲邏輯
+    
+    // 本地存儲
+    try {
+      localStorage.setItem('cart', JSON.stringify(state.items))
+    } catch (error) {
+      console.error('儲存購物車到本地存儲失敗:', error)
+    }
+  },
+  
+  removeItem({ commit, state }, itemKey) {
+    commit('REMOVE_ITEM', itemKey)
     localStorage.setItem('cart', JSON.stringify(state.items))
   },
   
-  removeItem({ commit }, productId) {
-    commit('REMOVE_ITEM', productId)
-    localStorage.setItem('cart', JSON.stringify(state.items))
-  },
-  
-  updateQuantity({ commit }, payload) {
+  updateQuantity({ commit, state }, payload) {
     commit('UPDATE_QUANTITY', payload)
     localStorage.setItem('cart', JSON.stringify(state.items))
   },
@@ -78,13 +175,32 @@ const actions = {
     localStorage.removeItem('cart')
   },
   
-  loadCart({ commit }) {
-    const savedCart = localStorage.getItem('cart')
-    if (savedCart) {
-      const items = JSON.parse(savedCart)
-      items.forEach(item => {
-        commit('ADD_ITEM', { ...item, quantity: item.quantity - 1 })
-      })
+  loadCart({ commit, state }) {
+    try {
+      const savedCart = localStorage.getItem('cart')
+      if (savedCart) {
+        const items = JSON.parse(savedCart)
+        
+        // 清空現有購物車
+        commit('CLEAR_CART')
+        
+        // 重新加載項目
+        items.forEach(item => {
+          // 確保每個項目都有唯一識別碼
+          if (!item.cartItemKey) {
+            item.cartItemKey = generateCartItemKey(item)
+          }
+          commit('ADD_ITEM', { ...item, quantity: 0 }) // 先設為 0
+          commit('UPDATE_QUANTITY', { 
+            itemKey: item.cartItemKey, 
+            quantity: item.quantity 
+          })
+        })
+      }
+    } catch (error) {
+      console.error('載入購物車失敗:', error)
+      // 如果載入失敗，清空損壞的資料
+      localStorage.removeItem('cart')
     }
   },
   
@@ -104,3 +220,6 @@ export default {
   mutations,
   actions
 }
+
+// 匯出輔助函數供其他模組使用
+export { generateCartItemKey }
