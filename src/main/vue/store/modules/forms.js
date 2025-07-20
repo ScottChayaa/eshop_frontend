@@ -4,7 +4,7 @@
  */
 
 const state = {
-  submittingForms: new Set(),
+  submittingForms: [],
   formErrors: {},
   formData: {},
   validationResults: {}
@@ -13,9 +13,14 @@ const state = {
 const mutations = {
   SET_FORM_SUBMITTING(state, { formId, isSubmitting }) {
     if (isSubmitting) {
-      state.submittingForms.add(formId)
+      if (!state.submittingForms.includes(formId)) {
+        state.submittingForms.push(formId)
+      }
     } else {
-      state.submittingForms.delete(formId)
+      const index = state.submittingForms.indexOf(formId)
+      if (index > -1) {
+        state.submittingForms.splice(index, 1)
+      }
     }
   },
 
@@ -123,7 +128,7 @@ const actions = {
 
 const getters = {
   isFormSubmitting: (state) => (formId) => {
-    return state.submittingForms.has(formId)
+    return state.submittingForms.includes(formId)
   },
 
   getFormErrors: (state) => (formId) => {
@@ -160,11 +165,11 @@ const getters = {
   },
 
   getSubmittingForms: (state) => {
-    return Array.from(state.submittingForms)
+    return [...state.submittingForms]
   },
 
   hasAnySubmittingForm: (state) => {
-    return state.submittingForms.size > 0
+    return state.submittingForms.length > 0
   }
 }
 

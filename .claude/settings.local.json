@@ -29,7 +29,8 @@
       "Bash(timeout:*)",
       "Bash(npm run lint)",
       "Bash(npm run check-js-errors:*)",
-      "Bash(npm run check-errors:*)"
+      "Bash(npm run check-errors:*)",
+      "Bash(grep:*)"
     ],
     "deny": []
   }

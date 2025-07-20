@@ -218,14 +218,14 @@ export default {
     // 計算熱門商品和最新商品
     const popularProducts = computed(() => {
       if (!allProducts.value.length) return []
-      return allProducts.value
+      return [...allProducts.value]
         .filter(product => product.rating >= 4.5)
         .slice(0, 10)
     })
     
     const newProducts = computed(() => {
       if (!allProducts.value.length) return []
-      return allProducts.value
+      return [...allProducts.value]
         .sort((a, b) => b.id - a.id)
         .slice(0, 8)
     })
