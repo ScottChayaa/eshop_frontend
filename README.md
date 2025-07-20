@@ -154,6 +154,61 @@ src/main/vue/
 - 結構化資料標記
 - Google Analytics 4 整合
 
+## 🚀 快速開始
+
+### 開發環境啟動
+
+1. **安裝依賴**
+   ```bash
+   npm install
+   ```
+
+2. **啟動開發伺服器**
+   ```bash
+   npm run dev
+   ```
+   開發伺服器：http://localhost:3000
+
+3. **啟動 Mock API 伺服器**（**必須**，用於模擬後端 API）
+   ```bash
+   npm run mock-server
+   ```
+   Mock API 伺服器：http://localhost:8080
+
+### ⚠️ 重要提醒
+**開發和測試時，必須同時啟動兩個伺服器：**
+- **主應用伺服器** (port 3000) - 前端應用
+- **Mock API 伺服器** (port 8080) - 模擬後端資料
+
+### 完整啟動流程
+```bash
+# 終端機 1 - 啟動 Mock API 伺服器
+npm run mock-server
+
+# 終端機 2 - 啟動開發伺服器  
+npm run dev
+```
+
+### 測試頁面連結
+開發伺服器啟動後，可以訪問以下頁面：
+
+- **首頁**：http://localhost:3000/
+- **商品詳情頁範例**：
+  - iPhone 15 Pro：http://localhost:3000/product/1
+  - MacBook Pro 14"：http://localhost:3000/product/2
+  - AirPods Pro：http://localhost:3000/product/3
+  - iPad Air：http://localhost:3000/product/4
+
+### 功能測試項目
+- ✅ 商品圖片輪播與切換
+- ✅ 規格選擇（顏色、容量等）
+- ✅ 數量選擇與庫存管理
+- ✅ 加入購物車功能
+- ✅ 商品描述與規格表
+- ✅ 響應式設計（手機/PC版）
+- ✅ 收藏功能
+- ✅ 評價系統展示
+
 ## 🧪 測試策略
 
 [how_to_test](./docs/how_to_test.md)
