@@ -148,6 +148,7 @@ const actions = {
 
 const getters = {
   favoriteItems: (state) => state.favoriteItems,
+  favoriteIds: (state) => state.favoriteItems,
   favoriteCount: (state) => state.favoriteItems.length,
   loading: (state) => state.loading,
   error: (state) => state.error,
