@@ -22,7 +22,7 @@
       </div>
     </v-card-text>
     
-    <v-card-actions class="pt-0">
+    <v-card-text class="pt-0">
       <div class="w-100">
         <div class="text-h6 font-weight-bold" style="color: #FFA101">
           NT$ {{ formatPrice(product.price) }}
@@ -35,7 +35,7 @@
           NT$ {{ formatPrice(product.originalPrice) }}
         </div>
       </div>
-    </v-card-actions>
+    </v-card-text>
   </v-card>
 </template>
 
