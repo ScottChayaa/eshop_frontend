@@ -221,13 +221,42 @@ export const ValidationState = {
 
 // 常用驗證規則快速創建函數
 export function createValidationRules() {
-  const { validateEmail, validatePassword, validatePhone, validateRequired } = require('../utils/validators.js')
-  
   return {
-    required: (fieldName = '此欄位') => (value) => validateRequired(value, fieldName),
-    email: () => validateEmail,
-    password: () => validatePassword,
-    phone: () => validatePhone,
+    required: (fieldName = '此欄位') => (value) => {
+      if (!value || (typeof value === 'string' && value.trim() === '')) {
+        return `${fieldName}不能為空`
+      }
+      return true
+    },
+    email: () => (value) => {
+      if (!value) {
+        return 'Email 不能為空'
+      }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(value)) {
+        return 'Email 格式不正確'
+      }
+      return true
+    },
+    password: () => (value) => {
+      if (!value) {
+        return '密碼不能為空'
+      }
+      if (value.length < 6) {
+        return '密碼長度至少需要 6 個字元'
+      }
+      return true
+    },
+    phone: () => (value) => {
+      if (!value) {
+        return '手機號碼不能為空'
+      }
+      const phoneRegex = /^09\d{8}$/
+      if (!phoneRegex.test(value)) {
+        return '手機號碼格式不正確 (請輸入09開頭的10位數字)'
+      }
+      return true
+    },
     minLength: (min, fieldName = '內容') => (value) => {
       if (!value || value.length < min) {
         return `${fieldName}長度至少需要 ${min} 個字元`

@@ -48,8 +48,14 @@ const routes = [
     name: 'Login',
     component: () => import('../views/LoginView.vue'),
     meta: {
-      title: '登入 - eshop_frontend'
+      title: '登入 - eshop_frontend',
+      guest: true
     }
+  },
+  {
+    path: '/user/login',
+    name: 'UserLogin',
+    redirect: '/login'
   },
   {
     path: '/register',
