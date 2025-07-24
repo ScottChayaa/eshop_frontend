@@ -23,18 +23,19 @@
     </v-card-text>
     
     <v-card-text class="pt-0">
+      <!-- 商品價格 -->
+      <div class="text-h6 font-weight-bold mb-2" style="color: #FFA101">
+        NT$ {{ formatPrice(product.price) }}
+      </div>
+
       <!-- 商品評價 -->
-      <div class="d-flex align-center mb-2" v-if="product.rating">
+      <div class="d-flex align-center" v-if="product.rating">
         <v-icon size="16" color="orange">mdi-star</v-icon>
         <span class="text-caption ml-1" style="color: #666">
           {{ formatRating(product.rating) }}
         </span>
       </div>
       
-      <!-- 商品價格 -->
-      <div class="text-h6 font-weight-bold" style="color: #FFA101">
-        NT$ {{ formatPrice(product.price) }}
-      </div>
     </v-card-text>
   </v-card>
 </template>

@@ -1,15 +1,15 @@
 <template>
-  <v-container class="login-container">
+  <v-container class="login-container" style="background: #FAE6B1">
     <v-row justify="center">
       <v-col cols="12" sm="8" md="6" lg="4">
-        <v-card class="login-card" elevation="8">
-          <v-card-title class="text-center pa-6">
+        <v-card class="login-card" elevation="12">
+          <v-card-title class="text-center pa-8" style="background: linear-gradient(135deg, #FAE6B1 0%, #FFA101 100%)">
             <div class="login-header">
-              <v-icon size="48" color="secondary" class="mb-2">
-                mdi-shopping
+              <v-icon size="64" color="white" class="mb-3">
+                mdi-storefront
               </v-icon>
-              <h1 class="text-h5 custom-dark">會員登入</h1>
-              <p class="text-body-2 text--secondary mb-0">
+              <h1 class="text-h4 font-weight-bold mb-2" style="color: white">會員登入</h1>
+              <p class="text-body-1 mb-0" style="color: rgba(255,255,255,0.9)">
                 歡迎回來！請輸入您的帳號密碼
               </p>
             </div>
@@ -76,31 +76,32 @@
 
               <v-btn
                 type="submit"
-                color="primary"
                 size="large"
                 block
                 :loading="isSubmitting"
                 :disabled="!isFormValid"
                 class="mb-4 login-btn"
+                style="background: #FFA101; color: white; font-weight: bold; text-transform: none; border-radius: 8px"
               >
-                登入
+                <v-icon left>mdi-login</v-icon>
+                立即登入
               </v-btn>
 
-              <v-divider class="my-4">
-                <span class="text-caption px-2">或</span>
+              <v-divider class="my-6">
+                <span class="text-body-2 px-3" style="background: white; color: #666">或</span>
               </v-divider>
 
               <v-btn
                 variant="outlined"
-                color="secondary"
                 size="large"
                 block
                 prepend-icon="mdi-google"
                 @click="handleGoogleLogin"
                 :disabled="isSubmitting"
-                class="mb-4"
+                class="mb-4 google-btn"
+                style="border: 2px solid #DB4437; color: #DB4437; font-weight: 600; text-transform: none; border-radius: 8px"
               >
-                Google 登入
+                Google 快速登入
               </v-btn>
 
               <div class="text-center">
@@ -230,15 +231,18 @@ export default {
 
 <style scoped>
 .login-container {
-  min-height: calc(100vh - 120px);
+  min-height: 100vh;
   display: flex;
   align-items: center;
   padding: 2rem 1rem;
+  background: linear-gradient(135deg, #FAE6B1 0%, #B3DEE5 100%) !important;
 }
 
 .login-card {
-  border-radius: 16px;
+  border-radius: 20px;
   overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important;
+  backdrop-filter: blur(10px);
 }
 
 .login-header {
@@ -256,6 +260,29 @@ export default {
 .login-btn {
   font-weight: 600;
   text-transform: none;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  height: 48px;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(255, 161, 1, 0.4);
+  background: linear-gradient(135deg, #FFA101 0%, #FF8F00 100%) !important;
+}
+
+.google-btn {
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  height: 48px;
+  border-color: #DB4437 !important;
+}
+
+.google-btn:hover {
+  transform: translateY(-2px);
+  background-color: rgba(219, 68, 55, 0.08) !important;
+  box-shadow: 0 12px 24px rgba(219, 68, 55, 0.25);
+  border-color: #C23321 !important;
 }
 
 .form-options {
@@ -266,6 +293,52 @@ export default {
   margin-left: -4px;
 }
 
+.form-options a {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #31525B;
+  transition: color 0.3s ease;
+}
+
+.form-options a:hover {
+  color: #FFA101;
+}
+
+/* Enhanced input styling */
+:deep(.v-field) {
+  border-radius: 12px !important;
+}
+
+:deep(.v-field--focused) {
+  box-shadow: 0 0 0 2px rgba(255, 161, 1, 0.2);
+}
+
+/* Divider styling */
+.v-divider {
+  opacity: 0.3;
+}
+
+/* Register link styling */
+.text-center a {
+  color: #31525B;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.text-center a:hover {
+  color: #FFA101;
+}
+
+/* Loading and disabled states */
+.login-btn:disabled {
+  opacity: 0.6;
+  transform: none !important;
+}
+
+.v-btn--loading {
+  pointer-events: none;
+}
+
 @media (max-width: 600px) {
   .login-container {
     padding: 1rem;
@@ -273,11 +346,24 @@ export default {
   
   .login-card {
     margin: 0;
+    border-radius: 16px;
   }
   
   .v-card-title,
   .v-card-text {
     padding: 1.5rem !important;
   }
+  
+  .login-btn,
+  .google-btn {
+    height: 44px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Animation for form alerts */
+.v-alert {
+  border-radius: 12px;
+  border: none;
 }
 </style>
