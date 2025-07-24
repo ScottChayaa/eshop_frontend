@@ -3,8 +3,7 @@
 1. 測試工具組合
    - **Vitest**：單元測試框架，用於測試邏輯函數和組件
    - **Vue Test Utils**：Vue 組件測試工具
-   - **MSW (Mock Service Worker)**：自動化測試 Mock API，攔截瀏覽器請求
-   - **JSON Server**：手動開發測試，提供真實 HTTP API 服務
+   - **MSW (Mock Service Worker)**：完整 API 模擬，支援開發和測試環境
 
 2. 完整的測試檔案結構
    - 認證系統測試 (21/21 PASSED)
@@ -22,8 +21,7 @@
 
 4. 測試策略文件
    - README.md 更新包含測試策略
-   - MSW 負責自動化測試
-   - JSON Server 負責手動開發測試
+   - MSW 統一處理 API 模擬，支援開發和測試
 
 ## 🔧 可用的測試命令
 
@@ -40,11 +38,8 @@ npm run test:coverage
 # 測試 UI 介面
 npm run test:ui
 
-# 啟動 JSON Server (手動測試)
-npm run json-server
-
-# 啟動 Mock Server (開發環境)
-npm run mock-server
+# 啟動開發環境 (MSW 自動啟動)
+npm run dev
 
 ```
 

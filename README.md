@@ -4,7 +4,7 @@ Vue3 前端購物網站開發專案 - 基於Vue3的現代化電商前端應用�
 
 ## 🎯 專案概述
 
-本專案為基於 Vue3 的前端購物網站開發，將通過多次討論逐步完善設計與功能規劃。
+本專案為基於 Vue3 的前端購物網站開發，採用 Mock Service Worker (MSW) 提供完整的電商 API 模擬環境。
 
 ### 基本架構方向
 - 採用 SPA (Single Page Application)
@@ -53,15 +53,16 @@ Vue3 前端購物網站開發專案 - 基於Vue3的現代化電商前端應用�
 ### 開發工具
 - **代碼格式化**：ESLint + Prettier
 - **CSS預處理**：Sass/SCSS
-- **測試框架**：Jest + Vue Test Utils
+- **測試框架**：Vitest + Vue Test Utils
+- **Mock API**：Mock Service Worker (MSW)
 - **部署**：Vercel、Netlify 或 Firebase Hosting
 
-### 後端資料處理
-- **開發階段**：使用 Mock API 模擬後端資料
-- **Mock 工具**：
-  - **MSW (Mock Service Worker)**：負責自動化測試，攔截瀏覽器請求進行模擬
-  - **JSON Server**：負責手動開發和測試，提供真實 HTTP API 服務
-- **假資料產生**：Faker.js
+### Mock API 系統
+- **MSW (Mock Service Worker)**：完整的電商 API 模擬
+  - 真實的網路攔截和響應模擬
+  - 完整的認證、商品、購物車、訂單功能
+  - 開發環境自動啟動，生產環境自動切換真實 API
+- **假資料產生**：使用豐富的測試資料結構
 - **API 結構預留**：預先設計 API 介面規格，方便後續整合真實後端
 
 ## 🎨 設計風格
@@ -114,7 +115,13 @@ src/main/vue/
 ├── store/         # Vuex 狀態管理
 ├── router/        # Vue Router 路由配置
 ├── services/      # API 服務層
-└── utils/         # 工具函數
+├── utils/         # 工具函數
+└── mocks/         # MSW Mock API
+    ├── handlers.js    # API 處理器
+    ├── browser.js     # 瀏覽器設定
+    ├── server.js      # 測試環境設定
+    ├── db.json        # 測試資料
+    └── data/          # 資料載入器
 ```
 
 ## 🎯 功能需求
@@ -156,38 +163,23 @@ src/main/vue/
 
 ## 🚀 快速開始
 
-### 開發環境啟動
+### 一鍵啟動開發環境
 
-1. **安裝依賴**
-   ```bash
-   npm install
-   ```
-
-2. **啟動開發伺服器**
-   ```bash
-   npm run dev
-   ```
-   開發伺服器：http://localhost:3000
-
-3. **啟動 Mock API 伺服器**（**必須**，用於模擬後端 API）
-   ```bash
-   npm run mock-server
-   ```
-   Mock API 伺服器：http://localhost:8080
-
-### ⚠️ 重要提醒
-**開發和測試時，必須同時啟動兩個伺服器：**
-- **主應用伺服器** (port 3000) - 前端應用
-- **Mock API 伺服器** (port 8080) - 模擬後端資料
-
-### 完整啟動流程
 ```bash
-# 終端機 1 - 啟動 Mock API 伺服器
-npm run mock-server
+# 1. 安裝依賴
+npm install
 
-# 終端機 2 - 啟動開發伺服器  
+# 2. 啟動開發伺服器 (MSW 自動啟動)
 npm run dev
 ```
+
+開發伺服器：http://localhost:3000
+
+### ✨ MSW 特色
+- **零配置**：MSW 會在開發環境自動啟動
+- **真實模擬**：攔截瀏覽器請求，完全模擬真實 API 行為
+- **豐富資料**：包含完整的商品、使用者、訂單資料
+- **即時反饋**：所有 API 請求會在 Console 中顯示
 
 ### 測試頁面連結
 開發伺服器啟動後，可以訪問以下頁面：
@@ -198,33 +190,42 @@ npm run dev
   - MacBook Pro 14"：http://localhost:3000/product/2
   - AirPods Pro：http://localhost:3000/product/3
   - iPad Air：http://localhost:3000/product/4
+- **登入頁面**：http://localhost:3000/login
+
+### 🔐 測試帳號
+| 角色 | Email | Password | 說明 |
+|------|-------|----------|------|
+| 管理員 | `admin@example.com` | `Admin123456` | 具有管理員權限 |
+| 一般用戶 | `user@example.com` | `User123456` | 一般使用者 |
+| 測試用戶 | `test@example.com` | `Test123456` | 測試專用帳號 |
 
 ### 功能測試項目
+- ✅ 登入/註冊/登出功能
 - ✅ 商品圖片輪播與切換
 - ✅ 規格選擇（顏色、容量等）
 - ✅ 數量選擇與庫存管理
 - ✅ 加入購物車功能
+- ✅ 購物車 CRUD 操作
 - ✅ 商品描述與規格表
 - ✅ 響應式設計（手機/PC版）
 - ✅ 收藏功能
 - ✅ 評價系統展示
+- ✅ 訂單建立與查詢
+- ✅ 通知系統
 
 ## 🧪 測試策略
-
-[how_to_test](./docs/how_to_test.md)
 
 ### 測試工具組合
 - **Vitest**：單元測試框架，用於測試邏輯函數和組件
 - **Vue Test Utils**：Vue 組件測試工具
-- **MSW (Mock Service Worker)**：自動化測試 Mock API，攔截瀏覽器請求
-- **JSON Server**：手動開發測試，提供真實 HTTP API 服務
+- **MSW (Mock Service Worker)**：完整 API 模擬，用於所有測試環境
 - **Cypress**：端到端測試框架
 
 ### 測試分工策略
 | 測試類型 | 工具 | 用途 |
 |---------|------|------|
-| **自動化測試** | MSW | 單元測試、整合測試中的 API 模擬 |
-| **手動開發測試** | JSON Server | 開發階段的 API 測試和資料持久化 |
+| **API 模擬** | MSW | 統一的 API 模擬，支援開發和測試 |
+| **單元測試** | Vitest | 函數和邏輯測試 |
 | **組件測試** | Vue Test Utils | Vue 組件功能和互動測試 |
 | **端到端測試** | Cypress | 完整使用者操作流程測試 |
 
@@ -234,6 +235,32 @@ npm run dev
 - API 服務層 (請求/響應/錯誤處理)
 - UI 組件 (Layout/互動/響應式)
 - 路由守衛 (權限控制/導航)
+- 購物車功能 (CRUD 操作)
+- 訂單管理 (建立/查詢)
+
+## 📚 開發文件
+
+- [🔐 登入功能測試指南](./LOGIN_TEST_GUIDE.md)
+- [🚀 MSW API 完整指南](./MSW_API_GUIDE.md)
+- [📋 開發者設定](./CLAUDE.md)
+
+## 🔄 環境設定
+
+### 開發環境
+```bash
+# .env.development (自動載入)
+VITE_ENABLE_MSW=true
+VITE_APP_API_URL=/api
+VITE_APP_DEBUG=true
+```
+
+### 生產環境
+```bash
+# .env.production (自動載入)
+VITE_ENABLE_MSW=false
+VITE_APP_API_URL=https://your-api-domain.com/api
+VITE_APP_DEBUG=false
+```
 
 ## 📝 規劃總結
 
@@ -243,5 +270,13 @@ npm run dev
 - 現代簡約風格，溫暖色調配置
 - 手機優先設計，底部固定導航
 - Google OAuth 登入整合
-- 雙 Mock API 策略 (MSW + JSON Server)
+- MSW 統一 Mock API 策略
 - 完整測試覆蓋和驗證機制
+
+### 🎉 現在開始開發
+
+```bash
+npm install && npm run dev
+```
+
+一個指令，完整的電商開發環境就緒！🚀

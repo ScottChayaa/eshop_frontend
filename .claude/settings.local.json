@@ -30,7 +30,8 @@
       "Bash(npm run lint)",
       "Bash(npm run check-js-errors:*)",
       "Bash(npm run check-errors:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(npm uninstall:*)"
     ],
     "deny": []
   }
