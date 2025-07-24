@@ -13,8 +13,6 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
-    "json-server": "json-server --watch db.json --port 8080",
-    "mock-server": "json-server --watch src/mocks/db.json --port 8080",
     "check-js-errors": "node scripts/check-js-errors.js",
     "check-errors": "node scripts/check-errors-simple.js"
   },
