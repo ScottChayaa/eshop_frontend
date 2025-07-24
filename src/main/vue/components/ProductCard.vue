@@ -17,23 +17,23 @@
     </v-img>
     
     <v-card-text class="pb-2">
-      <div class="text-subtitle1 font-weight-medium text-truncate" style="color: #31525B">
+      <div class="text-h6 font-weight-medium text-truncate" style="color: #31525B">
         {{ product.name }}
       </div>
     </v-card-text>
     
     <v-card-text class="pt-0">
-      <div class="w-100">
-        <div class="text-h6 font-weight-bold" style="color: #FFA101">
-          NT$ {{ formatPrice(product.price) }}
-        </div>
-        <div 
-          v-if="product.originalPrice && product.originalPrice > product.price"
-          class="text-caption text-decoration-line-through"
-          style="color: #999"
-        >
-          NT$ {{ formatPrice(product.originalPrice) }}
-        </div>
+      <!-- 商品評價 -->
+      <div class="d-flex align-center mb-2" v-if="product.rating">
+        <v-icon size="16" color="orange">mdi-star</v-icon>
+        <span class="text-caption ml-1" style="color: #666">
+          {{ formatRating(product.rating) }}
+        </span>
+      </div>
+      
+      <!-- 商品價格 -->
+      <div class="text-h6 font-weight-bold" style="color: #FFA101">
+        NT$ {{ formatPrice(product.price) }}
       </div>
     </v-card-text>
   </v-card>
@@ -57,12 +57,17 @@ export default {
       return new Intl.NumberFormat('zh-TW').format(price)
     }
 
+    const formatRating = (rating) => {
+      return parseFloat(rating).toFixed(1)
+    }
+
     const goToProduct = () => {
       router.push(`/product/${props.product.id}`)
     }
 
     return {
       formatPrice,
+      formatRating,
       goToProduct
     }
   }
