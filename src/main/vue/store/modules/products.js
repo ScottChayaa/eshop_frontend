@@ -40,7 +40,7 @@ const getters = {
         filtered.sort((a, b) => b.price - a.price)
         break
       case 'rating':
-        filtered.sort((a, b) => b.rating - a.rating)
+        filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0))
         break
       case 'newest':
       default:
