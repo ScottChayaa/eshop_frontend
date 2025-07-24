@@ -3,12 +3,29 @@
 </template>
 
 <script>
+import { onMounted } from 'vue'
+import { useStore } from 'vuex'
 import AppLayout from './components/layout/AppLayout.vue'
 
 export default {
   name: 'App',
   components: {
     AppLayout
+  },
+  setup() {
+    const store = useStore()
+
+    // 應用初始化時檢查認證狀態
+    onMounted(async () => {
+      try {
+        await store.dispatch('auth/checkAuth')
+        console.log('🔐 Authentication status checked')
+      } catch (error) {
+        console.warn('Authentication check failed:', error)
+      }
+    })
+
+    return {}
   }
 }
 </script>

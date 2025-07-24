@@ -10,6 +10,22 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import '@mdi/font/css/materialdesignicons.css'
 
+// 啟動 Mock Service Worker (僅在開發環境且啟用時)
+if (import.meta.env.DEV && import.meta.env.VITE_ENABLE_MSW !== 'false') {
+  const { worker } = await import('../mocks/browser.js')
+  worker.start({
+    onUnhandledRequest: 'bypass',
+    serviceWorker: {
+      url: '/mockServiceWorker.js'
+    }
+  }).then(() => {
+    console.log('🚀 Mock Service Worker started successfully')
+    console.log('📡 API requests will be intercepted by MSW')
+  }).catch(error => {
+    console.error('❌ Mock Service Worker failed to start:', error)
+  })
+}
+
 const vuetify = createVuetify({
   components,
   directives,
