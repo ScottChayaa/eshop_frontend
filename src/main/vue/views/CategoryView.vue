@@ -47,6 +47,8 @@
         <v-select
           v-model="sortBy"
           :items="sortOptions"
+          item-title="text"
+          item-value="value"
           label="排序方式"
           outlined
           dense
