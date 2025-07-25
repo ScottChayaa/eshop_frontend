@@ -124,9 +124,9 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 // import { useHead } from '@vueuse/head'
-import ProductImageGallery from '../components/ui/ProductImageGallery.vue'
-import ProductDetails from '../components/ui/ProductDetails.vue'
-import ProductContent from '../components/ui/ProductContent.vue'
+import ProductImageGallery from '../../components/ui/ProductImageGallery.vue'
+import ProductDetails from '../../components/ui/ProductDetails.vue'
+import ProductContent from '../../components/ui/ProductContent.vue'
 
 export default {
   name: 'ProductView',

@@ -303,11 +303,11 @@
 <script>
 import { ref, computed, onMounted, watch } from 'vue'
 import { useStore } from 'vuex'
-import { useForm, createValidationRules } from '../composables/useForm.js'
-import FormInput from '../components/common/FormInput.vue'
-import FormSelect from '../components/common/FormSelect.vue'
-import FormTextarea from '../components/common/FormTextarea.vue'
-import { validatePasswordConfirm } from '../utils/validators.js'
+import { useForm, createValidationRules } from '../../composables/useForm.js'
+import FormInput from '../../components/common/FormInput.vue'
+import FormSelect from '../../components/common/FormSelect.vue'
+import FormTextarea from '../../components/common/FormTextarea.vue'
+import { validatePasswordConfirm } from '../../utils/validators.js'
 
 export default {
   name: 'ProfileView',

@@ -152,8 +152,8 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import ProductCard from '../components/ProductCard.vue'
-import ProductListItem from '../components/category/ProductListItem.vue'
+import ProductCard from '../../components/ProductCard.vue'
+import ProductListItem from '../../components/category/ProductListItem.vue'
 
 export default {
   name: 'CategoryView',

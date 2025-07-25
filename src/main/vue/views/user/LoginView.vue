@@ -125,8 +125,8 @@
 import { reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { useForm, createValidationRules } from '../composables/useForm.js'
-import FormInput from '../components/common/FormInput.vue'
+import { useForm, createValidationRules } from '../../composables/useForm.js'
+import FormInput from '../../components/common/FormInput.vue'
 
 export default {
   name: 'LoginView',

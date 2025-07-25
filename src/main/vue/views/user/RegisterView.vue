@@ -208,9 +208,9 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { useForm, createValidationRules } from '../composables/useForm.js'
-import FormInput from '../components/common/FormInput.vue'
-import { validatePasswordConfirm } from '../utils/validators.js'
+import { useForm, createValidationRules } from '../../composables/useForm.js'
+import FormInput from '../../components/common/FormInput.vue'
+import { validatePasswordConfirm } from '../../utils/validators.js'
 
 export default {
   name: 'RegisterView',
