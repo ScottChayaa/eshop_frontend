@@ -172,9 +172,11 @@ export default {
       try {
         menuOpen.value = false
         await store.dispatch('auth/logout')
+        store.dispatch('ui/showSuccess', '已成功登出！')
         router.push('/')
       } catch (error) {
         console.error('Logout failed:', error)
+        store.dispatch('ui/showError', '登出失敗，請稍後再試')
       }
     }
 
