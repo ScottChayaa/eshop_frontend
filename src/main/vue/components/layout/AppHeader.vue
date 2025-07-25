@@ -48,9 +48,11 @@
           <UserButton v-else />
         </template>
         
-        <!-- 手機版只顯示購物車 -->
+        <!-- 手機版顯示購物車和會員按鈕 -->
         <template v-else>
-          <CartButton />
+          <CartButton class="mr-2" />
+          <UserMenu v-if="isAuthenticated" />
+          <UserButton v-else />
         </template>
       </div>
     </v-container>
