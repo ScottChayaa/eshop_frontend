@@ -191,13 +191,13 @@
                   />
                 </v-col>
                 
-                <v-col cols="12" sm="6">
-                  <FormSelect
-                    v-model="formData.city"
-                    label="居住城市"
-                    :items="cityOptions"
+                <v-col cols="12">
+                  <FormInput
+                    v-model="formData.address"
+                    label="住址"
                     :readonly="!editMode"
                     prepend-inner-icon="mdi-map-marker"
+                    placeholder="請輸入完整地址"
                   />
                 </v-col>
                 
@@ -337,7 +337,7 @@ export default {
       phone: userProfile.value.phone || '',
       birthday: userProfile.value.birthday || '',
       gender: userProfile.value.gender || '',
-      city: userProfile.value.city || '',
+      address: userProfile.value.address || '',
       bio: userProfile.value.bio || ''
     }))
 
@@ -373,15 +373,6 @@ export default {
       { title: '不願透露', value: 'prefer_not_to_say' }
     ]
 
-    const cityOptions = [
-      { title: '台北市', value: 'taipei' },
-      { title: '新北市', value: 'new_taipei' },
-      { title: '桃園市', value: 'taoyuan' },
-      { title: '台中市', value: 'taichung' },
-      { title: '台南市', value: 'tainan' },
-      { title: '高雄市', value: 'kaohsiung' },
-      { title: '其他', value: 'other' }
-    ]
 
     const hasFormError = computed(() => {
       return !!errors.value.submit
@@ -511,15 +502,37 @@ export default {
           phone: newProfile.phone || '',
           birthday: newProfile.birthday || '',
           gender: newProfile.gender || '',
-          city: newProfile.city || '',
+          address: newProfile.address || '',
           bio: newProfile.bio || ''
         })
       }
     }, { deep: true })
 
-    onMounted(() => {
+    onMounted(async () => {
+      // Load complete user profile data when entering the page
       if (userProfile.value.id) {
-        setFormData(initialData.value)
+        try {
+          const { default: userService } = await import('../../services/user.js')
+          const completeProfile = await userService.getProfile()
+          
+          // Update Vuex store with complete profile data
+          store.dispatch('auth/SET_USER', completeProfile)
+          
+          // Set form data with complete profile
+          setFormData({
+            name: completeProfile.name || '',
+            email: completeProfile.email || '',
+            phone: completeProfile.phone || '',
+            birthday: completeProfile.birthday || '',
+            gender: completeProfile.gender || '',
+            address: completeProfile.address || '',
+            bio: completeProfile.bio || ''
+          })
+        } catch (error) {
+          console.error('Failed to load complete profile:', error)
+          // Fallback to existing profile data
+          setFormData(initialData.value)
+        }
       }
     })
 
@@ -534,7 +547,6 @@ export default {
       formData,
       passwordForm,
       genderOptions,
-      cityOptions,
       rules,
       isSubmitting,
       isFormValid,
