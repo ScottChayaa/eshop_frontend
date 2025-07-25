@@ -3,7 +3,7 @@
  * @description Load and transform data from db.json for MSW handlers
  */
 
-import mockData from '../db.json'
+import mockData from './db.json'
 
 // Export data directly from db.json
 export const users = mockData.users || []
