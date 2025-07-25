@@ -421,7 +421,7 @@ export default {
     const handleSubmit = async () => {
       const result = await submitForm(async (data) => {
         try {
-          const { default: userService } = await import('../services/user.js')
+          const { default: userService } = await import('../../services/user.js')
           const updateResult = await userService.updateProfile(data)
           
           store.dispatch('auth/SET_USER', updateResult)
@@ -449,7 +449,7 @@ export default {
 
       try {
         uploadingAvatar.value = true
-        const { default: userService } = await import('../services/user.js')
+        const { default: userService } = await import('../../services/user.js')
         const result = await userService.uploadAvatar(file)
         
         store.dispatch('auth/SET_USER', { 
@@ -468,7 +468,7 @@ export default {
     const handlePasswordChange = async () => {
       try {
         changingPassword.value = true
-        const { default: userService } = await import('../services/user.js')
+        const { default: userService } = await import('../../services/user.js')
         
         await userService.changePassword({
           currentPassword: passwordForm.value.currentPassword,
