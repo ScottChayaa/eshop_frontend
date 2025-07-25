@@ -33,6 +33,26 @@
       <v-spacer></v-spacer>
 
       <div class="d-none d-md-flex align-center mr-4">
+        <!-- PC版導航連結 -->
+        <div class="d-flex align-center mr-6">
+          <v-btn
+            variant="text"
+            :to="{ name: 'Categories' }"
+            class="nav-link-btn"
+            size="small"
+          >
+            商品分類
+          </v-btn>
+          <v-btn
+            variant="text"
+            :to="{ name: 'Promotions' }"
+            class="nav-link-btn"
+            size="small"
+          >
+            促銷活動
+          </v-btn>
+        </div>
+        
         <SearchInput 
           @search="handleSearch"
           density="compact"
@@ -122,6 +142,36 @@ export default {
 <style scoped>
 .custom-dark {
   color: #31525B !important;
+}
+
+.nav-link-btn {
+  color: #31525B !important;
+  text-transform: none !important;
+  font-weight: 500 !important;
+  margin-right: 0.5rem;
+  position: relative;
+}
+
+.nav-link-btn:hover {
+  background: rgba(250, 230, 177, 0.1) !important;
+}
+
+/* 活動狀態樣式 */
+.nav-link-btn.router-link-active {
+  color: #FFA101 !important;
+  font-weight: 600 !important;
+}
+
+.nav-link-btn.router-link-active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 80%;
+  height: 2px;
+  background: #FFA101;
+  transform: translateX(-50%);
+  border-radius: 1px;
 }
 
 /* 移除底線，使用 elevation 陰影效果 */

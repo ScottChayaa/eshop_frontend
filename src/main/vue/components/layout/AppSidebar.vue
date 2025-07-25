@@ -185,7 +185,7 @@ export default {
 
     const mainNavItems = [
       { title: '首頁', icon: 'mdi-home', to: '/' },
-      { title: '所有商品', icon: 'mdi-shopping', to: '/products' },
+      { title: '商品分類', icon: 'mdi-format-list-bulleted', to: '/categories' },
       { title: '促銷活動', icon: 'mdi-tag-heart', to: '/promotions' },
       { title: '購物車', icon: 'mdi-cart', to: '/cart' }
     ]
