@@ -62,24 +62,6 @@
         <v-divider class="my-1"></v-divider>
 
         <v-list-item
-          prepend-icon="mdi-theme-light-dark"
-          title="深色模式"
-          @click="toggleTheme"
-        >
-          <template v-slot:append>
-            <v-switch
-              :model-value="isDarkTheme"
-              hide-details
-              inset
-              color="secondary"
-              @update:model-value="toggleTheme"
-            ></v-switch>
-          </template>
-        </v-list-item>
-
-        <v-divider class="my-1"></v-divider>
-
-        <v-list-item
           prepend-icon="mdi-logout"
           title="登出"
           @click="handleLogout"
@@ -91,17 +73,15 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import { useTheme } from 'vuetify'
 
 export default {
   name: 'UserMenu',
   setup() {
     const store = useStore()
     const router = useRouter()
-    const theme = useTheme()
     const menuOpen = ref(false)
 
     const user = computed(() => 
@@ -116,9 +96,6 @@ export default {
       store.getters['orders/pendingCount'] || 0
     )
 
-    const isDarkTheme = computed(() => 
-      theme.global.name.value === 'customDark'
-    )
 
     const menuItems = computed(() => [
       {
@@ -144,11 +121,6 @@ export default {
         to: '/favorites'
       },
       {
-        title: '地址管理',
-        icon: 'mdi-map-marker',
-        to: '/addresses'
-      },
-      {
         title: '帳戶設定',
         icon: 'mdi-cog',
         to: '/settings'
@@ -162,11 +134,6 @@ export default {
       }
     }
 
-    const toggleTheme = () => {
-      const newTheme = theme.global.name.value === 'customLight' ? 'customDark' : 'customLight'
-      theme.global.name.value = newTheme
-      localStorage.setItem('theme', newTheme)
-    }
 
     const handleLogout = async () => {
       try {
@@ -180,20 +147,12 @@ export default {
       }
     }
 
-    onMounted(() => {
-      const savedTheme = localStorage.getItem('theme')
-      if (savedTheme && ['customLight', 'customDark'].includes(savedTheme)) {
-        theme.global.name.value = savedTheme
-      }
-    })
 
     return {
       menuOpen,
       user,
       menuItems,
-      isDarkTheme,
       handleMenuItemClick,
-      toggleTheme,
       handleLogout
     }
   }
