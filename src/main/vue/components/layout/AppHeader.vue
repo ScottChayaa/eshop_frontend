@@ -44,7 +44,8 @@
         <!-- PC版顯示所有按鈕 -->
         <template v-if="$vuetify.display.mdAndUp">
           <CartButton class="mr-2" />
-          <UserButton />
+          <UserMenu v-if="isAuthenticated" />
+          <UserButton v-else />
         </template>
         
         <!-- 手機版只顯示購物車 -->
@@ -66,24 +67,32 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import SearchInput from '../common/SearchInput.vue'
 import CartButton from '../common/CartButton.vue'
 import UserButton from '../common/UserButton.vue'
+import UserMenu from '../common/UserMenu.vue'
 
 export default {
   name: 'AppHeader',
   components: {
     SearchInput,
     CartButton,
-    UserButton
+    UserButton,
+    UserMenu
   },
   emits: ['toggle-sidebar', 'navigate'],
   setup(props, { emit }) {
     const router = useRouter()
+    const store = useStore()
     
     const showSearchOnMobile = ref(false)
+    
+    const isAuthenticated = computed(() => 
+      store.getters['auth/isAuthenticated']
+    )
 
 
     const toggleSidebar = () => {
@@ -100,6 +109,7 @@ export default {
 
     return {
       showSearchOnMobile,
+      isAuthenticated,
       toggleSidebar,
       handleSearch
     }

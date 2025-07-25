@@ -124,34 +124,34 @@ export default {
       {
         title: '個人資料',
         icon: 'mdi-account',
-        to: '/user/profile'
+        to: '/profile'
       },
       {
         title: '訂單查詢',
         icon: 'mdi-package-variant',
-        to: '/user/orders',
+        to: '/orders',
         badge: pendingOrders.value
       },
       {
         title: '通知中心',
         icon: 'mdi-bell',
-        to: '/user/notifications',
+        to: '/notifications',
         badge: unreadNotifications.value
       },
       {
         title: '收藏清單',
         icon: 'mdi-heart',
-        to: '/user/favorites'
+        to: '/favorites'
       },
       {
         title: '地址管理',
         icon: 'mdi-map-marker',
-        to: '/user/addresses'
+        to: '/addresses'
       },
       {
         title: '帳戶設定',
         icon: 'mdi-cog',
-        to: '/user/settings'
+        to: '/settings'
       }
     ])
 
