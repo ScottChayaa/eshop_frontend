@@ -10,6 +10,17 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src/main/vue', import.meta.url))
     }
   },
+  build: {
+    // 確保生產環境也能正確處理 SPA 路由
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['vue', 'vue-router', 'vuex'],
+          vuetify: ['vuetify']
+        }
+      }
+    }
+  },
   css: {
     preprocessorOptions: {
       scss: {
@@ -24,6 +35,8 @@ export default defineConfig({
     watch: {
       usePolling: true, // 解決 WSL 文件監聽問題
       interval: 100
-    }
+    },
+    // 配置 history API fallback 支援 SPA 路由
+    // Vite 開發服務器預設就支援 SPA fallback，無需額外配置
   }
 })

@@ -436,13 +436,13 @@ export default {
         loading.value = true
         const newsId = route.params.id
         
-        // 載入新聞詳情
-        await store.dispatch('news/loadNewsDetail', newsId)
-        
-        // 確保新聞列表已載入（為了相關新聞）
+        // 確保新聞列表已載入（頁面刷新時 store 會重置）
         if (store.getters['news/allNews'].length === 0) {
           await store.dispatch('news/loadNews')
         }
+        
+        // 載入新聞詳情
+        await store.dispatch('news/loadNewsDetail', newsId)
       } catch (error) {
         console.error('Failed to load news detail:', error)
       } finally {
