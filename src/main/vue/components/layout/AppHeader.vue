@@ -45,11 +45,11 @@
           </v-btn>
           <v-btn
             variant="text"
-            :to="{ name: 'Promotions' }"
+            :to="{ name: 'News' }"
             class="nav-link-btn"
             size="small"
           >
-            促銷活動
+            最新消息
           </v-btn>
         </div>
         

@@ -104,9 +104,9 @@
             color="primary"
             size="small"
             prepend-icon="mdi-fire"
-            :to="{ name: 'Promotions' }"
+            :to="{ name: 'News' }"
           >
-            促銷活動
+            最新消息
           </v-btn>
           <v-btn
             variant="outlined"
