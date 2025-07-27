@@ -8,6 +8,7 @@ import search from './modules/search'
 import favorites from './modules/favorites'
 import forms from './modules/forms'
 import notifications from './modules/notifications'
+import news from './modules/news'
 
 export default createStore({
   modules: {
@@ -19,7 +20,8 @@ export default createStore({
     search,
     favorites,
     forms,
-    notifications
+    notifications,
+    news
   },
   strict: import.meta.env.MODE !== 'production'
 })

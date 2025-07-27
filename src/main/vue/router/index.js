@@ -100,11 +100,19 @@ const routes = [
     }
   },
   {
-    path: '/promotions',
-    name: 'Promotions',
-    component: () => import('../views/home/PromotionsView.vue'),
+    path: '/news',
+    name: 'News',
+    component: () => import('../views/home/NewsView.vue'),
     meta: {
-      title: '促銷活動 - eshop_frontend'
+      title: '最新消息 - eshop_frontend'
+    }
+  },
+  {
+    path: '/news/:id',
+    name: 'NewsDetail',
+    component: () => import('../views/home/NewsDetailView.vue'),
+    meta: {
+      title: '最新消息詳情 - eshop_frontend'
     }
   },
   {

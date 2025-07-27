@@ -17,6 +17,51 @@ const getters = {
   loading: state => state.loading,
   filters: state => state.filters,
   
+  // 所有商品的別名，用於保持向下相容
+  allProducts: state => state.products,
+  
+  // 促銷商品相關 getters
+  promotionProducts: state => {
+    return state.products.filter(product => 
+      product.originalPrice && product.originalPrice > product.price
+    )
+  },
+  
+  // 新品商品
+  newProducts: state => {
+    return state.products.filter(product => 
+      product.tags && product.tags.includes('新品')
+    )
+  },
+  
+  // 熱賣商品
+  hotProducts: state => {
+    return state.products.filter(product => 
+      product.tags && product.tags.includes('熱賣')
+    )
+  },
+  
+  // 限時優惠商品 (折扣超過 10%)
+  limitedTimeProducts: state => {
+    return state.products.filter(product => {
+      if (!product.originalPrice || product.originalPrice <= product.price) return false
+      const discountPercent = ((product.originalPrice - product.price) / product.originalPrice) * 100
+      return discountPercent > 10
+    })
+  },
+  
+  // 計算商品折扣百分比
+  getDiscountPercent: state => (product) => {
+    if (!product.originalPrice || product.originalPrice <= product.price) return 0
+    return Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+  },
+  
+  // 計算節省金額
+  getSavingsAmount: state => (product) => {
+    if (!product.originalPrice || product.originalPrice <= product.price) return 0
+    return product.originalPrice - product.price
+  },
+  
   filteredProducts: state => {
     let filtered = [...state.products]
     
@@ -41,6 +86,14 @@ const getters = {
         break
       case 'rating':
         filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0))
+        break
+      case 'discount':
+        // 按折扣幅度排序
+        filtered.sort((a, b) => {
+          const discountA = a.originalPrice ? ((a.originalPrice - a.price) / a.originalPrice) * 100 : 0
+          const discountB = b.originalPrice ? ((b.originalPrice - b.price) / b.originalPrice) * 100 : 0
+          return discountB - discountA
+        })
         break
       case 'newest':
       default:
@@ -83,6 +136,16 @@ const mutations = {
 }
 
 const actions = {
+  // 新增 fetchProducts 別名保持相容性
+  async fetchProducts({ commit }, params = {}) {
+    return this.dispatch('products/loadProducts', params)
+  },
+  
+  // 新增 fetchCategories 別名保持相容性
+  async fetchCategories({ commit }) {
+    return this.dispatch('products/loadCategories')
+  },
+
   async loadProducts({ commit }, params = {}) {
     commit('SET_LOADING', true)
     

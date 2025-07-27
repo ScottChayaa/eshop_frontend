@@ -27,11 +27,11 @@
 
     <v-btn 
       :value="2"
-      @click="navigateTo('/promotions')"
+      @click="navigateTo('/news')"
       class="nav-btn"
     >
-      <v-icon>mdi-percent</v-icon>
-      <span class="nav-label">活動</span>
+      <v-icon>mdi-newspaper</v-icon>
+      <span class="nav-label">消息</span>
     </v-btn>
 
     <v-btn 
@@ -93,7 +93,7 @@ export default {
       const routeToTabMap = {
         '/': 0,
         '/categories': 1,
-        '/promotions': 2,
+        '/news': 2,
         '/notifications': 3,
         '/profile': 4
       }
