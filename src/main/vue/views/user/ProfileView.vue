@@ -108,18 +108,8 @@
 
       <v-col cols="12" md="8">
         <v-card class="profile-form-card" elevation="2">
-          <v-card-title class="d-flex align-center justify-space-between">
+          <v-card-title>
             <span>基本資料</span>
-            <v-btn
-              v-if="!editMode"
-              variant="outlined"
-              color="secondary"
-              size="small"
-              prepend-icon="mdi-pencil"
-              @click="enterEditMode"
-            >
-              編輯
-            </v-btn>
           </v-card-title>
 
           <v-card-text class="pa-6">
@@ -224,24 +214,37 @@
                 :text="getFormError"
               />
 
-              <div v-if="editMode" class="form-actions mt-6">
+              <div class="form-actions mt-6">
                 <v-btn
-                  type="submit"
-                  color="primary"
-                  :loading="isSubmitting"
-                  :disabled="!isFormValid"
+                  v-if="!editMode"
+                  variant="outlined"
+                  color="secondary"
+                  prepend-icon="mdi-pencil"
+                  @click="enterEditMode"
                   class="mr-3"
                 >
-                  儲存變更
+                  編輯
                 </v-btn>
                 
-                <v-btn
-                  variant="outlined"
-                  @click="cancelEdit"
-                  :disabled="isSubmitting"
-                >
-                  取消
-                </v-btn>
+                <template v-if="editMode">
+                  <v-btn
+                    type="submit"
+                    color="primary"
+                    :loading="isSubmitting"
+                    :disabled="!isFormValid"
+                    class="mr-3"
+                  >
+                    儲存變更
+                  </v-btn>
+                  
+                  <v-btn
+                    variant="outlined"
+                    @click="cancelEdit"
+                    :disabled="isSubmitting"
+                  >
+                    取消
+                  </v-btn>
+                </template>
               </div>
             </v-form>
           </v-card-text>
