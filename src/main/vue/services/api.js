@@ -13,7 +13,7 @@ const api = axios.create({
 api.interceptors.request.use(
   config => {
     // 在發送請求之前做些什麼
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('auth_token')
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -35,8 +35,8 @@ api.interceptors.response.use(
     // 對響應錯誤做點什麼
     if (error.response?.status === 401) {
       // 未授權，清除本地存儲並跳轉到登入頁
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
+      localStorage.removeItem('auth_token')
+      localStorage.removeItem('user_info')
       window.location.href = '/login'
     }
     return Promise.reject(error)

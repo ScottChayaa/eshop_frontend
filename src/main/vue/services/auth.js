@@ -19,8 +19,8 @@ class AuthService {
       
       // Store token if login successful
       if (response.token) {
-        localStorage.setItem('token', response.token)
-        localStorage.setItem('user', JSON.stringify(response.user))
+        localStorage.setItem('auth_token', response.token)
+        localStorage.setItem('user_info', JSON.stringify(response.user))
       }
       
       return response
@@ -45,8 +45,8 @@ class AuthService {
       
       // Store token if registration successful
       if (response.token) {
-        localStorage.setItem('token', response.token)
-        localStorage.setItem('user', JSON.stringify(response.user))
+        localStorage.setItem('auth_token', response.token)
+        localStorage.setItem('user_info', JSON.stringify(response.user))
       }
       
       return response
@@ -67,8 +67,8 @@ class AuthService {
       console.warn('Logout API call failed:', error)
     } finally {
       // Clear local storage regardless of API call result
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
+      localStorage.removeItem('auth_token')
+      localStorage.removeItem('user_info')
     }
   }
 
@@ -81,14 +81,14 @@ class AuthService {
       const response = await authAPI.refreshToken()
       
       if (response.token) {
-        localStorage.setItem('token', response.token)
+        localStorage.setItem('auth_token', response.token)
       }
       
       return response
     } catch (error) {
       // Clear local storage if token refresh failed
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
+      localStorage.removeItem('auth_token')
+      localStorage.removeItem('user_info')
       
       const errorMessage = error.response?.data?.message || 'Token refresh failed'
       throw new Error(errorMessage)
@@ -131,8 +131,8 @@ class AuthService {
    * Clear authentication info
    */
   clearAuth() {
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
+    localStorage.removeItem('auth_token')
+    localStorage.removeItem('user_info')
   }
 }
 
