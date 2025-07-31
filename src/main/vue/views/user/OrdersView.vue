@@ -21,7 +21,7 @@
             <v-card class="stat-card text-center" elevation="2">
               <v-card-text class="pa-4">
                 <v-icon size="32" color="primary" class="mb-2">mdi-clipboard-text</v-icon>
-                <div class="text-h6 font-weight-bold custom-dark">{{ orderStats.total || 0 }}</div>
+                <div class="text-h6 font-weight-bold custom-dark">{{ orderStats?.total || 0 }}</div>
                 <div class="text-caption text--secondary">總訂單</div>
               </v-card-text>
             </v-card>
@@ -30,7 +30,7 @@
             <v-card class="stat-card text-center" elevation="2">
               <v-card-text class="pa-4">
                 <v-icon size="32" color="warning" class="mb-2">mdi-clock-outline</v-icon>
-                <div class="text-h6 font-weight-bold custom-dark">{{ orderStats.pending || 0 }}</div>
+                <div class="text-h6 font-weight-bold custom-dark">{{ orderStats?.pending || 0 }}</div>
                 <div class="text-caption text--secondary">待付款</div>
               </v-card-text>
             </v-card>
@@ -39,7 +39,7 @@
             <v-card class="stat-card text-center" elevation="2">
               <v-card-text class="pa-4">
                 <v-icon size="32" color="info" class="mb-2">mdi-truck-delivery</v-icon>
-                <div class="text-h6 font-weight-bold custom-dark">{{ orderStats.shipped || 0 }}</div>
+                <div class="text-h6 font-weight-bold custom-dark">{{ orderStats?.shipped || 0 }}</div>
                 <div class="text-caption text--secondary">配送中</div>
               </v-card-text>
             </v-card>
@@ -48,7 +48,7 @@
             <v-card class="stat-card text-center" elevation="2">
               <v-card-text class="pa-4">
                 <v-icon size="32" color="success" class="mb-2">mdi-check-circle</v-icon>
-                <div class="text-h6 font-weight-bold custom-dark">{{ orderStats.delivered || 0 }}</div>
+                <div class="text-h6 font-weight-bold custom-dark">{{ orderStats?.delivered || 0 }}</div>
                 <div class="text-caption text--secondary">已完成</div>
               </v-card-text>
             </v-card>
@@ -456,7 +456,15 @@ export default {
     // 響應式數據
     const loading = ref(false)
     const orders = ref([])
-    const orderStats = ref({})
+    const orderStats = ref({
+      total: 0,
+      pending: 0,
+      processing: 0,
+      shipped: 0,
+      delivered: 0,
+      cancelled: 0,
+      returned: 0
+    })
     const currentPage = ref(1)
     const pagination = ref({
       totalPages: 1,

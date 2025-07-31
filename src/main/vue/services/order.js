@@ -164,10 +164,12 @@ const orderService = {
    */
   async getOrderStats() {
     try {
+      console.log('📊 OrderService.getOrderStats called')
       const response = await api.get('/user/orders/stats')
+      console.log('📊 OrderStats API response:', response)
       return {
         success: true,
-        data: response.data
+        data: response
       }
     } catch (error) {
       console.error('獲取訂單統計失敗:', error)
