@@ -198,13 +198,13 @@ const actions = {
   
   logout({ commit }) {
     commit('LOGOUT')
-    localStorage.removeItem('user')
-    localStorage.removeItem('token')
+    localStorage.removeItem('user_info')
+    localStorage.removeItem('auth_token')
   },
   
   loadUser({ commit }) {
-    const savedUser = localStorage.getItem('user')
-    const savedToken = localStorage.getItem('token')
+    const savedUser = localStorage.getItem('user_info')
+    const savedToken = localStorage.getItem('auth_token')
     
     if (savedUser && savedToken) {
       commit('SET_USER', JSON.parse(savedUser))

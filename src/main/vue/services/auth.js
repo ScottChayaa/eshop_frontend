@@ -100,8 +100,8 @@ class AuthService {
    * @returns {boolean} Is authenticated
    */
   isAuthenticated() {
-    const token = localStorage.getItem('token')
-    const user = localStorage.getItem('user')
+    const token = localStorage.getItem('auth_token')
+    const user = localStorage.getItem('user_info')
     return !!(token && user)
   }
 
@@ -111,7 +111,7 @@ class AuthService {
    */
   getCurrentUser() {
     try {
-      const userStr = localStorage.getItem('user')
+      const userStr = localStorage.getItem('user_info')
       return userStr ? JSON.parse(userStr) : null
     } catch (error) {
       console.error('Failed to parse user info:', error)
@@ -124,7 +124,7 @@ class AuthService {
    * @returns {string|null} Token
    */
   getToken() {
-    return localStorage.getItem('token')
+    return localStorage.getItem('auth_token')
   }
 
   /**

@@ -161,7 +161,7 @@ router.beforeEach((to, from, next) => {
   // 檢查是否需要登入
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // 這裡應該檢查用戶是否已登入
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('auth_token')
     if (!token) {
       next({
         path: '/login',
