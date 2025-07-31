@@ -18,8 +18,11 @@ const orderService = {
    */
   async getOrders(params = {}) {
     try {
+      console.log('📋 OrderService.getOrders called with params:', params)
       const response = await api.get('/user/orders', { params })
-      return {
+      console.log('📋 Raw API response:', response)
+      
+      const result = {
         success: true,
         data: response.data,
         pagination: response.pagination || {
@@ -29,6 +32,9 @@ const orderService = {
           itemsPerPage: params.limit || 10
         }
       }
+      
+      console.log('📋 OrderService result:', result)
+      return result
     } catch (error) {
       console.error('獲取訂單列表失敗:', error)
       throw new Error(error.response?.data?.message || '獲取訂單列表失敗')

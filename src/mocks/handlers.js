@@ -516,6 +516,7 @@ export const handlers = [
     const dateRange = url.searchParams.get('dateRange')
     
     let userOrders = dataHelpers.findOrdersByUserId(user.id)
+    console.log('📋 MSW: Found orders for user', user.id, ':', userOrders.length, 'orders')
     
     // 狀態篩選
     if (status && status !== 'all') {
