@@ -13,46 +13,23 @@ let workingOrders = [...orders]
 let workingCart = [...cart]
 let workingNotifications = [...notifications]
 
-// Debug: 檢查數據初始化
-console.log('🚀 MSW Handlers 初始化')
-console.log('📊 初始 workingUsers:', workingUsers.length, workingUsers.map(u => ({ id: u.id, email: u.email, name: u.name })))
-console.log('📦 初始 workingProducts:', workingProducts.length)
-console.log('📋 初始 workingOrders:', workingOrders.length)
-
 // Utility functions
 function generateToken(user) {
-  const token = `mock-jwt-token-${user.id}-${Date.now()}`
-  console.log('🔑 generateToken:', { userId: user.id, userName: user.name, token })
-  return token
+  return `mock-jwt-token-${user.id}-${Date.now()}`
 }
 
 function verifyToken(token) {
   if (!token || !token.startsWith('Bearer ')) {
-    console.warn('❌ verifyToken: Invalid token format', { token })
     return null
   }
   
   const tokenValue = token.replace('Bearer ', '')
   
   if (tokenValue.startsWith('mock-jwt-token-')) {
-    const tokenParts = tokenValue.split('-')
-    const userId = parseInt(tokenParts[3])
-    const user = workingUsers.find(user => user.id === userId)
-    
-    if (!user) {
-      console.warn('❌ verifyToken: User not found', { 
-        userId, 
-        tokenParts, 
-        availableUserIds: workingUsers.map(u => u.id) 
-      })
-    } else {
-      console.log('✅ verifyToken: User found', { userId, userName: user.name })
-    }
-    
-    return user
+    const userId = parseInt(tokenValue.split('-')[3])
+    return workingUsers.find(user => user.id === userId)
   }
   
-  console.warn('❌ verifyToken: Token does not match pattern', { tokenValue })
   return null
 }
 
@@ -73,11 +50,8 @@ export const handlers = [
     await delay(500)
     
     const { email, password } = await request.json()
-    console.log('🔐 Login attempt:', { email, password })
-    console.log('📊 workingUsers:', workingUsers.map(u => ({ id: u.id, email: u.email, name: u.name })))
     
     const user = workingUsers.find(u => u.email === email && u.password === password)
-    console.log('👤 Found user:', user ? { id: user.id, name: user.name, email: user.email } : null)
     
     if (!user) {
       return HttpResponse.json(
@@ -174,18 +148,6 @@ export const handlers = [
     const user = verifyToken(authorization)
     
     if (!user) {
-      // 詳細的錯誤信息用於調試
-      const debugInfo = {
-        message: '請先登入',
-        debug: {
-          hasAuthHeader: !!authorization,
-          authHeader: authorization,
-          workingUsersCount: workingUsers.length,
-          userIds: workingUsers.map(u => u.id)
-        }
-      }
-      console.error('🔴 Profile API 401 Error:', debugInfo)
-      
       return HttpResponse.json(
         { message: '請先登入' },
         { status: 401 }

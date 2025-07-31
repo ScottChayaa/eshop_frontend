@@ -29,9 +29,10 @@ const mutations = {
   SET_TOKEN(state, token) {
     state.token = token
     if (token) {
-      storage.set(STORAGE_KEYS.TOKEN, token)
+      // Token 直接儲存到 localStorage，不使用 storage.set 避免 JSON.stringify
+      localStorage.setItem(STORAGE_KEYS.TOKEN, token)
     } else {
-      storage.remove(STORAGE_KEYS.TOKEN)
+      localStorage.removeItem(STORAGE_KEYS.TOKEN)
     }
     // 當有 token 且有 user 時，設置為已認證
     state.isAuthenticated = !!(token && state.user)
@@ -50,8 +51,8 @@ const mutations = {
     state.token = null
     state.isAuthenticated = false
     state.error = null
-    storage.remove(STORAGE_KEYS.TOKEN)
-    storage.remove(STORAGE_KEYS.USER)
+    localStorage.removeItem(STORAGE_KEYS.TOKEN)
+    localStorage.removeItem(STORAGE_KEYS.USER)
   }
 }
 
@@ -130,8 +131,11 @@ const actions = {
 
   async checkAuth({ commit }) {
     try {
-      const token = storage.get(STORAGE_KEYS.TOKEN)
-      const user = storage.get(STORAGE_KEYS.USER)
+      // Token 直接從 localStorage 讀取
+      const token = localStorage.getItem(STORAGE_KEYS.TOKEN)
+      // User 需要 JSON.parse
+      const userStr = localStorage.getItem(STORAGE_KEYS.USER)
+      const user = userStr ? JSON.parse(userStr) : null
 
       if (token && user) {
         commit('SET_TOKEN', token)

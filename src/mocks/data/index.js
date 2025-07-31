@@ -5,16 +5,6 @@
 
 import mockData from './db.json'
 
-// Debug: 檢查 JSON 數據導入
-console.log('📊 MockData imported:', {
-  users: mockData.users?.length || 0,
-  products: mockData.products?.length || 0,
-  orders: mockData.orders?.length || 0,
-  hasUsers: !!mockData.users,
-  firstUser: mockData.users?.[0],
-  userEmails: mockData.users?.map(u => u.email)
-})
-
 // Export data directly from db.json
 export const users = mockData.users || []
 export const products = mockData.products || []
@@ -22,9 +12,6 @@ export const orders = mockData.orders || []
 export const categories = mockData.categories || []
 export const cart = mockData.cart || []
 export const notifications = mockData.notifications || []
-
-// Debug: 檢查導出的數據
-console.log('📤 Exported users:', users.length, users.map(u => ({ id: u.id, email: u.email, name: u.name })))
 
 // Helper functions for data manipulation
 export const dataHelpers = {

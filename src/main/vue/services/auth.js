@@ -19,7 +19,9 @@ class AuthService {
       
       // Store token if login successful
       if (response.token) {
+        // Token 直接儲存，不需要 JSON.stringify
         localStorage.setItem('auth_token', response.token)
+        // User 資料需要 JSON.stringify
         localStorage.setItem('user_info', JSON.stringify(response.user))
       }
       
@@ -45,7 +47,9 @@ class AuthService {
       
       // Store token if registration successful
       if (response.token) {
+        // Token 直接儲存，不需要 JSON.stringify
         localStorage.setItem('auth_token', response.token)
+        // User 資料需要 JSON.stringify
         localStorage.setItem('user_info', JSON.stringify(response.user))
       }
       
@@ -81,6 +85,7 @@ class AuthService {
       const response = await authAPI.refreshToken()
       
       if (response.token) {
+        // Token 直接儲存，不需要 JSON.stringify
         localStorage.setItem('auth_token', response.token)
       }
       
