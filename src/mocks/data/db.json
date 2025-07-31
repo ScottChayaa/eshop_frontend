@@ -784,6 +784,233 @@
       "notes": "七天鑑賞期退貨",
       "createdAt": "2023-12-25T16:30:00.000Z",
       "updatedAt": "2024-01-05T10:00:00.000Z"
+    },
+    {
+      "id": 7,
+      "orderNumber": "ORD202401120007",
+      "userId": 2,
+      "items": [
+        {
+          "productId": 7,
+          "name": "Samsung Galaxy Watch 6",
+          "price": 8900,
+          "quantity": 1,
+          "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+        },
+        {
+          "productId": 9,
+          "name": "Anker PowerBank 20000mAh",
+          "price": 1290,
+          "quantity": 2,
+          "image": "https://images.unsplash.com/photo-1609592886886-28c684ba8ba6?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+        }
+      ],
+      "subtotal": 11480,
+      "shippingFee": 60,
+      "discount": 580,
+      "total": 10960,
+      "status": "delivered",
+      "statusHistory": [
+        {
+          "status": "pending",
+          "timestamp": "2024-01-12T12:15:00.000Z",
+          "description": "訂單已建立，等待付款確認"
+        },
+        {
+          "status": "paid",
+          "timestamp": "2024-01-12T12:20:00.000Z",
+          "description": "付款已確認"
+        },
+        {
+          "status": "processing",
+          "timestamp": "2024-01-12T14:30:00.000Z",
+          "description": "商品準備中"
+        },
+        {
+          "status": "shipped",
+          "timestamp": "2024-01-13T09:00:00.000Z",
+          "description": "商品已出貨"
+        },
+        {
+          "status": "delivered",
+          "timestamp": "2024-01-15T16:20:00.000Z",
+          "description": "商品已送達"
+        }
+      ],
+      "shippingAddress": {
+        "name": "陳小美",
+        "phone": "0987654321",
+        "address": "台北市信義區市府路1號2樓",
+        "postalCode": "11008"
+      },
+      "paymentMethod": "line_pay",
+      "paymentStatus": "paid",
+      "expectedDeliveryDate": "2024-01-16T00:00:00.000Z",
+      "trackingNumber": "7890123456",
+      "notes": "",
+      "createdAt": "2024-01-12T12:15:00.000Z",
+      "updatedAt": "2024-01-15T16:20:00.000Z"
+    },
+    {
+      "id": 8,
+      "orderNumber": "ORD202401150008",
+      "userId": 2,
+      "items": [
+        {
+          "productId": 12,
+          "name": "Dyson V15 吸塵器",
+          "price": 21900,
+          "quantity": 1,
+          "image": "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+        }
+      ],
+      "subtotal": 21900,
+      "shippingFee": 0,
+      "discount": 1000,
+      "total": 20900,
+      "status": "processing",
+      "statusHistory": [
+        {
+          "status": "pending",
+          "timestamp": "2024-01-15T20:45:00.000Z",
+          "description": "訂單已建立，等待付款確認"
+        },
+        {
+          "status": "paid",
+          "timestamp": "2024-01-15T20:50:00.000Z",
+          "description": "付款已確認"
+        },
+        {
+          "status": "processing",
+          "timestamp": "2024-01-16T08:00:00.000Z",
+          "description": "商品準備中"
+        }
+      ],
+      "shippingAddress": {
+        "name": "陳小美",
+        "phone": "0987654321",
+        "address": "台北市信義區市府路1號2樓",
+        "postalCode": "11008"
+      },
+      "paymentMethod": "credit_card",
+      "paymentStatus": "paid",
+      "expectedDeliveryDate": "2024-01-20T00:00:00.000Z",
+      "trackingNumber": "2468013579",
+      "notes": "大型家電，請提前電話聯絡配送時間",
+      "createdAt": "2024-01-15T20:45:00.000Z",
+      "updatedAt": "2024-01-16T08:00:00.000Z"
+    },
+    {
+      "id": 9,
+      "orderNumber": "ORD202401180009",
+      "userId": 2,
+      "items": [
+        {
+          "productId": 13,
+          "name": "Apple Magic Keyboard",
+          "price": 3790,
+          "quantity": 1,
+          "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+        },
+        {
+          "productId": 14,
+          "name": "Logitech MX Master 3S",
+          "price": 2890,
+          "quantity": 1,
+          "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+        }
+      ],
+      "subtotal": 6680,
+      "shippingFee": 60,
+      "discount": 0,
+      "total": 6740,
+      "status": "shipped",
+      "statusHistory": [
+        {
+          "status": "pending",
+          "timestamp": "2024-01-18T14:20:00.000Z",
+          "description": "訂單已建立，等待付款確認"
+        },
+        {
+          "status": "paid",
+          "timestamp": "2024-01-18T14:25:00.000Z",
+          "description": "付款已確認"
+        },
+        {
+          "status": "processing",
+          "timestamp": "2024-01-18T16:00:00.000Z",
+          "description": "商品準備中"
+        },
+        {
+          "status": "shipped",
+          "timestamp": "2024-01-19T11:30:00.000Z",
+          "description": "商品已出貨"
+        }
+      ],
+      "shippingAddress": {
+        "name": "陳小美",
+        "phone": "0987654321",
+        "address": "台北市信義區市府路1號2樓",
+        "postalCode": "11008"
+      },
+      "paymentMethod": "atm_transfer",
+      "paymentStatus": "paid",
+      "expectedDeliveryDate": "2024-01-22T00:00:00.000Z",
+      "trackingNumber": "3691472580",
+      "notes": "辦公用品",
+      "createdAt": "2024-01-18T14:20:00.000Z",
+      "updatedAt": "2024-01-19T11:30:00.000Z"
+    },
+    {
+      "id": 10,
+      "orderNumber": "ORD202401200010",
+      "userId": 2,
+      "items": [
+        {
+          "productId": 15,
+          "name": "Nintendo Switch OLED",
+          "price": 10780,
+          "quantity": 1,
+          "image": "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+        },
+        {
+          "productId": 16,
+          "name": "Super Mario Odyssey",
+          "price": 1790,
+          "quantity": 2,
+          "image": "https://images.unsplash.com/photo-1567540543214-9b16c073cf5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+        }
+      ],
+      "subtotal": 14360,
+      "shippingFee": 60,
+      "discount": 360,
+      "total": 14060,
+      "status": "paid",
+      "statusHistory": [
+        {
+          "status": "pending",
+          "timestamp": "2024-01-20T19:30:00.000Z",
+          "description": "訂單已建立，等待付款確認"
+        },
+        {
+          "status": "paid",
+          "timestamp": "2024-01-20T19:35:00.000Z",
+          "description": "付款已確認"
+        }
+      ],
+      "shippingAddress": {
+        "name": "陳小美",
+        "phone": "0987654321",
+        "address": "台北市信義區市府路1號2樓",
+        "postalCode": "11008"
+      },
+      "paymentMethod": "credit_card",
+      "paymentStatus": "paid",
+      "expectedDeliveryDate": "2024-01-25T00:00:00.000Z",
+      "trackingNumber": null,
+      "notes": "遊戲主機組合",
+      "createdAt": "2024-01-20T19:30:00.000Z",
+      "updatedAt": "2024-01-20T19:35:00.000Z"
     }
   ],
   "categories": [
