@@ -494,7 +494,7 @@ export const handlers = [
   
   // ==================== 訂單相關 API ====================
   
-  // 取得使用者訂單
+  // 取得使用者訂單（支援分頁和篩選）
   http.get('/api/user/orders', async ({ request }) => {
     await delay(400)
     
@@ -508,8 +508,286 @@ export const handlers = [
       )
     }
     
+    const url = new URL(request.url)
+    const page = parseInt(url.searchParams.get('page')) || 1
+    const limit = parseInt(url.searchParams.get('limit')) || 10
+    const status = url.searchParams.get('status')
+    const keyword = url.searchParams.get('keyword')
+    const dateRange = url.searchParams.get('dateRange')
+    
+    let userOrders = dataHelpers.findOrdersByUserId(user.id)
+    
+    // 狀態篩選
+    if (status && status !== 'all') {
+      userOrders = userOrders.filter(order => order.status === status)
+    }
+    
+    // 關鍵字搜尋（訂單號、商品名稱）
+    if (keyword) {
+      const searchTerm = keyword.toLowerCase()
+      userOrders = userOrders.filter(order => 
+        order.orderNumber.toLowerCase().includes(searchTerm) ||
+        order.items.some(item => item.name.toLowerCase().includes(searchTerm))
+      )
+    }
+    
+    // 日期範圍篩選
+    if (dateRange) {
+      const now = new Date()
+      let startDate
+      
+      switch (dateRange) {
+        case '7days':
+          startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+          break
+        case '30days':
+          startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
+          break
+        case '90days':
+          startDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000)
+          break
+        default:
+          startDate = null
+      }
+      
+      if (startDate) {
+        userOrders = userOrders.filter(order => 
+          new Date(order.createdAt) >= startDate
+        )
+      }
+    }
+    
+    // 排序（最新的在前）
+    userOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    
+    // 分頁處理
+    const totalItems = userOrders.length
+    const totalPages = Math.ceil(totalItems / limit)
+    const startIndex = (page - 1) * limit
+    const endIndex = startIndex + limit
+    const paginatedOrders = userOrders.slice(startIndex, endIndex)
+    
+    return HttpResponse.json({
+      data: paginatedOrders,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        totalItems,
+        itemsPerPage: limit,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1
+      }
+    })
+  }),
+
+  // 取得單一訂單詳情
+  http.get('/api/orders/:orderId', async ({ params, request }) => {
+    await delay(300)
+    
+    const authorization = request.headers.get('Authorization')
+    const user = verifyToken(authorization)
+    
+    if (!user) {
+      return HttpResponse.json(
+        { message: '請先登入' },
+        { status: 401 }
+      )
+    }
+    
+    const order = dataHelpers.findOrderById(params.orderId)
+    
+    if (!order) {
+      return HttpResponse.json(
+        { message: '訂單不存在' },
+        { status: 404 }
+      )
+    }
+    
+    // 檢查訂單是否屬於當前用戶
+    if (order.userId !== user.id) {
+      return HttpResponse.json(
+        { message: '無權限查看此訂單' },
+        { status: 403 }
+      )
+    }
+    
+    return HttpResponse.json(order)
+  }),
+
+  // 取消訂單
+  http.post('/api/orders/:orderId/cancel', async ({ params, request }) => {
+    await delay(500)
+    
+    const authorization = request.headers.get('Authorization')
+    const user = verifyToken(authorization)
+    
+    if (!user) {
+      return HttpResponse.json(
+        { message: '請先登入' },
+        { status: 401 }
+      )
+    }
+    
+    const { reason } = await request.json()
+    const order = dataHelpers.findOrderById(params.orderId)
+    
+    if (!order) {
+      return HttpResponse.json(
+        { message: '訂單不存在' },
+        { status: 404 }
+      )
+    }
+    
+    if (order.userId !== user.id) {
+      return HttpResponse.json(
+        { message: '無權限操作此訂單' },
+        { status: 403 }
+      )
+    }
+    
+    if (!['pending', 'paid'].includes(order.status)) {
+      return HttpResponse.json(
+        { message: '此訂單狀態無法取消' },
+        { status: 400 }
+      )
+    }
+    
+    // 模擬更新訂單狀態
+    order.status = 'cancelled'
+    order.paymentStatus = 'cancelled'
+    order.updatedAt = new Date().toISOString()
+    order.statusHistory.push({
+      status: 'cancelled',
+      timestamp: new Date().toISOString(),
+      description: reason || '客戶取消訂單'
+    })
+    
+    return HttpResponse.json({
+      message: '訂單已成功取消',
+      order
+    })
+  }),
+
+  // 確認收貨
+  http.post('/api/orders/:orderId/confirm-delivery', async ({ params, request }) => {
+    await delay(300)
+    
+    const authorization = request.headers.get('Authorization')
+    const user = verifyToken(authorization)
+    
+    if (!user) {
+      return HttpResponse.json(
+        { message: '請先登入' },
+        { status: 401 }
+      )
+    }
+    
+    const order = dataHelpers.findOrderById(params.orderId)
+    
+    if (!order) {
+      return HttpResponse.json(
+        { message: '訂單不存在' },
+        { status: 404 }
+      )
+    }
+    
+    if (order.userId !== user.id) {
+      return HttpResponse.json(
+        { message: '無權限操作此訂單' },
+        { status: 403 }
+      )
+    }
+    
+    if (order.status !== 'shipped') {
+      return HttpResponse.json(
+        { message: '此訂單狀態無法確認收貨' },
+        { status: 400 }
+      )
+    }
+    
+    // 模擬更新訂單狀態
+    order.status = 'delivered'
+    order.updatedAt = new Date().toISOString()
+    order.statusHistory.push({
+      status: 'delivered',
+      timestamp: new Date().toISOString(),
+      description: '客戶確認收貨'
+    })
+    
+    return HttpResponse.json({
+      message: '已確認收貨',
+      order
+    })
+  }),
+
+  // 重新下單
+  http.post('/api/orders/:orderId/reorder', async ({ params, request }) => {
+    await delay(400)
+    
+    const authorization = request.headers.get('Authorization')
+    const user = verifyToken(authorization)
+    
+    if (!user) {
+      return HttpResponse.json(
+        { message: '請先登入' },
+        { status: 401 }
+      )
+    }
+    
+    const order = dataHelpers.findOrderById(params.orderId)
+    
+    if (!order) {
+      return HttpResponse.json(
+        { message: '訂單不存在' },
+        { status: 404 }
+      )
+    }
+    
+    if (order.userId !== user.id) {
+      return HttpResponse.json(
+        { message: '無權限操作此訂單' },
+        { status: 403 }
+      )
+    }
+    
+    // 模擬將商品添加到購物車
+    return HttpResponse.json({
+      message: '商品已添加到購物車',
+      cartItems: order.items.map(item => ({
+        productId: item.productId,
+        quantity: item.quantity
+      }))
+    })
+  }),
+
+  // 獲取訂單統計
+  http.get('/api/user/orders/stats', async ({ request }) => {
+    await delay(300)
+    
+    const authorization = request.headers.get('Authorization')
+    const user = verifyToken(authorization)
+    
+    if (!user) {
+      return HttpResponse.json(
+        { message: '請先登入' },
+        { status: 401 }
+      )
+    }
+    
     const userOrders = dataHelpers.findOrdersByUserId(user.id)
-    return HttpResponse.json(userOrders)
+    
+    const stats = {
+      total: userOrders.length,
+      pending: userOrders.filter(o => o.status === 'pending').length,
+      processing: userOrders.filter(o => o.status === 'processing').length,
+      shipped: userOrders.filter(o => o.status === 'shipped').length,
+      delivered: userOrders.filter(o => o.status === 'delivered').length,
+      cancelled: userOrders.filter(o => o.status === 'cancelled').length,
+      returned: userOrders.filter(o => o.status === 'returned').length,
+      totalAmount: userOrders.reduce((sum, order) => sum + order.total, 0)
+    }
+    
+    return HttpResponse.json(stats)
   }),
   
   // 建立訂單

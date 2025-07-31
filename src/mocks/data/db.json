@@ -457,31 +457,333 @@
   "orders": [
     {
       "id": 1,
+      "orderNumber": "ORD202401100001",
       "userId": 2,
       "items": [
         {
           "productId": 1,
           "name": "iPhone 15 Pro",
           "price": 36900,
-          "quantity": 1
+          "quantity": 1,
+          "image": "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
         },
         {
           "productId": 3,
           "name": "AirPods Pro (第 2 代)",
           "price": 7490,
-          "quantity": 1
+          "quantity": 1,
+          "image": "https://images.unsplash.com/photo-1606400082777-ef05f3c5cde4?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
         }
       ],
-      "total": 44390,
+      "subtotal": 44390,
+      "shippingFee": 60,
+      "discount": 0,
+      "total": 44450,
       "status": "pending",
+      "statusHistory": [
+        {
+          "status": "pending",
+          "timestamp": "2024-01-10T10:30:00.000Z",
+          "description": "訂單已建立，等待付款確認"
+        }
+      ],
       "shippingAddress": {
-        "name": "一般使用者",
+        "name": "陳小美",
         "phone": "0987654321",
-        "address": "台北市信義區市府路1號"
+        "address": "台北市信義區市府路1號2樓",
+        "postalCode": "11008"
       },
       "paymentMethod": "credit_card",
+      "paymentStatus": "pending",
+      "expectedDeliveryDate": "2024-01-15T00:00:00.000Z",
+      "trackingNumber": null,
+      "notes": "",
       "createdAt": "2024-01-10T10:30:00.000Z",
       "updatedAt": "2024-01-10T10:30:00.000Z"
+    },
+    {
+      "id": 2,
+      "orderNumber": "ORD202401080002",
+      "userId": 2,
+      "items": [
+        {
+          "productId": 2,
+          "name": "MacBook Pro 14吋",
+          "price": 64900,
+          "quantity": 1,
+          "image": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+        }
+      ],
+      "subtotal": 64900,
+      "shippingFee": 0,
+      "discount": 2000,
+      "total": 62900,
+      "status": "processing",
+      "statusHistory": [
+        {
+          "status": "pending",
+          "timestamp": "2024-01-08T14:20:00.000Z",
+          "description": "訂單已建立，等待付款確認"
+        },
+        {
+          "status": "paid",
+          "timestamp": "2024-01-08T14:25:00.000Z",
+          "description": "付款已確認"
+        },
+        {
+          "status": "processing",
+          "timestamp": "2024-01-08T16:00:00.000Z",
+          "description": "商品準備中"
+        }
+      ],
+      "shippingAddress": {
+        "name": "陳小美",
+        "phone": "0987654321",
+        "address": "台北市信義區市府路1號2樓",
+        "postalCode": "11008"
+      },
+      "paymentMethod": "credit_card",
+      "paymentStatus": "paid",
+      "expectedDeliveryDate": "2024-01-12T00:00:00.000Z",
+      "trackingNumber": "1234567890",
+      "notes": "請在工作日配送",
+      "createdAt": "2024-01-08T14:20:00.000Z",
+      "updatedAt": "2024-01-08T16:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "orderNumber": "ORD202401050003",
+      "userId": 3,
+      "items": [
+        {
+          "productId": 5,
+          "name": "Sony WH-1000XM5 無線降噪耳機",
+          "price": 11900,
+          "quantity": 1,
+          "image": "https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+        },
+        {
+          "productId": 6,
+          "name": "iPad Air (第 5 代)",
+          "price": 18900,
+          "quantity": 1,
+          "image": "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+        }
+      ],
+      "subtotal": 30800,
+      "shippingFee": 60,
+      "discount": 500,
+      "total": 30360,
+      "status": "shipped",
+      "statusHistory": [
+        {
+          "status": "pending",
+          "timestamp": "2024-01-05T09:15:00.000Z",
+          "description": "訂單已建立，等待付款確認"
+        },
+        {
+          "status": "paid",
+          "timestamp": "2024-01-05T09:20:00.000Z",
+          "description": "付款已確認"
+        },
+        {
+          "status": "processing",
+          "timestamp": "2024-01-05T11:00:00.000Z",
+          "description": "商品準備中"
+        },
+        {
+          "status": "shipped",
+          "timestamp": "2024-01-06T15:30:00.000Z",
+          "description": "商品已出貨"
+        }
+      ],
+      "shippingAddress": {
+        "name": "李大明",
+        "phone": "0911222333",
+        "address": "台北市中正區重慶南路一段122號3樓之1",
+        "postalCode": "10045"
+      },
+      "paymentMethod": "atm_transfer",
+      "paymentStatus": "paid",
+      "expectedDeliveryDate": "2024-01-08T00:00:00.000Z",
+      "trackingNumber": "9876543210",
+      "notes": "請放置管理室代收",
+      "createdAt": "2024-01-05T09:15:00.000Z",
+      "updatedAt": "2024-01-06T15:30:00.000Z"
+    },
+    {
+      "id": 4,
+      "orderNumber": "ORD202401030004",
+      "userId": 2,
+      "items": [
+        {
+          "productId": 8,
+          "name": "Nike Air Max 270",
+          "price": 4500,
+          "quantity": 2,
+          "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+        }
+      ],
+      "subtotal": 9000,
+      "shippingFee": 60,
+      "discount": 0,
+      "total": 9060,
+      "status": "delivered",
+      "statusHistory": [
+        {
+          "status": "pending",
+          "timestamp": "2024-01-03T13:45:00.000Z",
+          "description": "訂單已建立，等待付款確認"
+        },
+        {
+          "status": "paid",
+          "timestamp": "2024-01-03T13:50:00.000Z",
+          "description": "付款已確認"
+        },
+        {
+          "status": "processing",
+          "timestamp": "2024-01-03T16:00:00.000Z",
+          "description": "商品準備中"
+        },
+        {
+          "status": "shipped",
+          "timestamp": "2024-01-04T10:00:00.000Z",
+          "description": "商品已出貨"
+        },
+        {
+          "status": "delivered",
+          "timestamp": "2024-01-05T14:30:00.000Z",
+          "description": "商品已送達"
+        }
+      ],
+      "shippingAddress": {
+        "name": "陳小美",
+        "phone": "0987654321",
+        "address": "台北市信義區市府路1號2樓",
+        "postalCode": "11008"
+      },
+      "paymentMethod": "line_pay",
+      "paymentStatus": "paid",
+      "expectedDeliveryDate": "2024-01-06T00:00:00.000Z",
+      "trackingNumber": "5678901234",
+      "notes": "",
+      "createdAt": "2024-01-03T13:45:00.000Z",
+      "updatedAt": "2024-01-05T14:30:00.000Z"
+    },
+    {
+      "id": 5,
+      "orderNumber": "ORD202312280005",
+      "userId": 4,
+      "items": [
+        {
+          "productId": 10,
+          "name": "UNIQLO 羽絨外套",
+          "price": 1990,
+          "quantity": 1,
+          "image": "https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+        },
+        {
+          "productId": 11,
+          "name": "Adidas 運動鞋",
+          "price": 3200,
+          "quantity": 1,
+          "image": "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+        }
+      ],
+      "subtotal": 5190,
+      "shippingFee": 60,
+      "discount": 200,
+      "total": 5050,
+      "status": "cancelled",
+      "statusHistory": [
+        {
+          "status": "pending",
+          "timestamp": "2023-12-28T11:20:00.000Z",
+          "description": "訂單已建立，等待付款確認"
+        },
+        {
+          "status": "cancelled",
+          "timestamp": "2023-12-28T18:00:00.000Z",
+          "description": "客戶取消訂單"
+        }
+      ],
+      "shippingAddress": {
+        "name": "張雅琪",
+        "phone": "0923456789",
+        "address": "台中市西屯區台灣大道三段99號",
+        "postalCode": "40756"
+      },
+      "paymentMethod": "credit_card",
+      "paymentStatus": "cancelled",
+      "expectedDeliveryDate": null,
+      "trackingNumber": null,
+      "notes": "客戶主動取消",
+      "createdAt": "2023-12-28T11:20:00.000Z",
+      "updatedAt": "2023-12-28T18:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "orderNumber": "ORD202312250006",
+      "userId": 5,
+      "items": [
+        {
+          "productId": 4,
+          "name": "Dell XPS 13",
+          "price": 45900,
+          "quantity": 1,
+          "image": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200&q=80"
+        }
+      ],
+      "subtotal": 45900,
+      "shippingFee": 0,
+      "discount": 1000,
+      "total": 44900,
+      "status": "returned",
+      "statusHistory": [
+        {
+          "status": "pending",
+          "timestamp": "2023-12-25T16:30:00.000Z",
+          "description": "訂單已建立，等待付款確認"
+        },
+        {
+          "status": "paid",
+          "timestamp": "2023-12-25T16:35:00.000Z",
+          "description": "付款已確認"
+        },
+        {
+          "status": "processing",
+          "timestamp": "2023-12-26T09:00:00.000Z",
+          "description": "商品準備中"
+        },
+        {
+          "status": "shipped",
+          "timestamp": "2023-12-27T14:00:00.000Z",
+          "description": "商品已出貨"
+        },
+        {
+          "status": "delivered",
+          "timestamp": "2023-12-28T11:30:00.000Z",
+          "description": "商品已送達"
+        },
+        {
+          "status": "returned",
+          "timestamp": "2024-01-05T10:00:00.000Z",
+          "description": "客戶申請退貨，商品已退回"
+        }
+      ],
+      "shippingAddress": {
+        "name": "林志明",
+        "phone": "0934567890",
+        "address": "高雄市前金區中正四路211號",
+        "postalCode": "80141"
+      },
+      "paymentMethod": "credit_card",
+      "paymentStatus": "refunded",
+      "expectedDeliveryDate": "2023-12-30T00:00:00.000Z",
+      "trackingNumber": "1357924680",
+      "notes": "七天鑑賞期退貨",
+      "createdAt": "2023-12-25T16:30:00.000Z",
+      "updatedAt": "2024-01-05T10:00:00.000Z"
     }
   ],
   "categories": [
