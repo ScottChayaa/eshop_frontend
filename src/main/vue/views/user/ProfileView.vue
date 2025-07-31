@@ -537,7 +537,15 @@ export default {
           })
         } catch (error) {
           console.error('Failed to load complete profile:', error)
-          // Fallback to existing profile data
+          
+          // 如果是認證錯誤，重定向到登入頁面
+          if (error.response?.status === 401) {
+            console.warn('🔴 Profile API 認證失敗，重定向到登入頁面')
+            router.push('/login')
+            return
+          }
+          
+          // 其他錯誤，回退到現有資料
           setFormData(initialData.value)
         }
       }

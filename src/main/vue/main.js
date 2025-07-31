@@ -61,6 +61,9 @@ app.use(store)
 app.use(router)
 app.use(vuetify)
 
+// 將 store 暴露給全域，供響應攔截器使用
+window.__VUE_STORE__ = store
+
 // Initialize authentication state from localStorage
 store.dispatch('auth/checkAuth')
 

@@ -34,10 +34,24 @@ api.interceptors.response.use(
   error => {
     // 對響應錯誤做點什麼
     if (error.response?.status === 401) {
-      // 未授權，清除本地存儲並跳轉到登入頁
+      // 記錄 401 錯誤但不立即重定向，讓 Vue 應用處理
+      console.warn('🔴 API 401 Unauthorized:', {
+        url: error.config?.url,
+        method: error.config?.method,
+        headers: error.config?.headers,
+        hasToken: !!localStorage.getItem('auth_token')
+      })
+      
+      // 清除本地存儲
       localStorage.removeItem('auth_token')
       localStorage.removeItem('user_info')
-      window.location.href = '/login'
+      
+      // 通知 store 更新認證狀態
+      if (window.__VUE_STORE__) {
+        window.__VUE_STORE__.dispatch('auth/logout')
+      }
+      
+      // 不立即重定向，讓 Vue 路由守衛或組件處理
     }
     return Promise.reject(error)
   }
