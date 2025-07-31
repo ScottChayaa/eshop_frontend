@@ -107,12 +107,16 @@
       </v-col>
 
       <v-col cols="12" md="8">
-        <v-card class="profile-form-card" elevation="2">
-          <v-card-title>
+        <v-card class="profile-form-card" :class="{ 'editing-mode': editMode }" elevation="2">
+          <v-card-title class="d-flex align-center justify-space-between">
             <span>基本資料</span>
+            <div v-if="editMode" class="edit-indicator d-flex align-center">
+              <v-icon color="warning" size="small" class="mr-1">mdi-pencil</v-icon>
+              <span class="text-body-2 text-warning font-weight-medium">編輯中</span>
+            </div>
           </v-card-title>
 
-          <v-card-text class="pa-6">
+          <v-card-text class="pa-6" :class="{ 'editing-content': editMode }">
             <v-form
               ref="formRef"
               @submit.prevent="handleSubmit"
@@ -633,6 +637,71 @@ export default {
   gap: 12px;
 }
 
+/* 編輯模式樣式 */
+.editing-mode {
+  border: 2px solid #FFA101 !important;
+  box-shadow: 0 0 20px rgba(255, 161, 1, 0.2) !important;
+  transition: all 0.3s ease;
+}
+
+.editing-content {
+  background: linear-gradient(135deg, rgba(255, 161, 1, 0.05), rgba(250, 230, 177, 0.05));
+  position: relative;
+}
+
+.editing-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, #FFA101, #FAE6B1);
+  border-radius: 0 2px 2px 0;
+}
+
+.edit-indicator {
+  background: rgba(255, 161, 1, 0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 161, 1, 0.3);
+  animation: pulse-edit 2s infinite;
+}
+
+@keyframes pulse-edit {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 161, 1, 0.3);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(255, 161, 1, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 161, 1, 0);
+  }
+}
+
+/* 表單欄位編輯狀態樣式 */
+.editing-mode :deep(.v-input:not(.v-input--readonly)) {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.editing-mode :deep(.v-input:not(.v-input--readonly):hover) {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-1px);
+}
+
+.editing-mode :deep(.v-field--focused) {
+  box-shadow: 0 0 0 2px rgba(255, 161, 1, 0.3);
+}
+
+/* 唯讀狀態樣式 */
+.profile-form-card:not(.editing-mode) :deep(.v-input--readonly .v-field) {
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 @media (max-width: 960px) {
   .form-actions {
     flex-direction: column;
@@ -640,6 +709,11 @@ export default {
   
   .form-actions .v-btn {
     width: 100%;
+  }
+  
+  .edit-indicator {
+    padding: 2px 8px;
+    font-size: 0.75rem;
   }
 }
 </style>
