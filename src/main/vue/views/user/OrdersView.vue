@@ -444,7 +444,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted, reactive } from 'vue'
+import { ref, computed, onMounted, reactive, watch } from 'vue'
 import { useStore } from 'vuex'
 import orderService, { ORDER_STATUS_TEXT, ORDER_STATUS_COLOR, PAYMENT_METHOD_TEXT } from '../../services/order.js'
 
@@ -504,7 +504,7 @@ export default {
     ]
 
     // 計算屬性
-    const isLoggedIn = computed(() => store.getters['auth/isLoggedIn'])
+    const isLoggedIn = computed(() => store.getters['auth/isAuthenticated'])
 
     // 方法
     const loadOrders = async (page = 1) => {
@@ -653,11 +653,25 @@ export default {
       })
     }
 
-    // 生命周期
-    onMounted(() => {
-      if (isLoggedIn.value) {
+    // 監聽認證狀態變化
+    watch(isLoggedIn, (newValue) => {
+      console.log('📋 OrdersView - 認證狀態變化:', newValue)
+      if (newValue) {
+        console.log('📋 OrdersView - 用戶已登入，載入訂單資料')
         loadOrders()
         loadOrderStats()
+      }
+    }, { immediate: true })
+
+    // 生命周期
+    onMounted(() => {
+      console.log('📋 OrdersView onMounted - isLoggedIn:', isLoggedIn.value)
+      if (isLoggedIn.value) {
+        console.log('📋 OrdersView - 開始載入訂單資料')
+        loadOrders()
+        loadOrderStats()
+      } else {
+        console.warn('📋 OrdersView - 用戶未登入，跳過載入訂單')
       }
     })
 
