@@ -13,9 +13,17 @@ let workingOrders = [...orders]
 let workingCart = [...cart]
 let workingNotifications = [...notifications]
 
+// Debug: 檢查數據初始化
+console.log('🚀 MSW Handlers 初始化')
+console.log('📊 初始 workingUsers:', workingUsers.length, workingUsers.map(u => ({ id: u.id, email: u.email, name: u.name })))
+console.log('📦 初始 workingProducts:', workingProducts.length)
+console.log('📋 初始 workingOrders:', workingOrders.length)
+
 // Utility functions
 function generateToken(user) {
-  return `mock-jwt-token-${user.id}-${Date.now()}`
+  const token = `mock-jwt-token-${user.id}-${Date.now()}`
+  console.log('🔑 generateToken:', { userId: user.id, userName: user.name, token })
+  return token
 }
 
 function verifyToken(token) {
@@ -65,8 +73,11 @@ export const handlers = [
     await delay(500)
     
     const { email, password } = await request.json()
+    console.log('🔐 Login attempt:', { email, password })
+    console.log('📊 workingUsers:', workingUsers.map(u => ({ id: u.id, email: u.email, name: u.name })))
     
     const user = workingUsers.find(u => u.email === email && u.password === password)
+    console.log('👤 Found user:', user ? { id: user.id, name: user.name, email: user.email } : null)
     
     if (!user) {
       return HttpResponse.json(
