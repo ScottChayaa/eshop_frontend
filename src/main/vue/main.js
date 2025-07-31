@@ -61,4 +61,7 @@ app.use(store)
 app.use(router)
 app.use(vuetify)
 
+// Initialize authentication state from localStorage
+store.dispatch('auth/checkAuth')
+
 app.mount('#app')

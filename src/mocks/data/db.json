@@ -21,7 +21,7 @@
       "password": "User123456",
       "name": "陳小美",
       "role": "user",
-      "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150&q=80",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=AnnaSmith&backgroundColor=b6e3f4&clothingColor=9287ff",
       "phone": "0987654321",
       "address": "台北市信義區市府路1號2樓",
       "gender": "female",

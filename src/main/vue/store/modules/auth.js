@@ -17,7 +17,13 @@ const state = {
 const mutations = {
   SET_USER(state, user) {
     state.user = user
-    state.isAuthenticated = !!user
+    if (user) {
+      storage.set(STORAGE_KEYS.USER, user)
+    } else {
+      storage.remove(STORAGE_KEYS.USER)
+    }
+    // 當有 user 且有 token 時，設置為已認證
+    state.isAuthenticated = !!(user && state.token)
   },
 
   SET_TOKEN(state, token) {
@@ -27,6 +33,8 @@ const mutations = {
     } else {
       storage.remove(STORAGE_KEYS.TOKEN)
     }
+    // 當有 token 且有 user 時，設置為已認證
+    state.isAuthenticated = !!(token && state.user)
   },
 
   SET_LOADING(state, loading) {
