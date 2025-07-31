@@ -20,16 +20,31 @@ function generateToken(user) {
 
 function verifyToken(token) {
   if (!token || !token.startsWith('Bearer ')) {
+    console.warn('❌ verifyToken: Invalid token format', { token })
     return null
   }
   
   const tokenValue = token.replace('Bearer ', '')
   
   if (tokenValue.startsWith('mock-jwt-token-')) {
-    const userId = parseInt(tokenValue.split('-')[3])
-    return workingUsers.find(user => user.id === userId)
+    const tokenParts = tokenValue.split('-')
+    const userId = parseInt(tokenParts[3])
+    const user = workingUsers.find(user => user.id === userId)
+    
+    if (!user) {
+      console.warn('❌ verifyToken: User not found', { 
+        userId, 
+        tokenParts, 
+        availableUserIds: workingUsers.map(u => u.id) 
+      })
+    } else {
+      console.log('✅ verifyToken: User found', { userId, userName: user.name })
+    }
+    
+    return user
   }
   
+  console.warn('❌ verifyToken: Token does not match pattern', { tokenValue })
   return null
 }
 
@@ -148,6 +163,18 @@ export const handlers = [
     const user = verifyToken(authorization)
     
     if (!user) {
+      // 詳細的錯誤信息用於調試
+      const debugInfo = {
+        message: '請先登入',
+        debug: {
+          hasAuthHeader: !!authorization,
+          authHeader: authorization,
+          workingUsersCount: workingUsers.length,
+          userIds: workingUsers.map(u => u.id)
+        }
+      }
+      console.error('🔴 Profile API 401 Error:', debugInfo)
+      
       return HttpResponse.json(
         { message: '請先登入' },
         { status: 401 }
