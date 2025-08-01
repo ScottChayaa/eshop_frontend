@@ -130,18 +130,6 @@
         加入購物車
       </v-btn>
       
-      <v-btn
-        :disabled="!canAddToCart"
-        color="primary"
-        variant="outlined"
-        size="large"
-        block
-        class="buy-now-btn"
-        @click="buyNow"
-      >
-        <v-icon start>mdi-lightning-bolt</v-icon>
-        立即購買
-      </v-btn>
 
       <!-- 收藏按鈕 -->
       <v-btn
@@ -360,12 +348,6 @@ export default {
       }
     }
 
-    const buyNow = async () => {
-      await addToCart()
-      if (canAddToCart.value) {
-        router.push('/checkout')
-      }
-    }
 
     const toggleFavorite = async () => {
       try {
@@ -407,7 +389,6 @@ export default {
       decreaseQuantity,
       validateQuantity,
       addToCart,
-      buyNow,
       toggleFavorite
     }
   }
@@ -559,7 +540,6 @@ export default {
 }
 
 .add-to-cart-btn,
-.buy-now-btn,
 .favorite-btn {
   margin-bottom: 12px !important;
 }

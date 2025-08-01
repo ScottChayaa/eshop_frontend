@@ -130,14 +130,24 @@ export default {
       router.push(`/product/${props.product.id}`)
     }
 
-    const addToCart = () => {
-      store.dispatch('cart/addToCart', {
-        productId: props.product.id,
-        quantity: 1
-      })
-      
-      // 顯示成功提示
-      store.dispatch('ui/showSuccess', `${props.product.name} 已加入購物車`)
+    const addToCart = async () => {
+      try {
+        await store.dispatch('cart/addItem', {
+          ...props.product,
+          quantity: 1
+        })
+        
+        // 顯示成功提示
+        store.dispatch('ui/showSnackbar', {
+          message: `${props.product.name} 已加入購物車`,
+          color: 'success'
+        })
+      } catch (error) {
+        store.dispatch('ui/showSnackbar', {
+          message: '加入購物車失敗，請稍後再試',
+          color: 'error'
+        })
+      }
     }
 
     const toggleFavorite = () => {
