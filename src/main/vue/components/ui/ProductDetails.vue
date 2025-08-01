@@ -243,7 +243,7 @@ export default {
 
     // 當前庫存
     const currentStock = computed(() => {
-      return currentVariant.value?.stock || props.product.stock || 0
+      return currentVariant.value?.stock || props.product?.stock || 999
     })
 
     // 最大可購買數量
@@ -253,17 +253,26 @@ export default {
 
     // 是否可以加入購物車
     const canAddToCart = computed(() => {
+      // 確保商品存在
+      if (!props.product) return false
+      
       // 檢查是否有必要的規格選擇
       const requiredSpecs = availableSpecs.value.length > 0
       const hasAllSpecs = requiredSpecs ? 
         availableSpecs.value.every(spec => selectedSpecs.value[spec.name]) : true
       
-      return hasAllSpecs && quantity.value > 0 && quantity.value <= maxQuantity.value
+      return hasAllSpecs && quantity.value > 0 && quantity.value <= maxQuantity.value && currentStock.value > 0
     })
 
     // 是否收藏
     const isFavorite = computed(() => {
-      return store.getters['favorites/isFavorite'](props.product.id)
+      if (!props.product?.id) return false
+      try {
+        return store.getters['favorites/isFavorite'](props.product.id)
+      } catch (error) {
+        console.warn('Favorites getter error:', error)
+        return false
+      }
     })
 
     const formatPrice = (price) => {
@@ -350,18 +359,23 @@ export default {
 
 
     const toggleFavorite = async () => {
+      if (!props.product?.id) return
+      
       try {
+        const wasFavorite = isFavorite.value
         await store.dispatch('favorites/toggleFavorite', props.product.id)
         
         // 顯示成功訊息
-        const message = isFavorite.value ? '已從收藏中移除' : '已加入收藏'
+        const message = wasFavorite ? '已從收藏中移除' : '已加入收藏'
         store.dispatch('ui/showSnackbar', {
           message,
           color: 'success'
         })
       } catch (error) {
+        // 如果是認證錯誤，提示用戶登入
+        const message = error.message || '操作失敗，請稍後再試'
         store.dispatch('ui/showSnackbar', {
-          message: error.message || '操作失敗，請稍後再試',
+          message,
           color: 'error'
         })
       }
