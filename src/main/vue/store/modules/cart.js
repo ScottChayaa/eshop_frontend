@@ -190,10 +190,11 @@ const actions = {
           if (!item.cartItemKey) {
             item.cartItemKey = generateCartItemKey(item)
           }
-          commit('ADD_ITEM', { ...item, quantity: 0 }) // 先設為 0
-          commit('UPDATE_QUANTITY', { 
-            itemKey: item.cartItemKey, 
-            quantity: item.quantity 
+          // 直接加載完整的項目資料
+          state.items.push({
+            ...item,
+            cartItemKey: item.cartItemKey,
+            addedAt: item.addedAt || new Date().toISOString()
           })
         })
       }

@@ -15,13 +15,18 @@ export default {
   setup() {
     const store = useStore()
 
-    // 應用初始化時檢查認證狀態
+    // 應用初始化時檢查認證狀態和載入購物車
     onMounted(async () => {
       try {
+        // 載入購物車資料
+        await store.dispatch('cart/loadCart')
+        console.log('🛒 Cart data loaded from localStorage')
+        
+        // 檢查認證狀態
         await store.dispatch('auth/checkAuth')
         console.log('🔐 Authentication status checked')
       } catch (error) {
-        console.warn('Authentication check failed:', error)
+        console.warn('Initialization failed:', error)
       }
     })
 
