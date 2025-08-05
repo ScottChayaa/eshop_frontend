@@ -211,11 +211,11 @@
             </v-btn>
             
             <v-btn
-              variant="outlined"
               color="primary"
               size="large"
               block
               rounded="pill"
+              elevation="2"
               @click="goShopping"
             >
               <v-icon start>mdi-shopping</v-icon>
