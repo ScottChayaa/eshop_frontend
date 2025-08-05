@@ -145,11 +145,6 @@ const actions = {
       throw new Error('商品資料不完整')
     }
 
-    // 如果商品有規格但未選擇，拋出錯誤
-    if (product.variants && product.variants.length > 0 && !product.selectedSpecs) {
-      throw new Error('請選擇商品規格')
-    }
-
     commit('ADD_ITEM', product)
     
     // 本地存儲

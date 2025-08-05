@@ -38,45 +38,6 @@
       </div>
     </div>
 
-    <!-- 規格選擇區域 -->
-    <div class="specifications-section" v-if="product.variants && product.variants.length > 0">
-      <div 
-        v-for="spec in availableSpecs" 
-        :key="spec.name"
-        class="spec-group"
-      >
-        <label class="spec-label">{{ spec.label }}</label>
-        
-        <!-- 顏色選擇器 -->
-        <div v-if="spec.type === 'color'" class="color-options">
-          <div 
-            v-for="option in spec.options"
-            :key="option.value"
-            :class="['color-option', { 'selected': selectedSpecs[spec.name] === option.value }]"
-            @click="selectSpec(spec.name, option.value)"
-            :style="{ backgroundColor: option.color }"
-            :title="option.label"
-          >
-            <v-icon v-if="selectedSpecs[spec.name] === option.value" size="small" color="white">
-              mdi-check
-            </v-icon>
-          </div>
-        </div>
-        
-        <!-- 下拉選單選擇器 -->
-        <v-select
-          v-else
-          v-model="selectedSpecs[spec.name]"
-          :items="spec.options"
-          item-title="label"
-          item-value="value"
-          variant="outlined"
-          density="compact"
-          :placeholder="`請選擇${spec.label}`"
-          class="spec-select"
-        ></v-select>
-      </div>
-    </div>
 
     <!-- 數量選擇 -->
     <div class="quantity-section">
@@ -186,64 +147,12 @@ export default {
     const router = useRouter()
 
     const quantity = ref(1)
-    const selectedSpecs = ref({})
     const addingToCart = ref(false)
 
-    // 可用規格選項
-    const availableSpecs = computed(() => {
-      if (!props.product.variants) return []
-      
-      const specs = []
-      const variants = props.product.variants
-
-      // 提取所有可能的規格類型
-      variants.forEach(variant => {
-        Object.keys(variant.specs || {}).forEach(specKey => {
-          if (!specs.find(s => s.name === specKey)) {
-            const specConfig = getSpecConfig(specKey)
-            specs.push({
-              name: specKey,
-              label: specConfig.label,
-              type: specConfig.type,
-              options: []
-            })
-          }
-        })
-      })
-
-      // 填充選項
-      specs.forEach(spec => {
-        const options = new Set()
-        variants.forEach(variant => {
-          if (variant.specs && variant.specs[spec.name]) {
-            options.add(JSON.stringify({
-              value: variant.specs[spec.name],
-              label: variant.specs[spec.name],
-              color: getColorValue(variant.specs[spec.name])
-            }))
-          }
-        })
-        spec.options = Array.from(options).map(option => JSON.parse(option))
-      })
-
-      return specs
-    })
-
-    // 當前選中的變體
-    const currentVariant = computed(() => {
-      if (!props.product.variants) return null
-      
-      return props.product.variants.find(variant => {
-        if (!variant.specs) return false
-        return Object.keys(selectedSpecs.value).every(key => 
-          variant.specs[key] === selectedSpecs.value[key]
-        )
-      })
-    })
 
     // 當前庫存
     const currentStock = computed(() => {
-      return currentVariant.value?.stock || props.product?.stock || 999
+      return props.product?.stock || 999
     })
 
     // 最大可購買數量
@@ -256,12 +165,7 @@ export default {
       // 確保商品存在
       if (!props.product) return false
       
-      // 檢查是否有必要的規格選擇
-      const requiredSpecs = availableSpecs.value.length > 0
-      const hasAllSpecs = requiredSpecs ? 
-        availableSpecs.value.every(spec => selectedSpecs.value[spec.name]) : true
-      
-      return hasAllSpecs && quantity.value > 0 && quantity.value <= maxQuantity.value && currentStock.value > 0
+      return quantity.value > 0 && quantity.value <= maxQuantity.value && currentStock.value > 0
     })
 
     // 是否收藏
@@ -279,36 +183,6 @@ export default {
       return new Intl.NumberFormat('zh-TW').format(price)
     }
 
-    const getSpecConfig = (specKey) => {
-      const configs = {
-        color: { label: '顏色', type: 'color' },
-        size: { label: '尺寸', type: 'select' },
-        storage: { label: '容量', type: 'select' },
-        material: { label: '材質', type: 'select' }
-      }
-      return configs[specKey] || { label: specKey, type: 'select' }
-    }
-
-    const getColorValue = (colorName) => {
-      const colorMap = {
-        '黑色': '#000000',
-        '白色': '#ffffff',
-        '紅色': '#ff0000',
-        '藍色': '#0000ff',
-        '綠色': '#00ff00',
-        '黃色': '#ffff00',
-        '粉色': '#ffc0cb',
-        '灰色': '#808080',
-        '銀色': '#c0c0c0',
-        '金色': '#ffd700'
-      }
-      return colorMap[colorName] || '#cccccc'
-    }
-
-    const selectSpec = (specName, value) => {
-      selectedSpecs.value[specName] = value
-      emit('spec-change', { ...selectedSpecs.value })
-    }
 
     const increaseQuantity = () => {
       if (quantity.value < maxQuantity.value) {
@@ -333,9 +207,7 @@ export default {
       try {
         const cartItem = {
           ...props.product,
-          quantity: quantity.value,
-          selectedSpecs: { ...selectedSpecs.value },
-          variant: currentVariant.value
+          quantity: quantity.value
         }
 
         await store.dispatch('cart/addItem', cartItem)
@@ -381,24 +253,15 @@ export default {
       }
     }
 
-    // 監聽規格變化，重置數量
-    watch(currentVariant, () => {
-      if (quantity.value > maxQuantity.value) {
-        quantity.value = Math.min(maxQuantity.value, 1)
-      }
-    })
 
     return {
       quantity,
-      selectedSpecs,
       addingToCart,
-      availableSpecs,
       currentStock,
       maxQuantity,
       canAddToCart,
       isFavorite,
       formatPrice,
-      selectSpec,
       increaseQuantity,
       decreaseQuantity,
       validateQuantity,
@@ -466,52 +329,6 @@ export default {
   font-weight: 600;
 }
 
-.specifications-section {
-  margin-bottom: 24px;
-}
-
-.spec-group {
-  margin-bottom: 20px;
-}
-
-.spec-label {
-  display: block;
-  font-weight: 600;
-  color: #31525B;
-  margin-bottom: 8px;
-}
-
-.color-options {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.color-option {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 3px solid transparent;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  position: relative;
-}
-
-.color-option:hover {
-  transform: scale(1.1);
-}
-
-.color-option.selected {
-  border-color: #FFA101;
-  box-shadow: 0 0 0 2px rgba(255, 161, 1, 0.3);
-}
-
-.spec-select {
-  max-width: 200px;
-}
 
 .quantity-section {
   margin-bottom: 24px;
@@ -599,9 +416,4 @@ export default {
   }
 }
 
-@media (min-width: 1200px) {
-  .spec-select {
-    max-width: 250px;
-  }
-}
 </style>
