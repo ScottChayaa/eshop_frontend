@@ -108,6 +108,10 @@ const mutations = {
     state.items = []
   },
   
+  SET_ITEMS(state, items) {
+    state.items = items
+  },
+  
   TOGGLE_CART(state) {
     state.isOpen = !state.isOpen
   },
@@ -179,19 +183,15 @@ const actions = {
         // 清空現有購物車
         commit('CLEAR_CART')
         
-        // 重新加載項目
-        items.forEach(item => {
-          // 確保每個項目都有唯一識別碼
-          if (!item.cartItemKey) {
-            item.cartItemKey = generateCartItemKey(item)
-          }
-          // 直接加載完整的項目資料
-          state.items.push({
-            ...item,
-            cartItemKey: item.cartItemKey,
-            addedAt: item.addedAt || new Date().toISOString()
-          })
-        })
+        // 直接設置購物車狀態（確保響應性）
+        const loadedItems = items.map(item => ({
+          ...item,
+          cartItemKey: item.cartItemKey || generateCartItemKey(item),
+          addedAt: item.addedAt || new Date().toISOString()
+        }))
+        
+        // 使用 mutation 正確設置購物車項目
+        commit('SET_ITEMS', loadedItems)
       }
     } catch (error) {
       console.error('載入購物車失敗:', error)
