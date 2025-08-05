@@ -25,6 +25,12 @@ export default {
         // 檢查認證狀態
         await store.dispatch('auth/checkAuth')
         console.log('🔐 Authentication status checked')
+        
+        // 如果用戶已登入，載入通知
+        if (store.getters['auth/isAuthenticated']) {
+          await store.dispatch('notifications/fetchNotifications')
+          console.log('🔔 Notifications loaded')
+        }
       } catch (error) {
         console.warn('Initialization failed:', error)
       }

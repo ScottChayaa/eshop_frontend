@@ -63,6 +63,7 @@
       <div class="d-flex align-center">
         <!-- PC版顯示所有按鈕 -->
         <template v-if="$vuetify.display.mdAndUp">
+          <NotificationButton v-if="isAuthenticated" class="mr-2" />
           <CartButton class="mr-2" />
           <UserMenu v-if="isAuthenticated" />
           <UserButton v-else />
@@ -70,6 +71,7 @@
         
         <!-- 手機版顯示購物車和會員按鈕 -->
         <template v-else>
+          <NotificationButton v-if="isAuthenticated" class="mr-2" />
           <CartButton class="mr-2" />
           <UserMenu v-if="isAuthenticated" />
           <UserButton v-else />
@@ -94,6 +96,7 @@ import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import SearchInput from '../common/SearchInput.vue'
 import CartButton from '../common/CartButton.vue'
+import NotificationButton from '../common/NotificationButton.vue'
 import UserButton from '../common/UserButton.vue'
 import UserMenu from '../common/UserMenu.vue'
 
@@ -102,6 +105,7 @@ export default {
   components: {
     SearchInput,
     CartButton,
+    NotificationButton,
     UserButton,
     UserMenu
   },
