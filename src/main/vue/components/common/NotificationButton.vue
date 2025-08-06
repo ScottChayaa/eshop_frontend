@@ -36,13 +36,16 @@
               {{ unreadCount }}
             </v-chip>
           </div>
-          <div>
+          <div class="d-flex align-center ga-2">
             <v-btn
               v-if="hasUnreadNotifications"
-              variant="text"
+              variant="elevated"
               size="small"
-              color="primary"
+              color="secondary"
+              prepend-icon="mdi-check-all"
               @click="markAllAsRead"
+              class="notification-mark-read-btn"
+              elevation="1"
             >
               全部已讀
             </v-btn>
@@ -50,8 +53,10 @@
               icon="mdi-cog"
               variant="text"
               size="small"
+              color="grey-darken-1"
               :to="{ name: 'Notifications' }"
               @click="showDropdown = false"
+              class="notification-settings-btn"
             ></v-btn>
           </div>
         </v-card-title>
@@ -120,13 +125,17 @@
         </v-list>
 
         <!-- 查看全部按鈕 -->
-        <v-card-actions v-if="hasRecentNotifications">
+        <v-card-actions v-if="hasRecentNotifications" class="pa-3">
           <v-btn
             block
-            variant="text"
+            variant="elevated"
             color="primary"
+            prepend-icon="mdi-bell-outline"
             :to="{ name: 'Notifications' }"
             @click="showDropdown = false"
+            class="notification-view-all-btn"
+            size="default"
+            elevation="2"
           >
             查看全部通知
           </v-btn>
@@ -282,6 +291,39 @@ export default {
 
 .notification-dropdown-item.unread:hover {
   background-color: rgba(250, 230, 177, 0.15);
+}
+
+/* 按鈕樣式增強 */
+.notification-mark-read-btn {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(255, 161, 1, 0.2);
+}
+
+.notification-mark-read-btn:hover {
+  box-shadow: 0 4px 8px rgba(255, 161, 1, 0.3);
+  transform: translateY(-1px);
+}
+
+.notification-view-all-btn {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(49, 82, 91, 0.2);
+}
+
+.notification-view-all-btn:hover {
+  box-shadow: 0 4px 12px rgba(49, 82, 91, 0.3);
+  transform: translateY(-1px);
+}
+
+.notification-settings-btn {
+  transition: all 0.2s ease;
+}
+
+.notification-settings-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 /* 自定義滾動條 */
