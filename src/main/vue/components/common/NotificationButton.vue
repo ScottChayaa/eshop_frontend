@@ -203,8 +203,11 @@ export default {
     // 切換通知下拉選單
     const toggleNotificationDropdown = () => {
       if (!showDropdown.value) {
-        // 載入通知數據
-        store.dispatch('notifications/fetchNotifications')
+        // 只有在未載入或通知為空時才重新載入
+        const notifications = store.getters['notifications/allNotifications']
+        if (!notifications || notifications.length === 0) {
+          store.dispatch('notifications/fetchNotifications')
+        }
       }
       showDropdown.value = !showDropdown.value
     }

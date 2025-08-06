@@ -57,7 +57,7 @@ const mutations = {
 }
 
 const actions = {
-  async login({ commit }, credentials) {
+  async login({ commit, dispatch }, credentials) {
     try {
       commit('SET_LOADING', true)
       commit('SET_ERROR', null)
@@ -70,6 +70,14 @@ const actions = {
       
       storage.set(STORAGE_KEYS.USER, response.user)
 
+      // 登入成功後立即載入通知
+      try {
+        await dispatch('notifications/fetchNotifications', null, { root: true })
+      } catch (notificationError) {
+        console.warn('載入通知失敗:', notificationError)
+        // 不讓通知載入失敗影響登入流程
+      }
+
       return response
     } catch (error) {
       commit('SET_ERROR', error.message)
@@ -79,7 +87,7 @@ const actions = {
     }
   },
 
-  async register({ commit }, userData) {
+  async register({ commit, dispatch }, userData) {
     try {
       commit('SET_LOADING', true)
       commit('SET_ERROR', null)
@@ -92,6 +100,14 @@ const actions = {
       
       storage.set(STORAGE_KEYS.USER, response.user)
 
+      // 註冊成功後立即載入通知
+      try {
+        await dispatch('notifications/fetchNotifications', null, { root: true })
+      } catch (notificationError) {
+        console.warn('載入通知失敗:', notificationError)
+        // 不讓通知載入失敗影響註冊流程
+      }
+
       return response
     } catch (error) {
       commit('SET_ERROR', error.message)
@@ -101,7 +117,7 @@ const actions = {
     }
   },
 
-  async logout({ commit }) {
+  async logout({ commit, dispatch }) {
     try {
       const { default: authService } = await import('../../services/auth.js')
       await authService.logout()
@@ -109,6 +125,12 @@ const actions = {
       console.error('Logout API call failed:', error)
     } finally {
       commit('LOGOUT')
+      // 登出時清空通知
+      try {
+        await dispatch('notifications/clearAllNotifications', null, { root: true })
+      } catch (notificationError) {
+        console.warn('清空通知失敗:', notificationError)
+      }
     }
   },
 

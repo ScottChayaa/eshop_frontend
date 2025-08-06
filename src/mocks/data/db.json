@@ -1067,21 +1067,129 @@
   "notifications": [
     {
       "id": 1,
-      "userId": 2,
-      "title": "訂單已出貨",
-      "message": "您的訂單 #1 已經出貨，預計 2-3 個工作天送達",
-      "type": "order",
+      "userId": 1,
+      "title": "系統維護完成",
+      "message": "系統維護已於凌晨 4:00 完成，所有功能恢復正常運行",
+      "type": "system",
       "read": false,
-      "createdAt": "2024-01-10T16:00:00.000Z"
+      "createdAt": "2024-01-20T04:00:00.000Z"
     },
     {
       "id": 2,
-      "userId": 3,
-      "title": "新品上架",
-      "message": "Apple 最新產品現已上架，快來選購！",
+      "userId": 1,
+      "title": "新管理員權限",
+      "message": "您已獲得商品管理權限，可以開始管理商品庫存",
+      "type": "system",
+      "read": false,
+      "createdAt": "2024-01-19T09:30:00.000Z"
+    },
+    {
+      "id": 3,
+      "userId": 2,
+      "title": "訂單已出貨",
+      "message": "您的訂單 #ORD202401200010 已經出貨，預計 2-3 個工作天送達",
+      "type": "order",
+      "read": false,
+      "createdAt": "2024-01-20T14:30:00.000Z"
+    },
+    {
+      "id": 4,
+      "userId": 2,
+      "title": "付款確認通知",
+      "message": "您的訂單 #ORD202401150008 付款已確認，商品準備中",
+      "type": "order",
+      "read": false,
+      "createdAt": "2024-01-16T08:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "userId": 2,
+      "title": "限時優惠活動",
+      "message": "MacBook Pro 系列限時特惠！最高省 15,000 元，機會難得！",
       "type": "promotion",
       "read": true,
-      "createdAt": "2024-01-05T12:00:00.000Z"
+      "createdAt": "2024-01-15T10:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "userId": 2,
+      "title": "商品到貨通知",
+      "message": "您關注的 iPhone 15 Pro 現已到貨，數量有限快來搶購！",
+      "type": "promotion",
+      "read": false,
+      "createdAt": "2024-01-14T16:20:00.000Z"
+    },
+    {
+      "id": 7,
+      "userId": 3,
+      "title": "訂單已送達",
+      "message": "您的訂單 #ORD202401050003 已成功送達，感謝您的購買！",
+      "type": "order",
+      "read": true,
+      "createdAt": "2024-01-08T14:30:00.000Z"
+    },
+    {
+      "id": 8,
+      "userId": 3,
+      "title": "新品推薦",
+      "message": "根據您的購買記錄，為您推薦最新的 iPad Air 系列產品",
+      "type": "promotion",
+      "read": false,
+      "createdAt": "2024-01-18T11:15:00.000Z"
+    },
+    {
+      "id": 9,
+      "userId": 3,
+      "title": "會員等級提升",
+      "message": "恭喜！您已成為白銀會員，享有更多專屬優惠和服務",
+      "type": "system",
+      "read": false,
+      "createdAt": "2024-01-17T10:30:00.000Z"
+    },
+    {
+      "id": 10,
+      "userId": 4,
+      "title": "生日優惠券",
+      "message": "生日快樂！專屬優惠券已發送，全館商品 9 折優惠等您使用",
+      "type": "promotion",
+      "read": false,
+      "createdAt": "2024-01-18T00:00:00.000Z"
+    },
+    {
+      "id": 11,
+      "userId": 4,
+      "title": "設計師精選",
+      "message": "本週設計師精選商品上架，美學與實用並重的生活好物等您發現",
+      "type": "promotion",
+      "read": true,
+      "createdAt": "2024-01-16T14:00:00.000Z"
+    },
+    {
+      "id": 12,
+      "userId": 5,
+      "title": "運動裝備特賣",
+      "message": "運動用品專區特賣開始！Nike、Adidas 等知名品牌低至 6 折",
+      "type": "promotion",
+      "read": false,
+      "createdAt": "2024-01-19T09:00:00.000Z"
+    },
+    {
+      "id": 13,
+      "userId": 5,
+      "title": "訂單退貨處理",
+      "message": "您的退貨申請已處理完成，退款將於 3-5 個工作天內到帳",
+      "type": "order",
+      "read": true,
+      "createdAt": "2024-01-05T16:00:00.000Z"
+    },
+    {
+      "id": 14,
+      "userId": 5,
+      "title": "健康生活分享",
+      "message": "新增健康食品專區，為您的運動生活提供更好的營養補給",
+      "type": "promotion",
+      "read": false,
+      "createdAt": "2024-01-12T13:20:00.000Z"
     }
   ],
   "news": [

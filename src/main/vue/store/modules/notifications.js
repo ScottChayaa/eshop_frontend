@@ -71,46 +71,52 @@ const mutations = {
 
 const actions = {
   // 獲取所有通知
-  async fetchNotifications({ commit }) {
+  async fetchNotifications({ commit, rootState }) {
     commit('SET_LOADING', true)
     commit('SET_ERROR', null)
     
     try {
-      // 模擬 API 調用
-      const mockNotifications = [
-        {
-          id: 1,
-          type: 'order',
-          title: '訂單已出貨',
-          message: '您的訂單 #12345 已經出貨，預計明日送達',
-          isRead: false,
-          createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString() // 2小時前
-        },
-        {
-          id: 2,
-          type: 'promotion',
-          title: '限時優惠',
-          message: '全館商品 8 折優惠，僅限今日！',
-          isRead: false,
-          createdAt: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString() // 6小時前
-        },
-        {
-          id: 3,
-          type: 'system',
-          title: '系統維護通知',
-          message: '系統將於明日凌晨 2:00-4:00 進行維護',
-          isRead: true,
-          createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString() // 1天前
+      const token = rootState.auth.token
+      if (!token) {
+        commit('SET_NOTIFICATIONS', [])
+        commit('SET_UNREAD_COUNT', 0)
+        return
+      }
+
+      const response = await fetch('/api/notifications', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         }
-      ]
+      })
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          // Token 過期，清空通知
+          commit('SET_NOTIFICATIONS', [])
+          commit('SET_UNREAD_COUNT', 0)
+          return
+        }
+        throw new Error('獲取通知失敗')
+      }
+
+      const notifications = await response.json()
       
-      commit('SET_NOTIFICATIONS', mockNotifications)
+      // 轉換資料格式，確保相容性
+      const formattedNotifications = notifications.map(notification => ({
+        ...notification,
+        isRead: notification.read // 將 read 轉為 isRead
+      }))
+      
+      commit('SET_NOTIFICATIONS', formattedNotifications)
       
       // 計算未讀數量
-      const unreadCount = mockNotifications.filter(n => !n.isRead).length
+      const unreadCount = formattedNotifications.filter(n => !n.isRead).length
       commit('SET_UNREAD_COUNT', unreadCount)
       
     } catch (error) {
+      console.error('獲取通知失敗:', error)
       commit('SET_ERROR', error.message || '獲取通知失敗')
     } finally {
       commit('SET_LOADING', false)
@@ -118,31 +124,87 @@ const actions = {
   },
   
   // 標記通知為已讀
-  async markAsRead({ commit }, notificationId) {
+  async markAsRead({ commit, rootState }, notificationId) {
     try {
-      // 這裡應該調用 API
+      const token = rootState.auth.token
+      if (!token) {
+        throw new Error('請先登入')
+      }
+
+      const response = await fetch(`/api/notifications/${notificationId}/read`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (!response.ok) {
+        throw new Error('標記已讀失敗')
+      }
+
       commit('MARK_AS_READ', notificationId)
     } catch (error) {
+      console.error('標記已讀失敗:', error)
       commit('SET_ERROR', error.message || '標記已讀失敗')
     }
   },
   
   // 標記所有通知為已讀
-  async markAllAsRead({ commit }) {
+  async markAllAsRead({ commit, rootState, state }) {
     try {
-      // 這裡應該調用 API
+      const token = rootState.auth.token
+      if (!token) {
+        throw new Error('請先登入')
+      }
+
+      // 批量標記所有未讀通知為已讀
+      const unreadNotifications = state.notifications.filter(n => !n.isRead)
+      
+      for (const notification of unreadNotifications) {
+        const response = await fetch(`/api/notifications/${notification.id}/read`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        })
+
+        if (!response.ok) {
+          console.warn(`標記通知 ${notification.id} 已讀失敗`)
+        }
+      }
+
       commit('MARK_ALL_AS_READ')
     } catch (error) {
+      console.error('標記全部已讀失敗:', error)
       commit('SET_ERROR', error.message || '標記全部已讀失敗')
     }
   },
   
   // 刪除通知
-  async deleteNotification({ commit }, notificationId) {
+  async deleteNotification({ commit, rootState }, notificationId) {
     try {
-      // 這裡應該調用 API
+      const token = rootState.auth.token
+      if (!token) {
+        throw new Error('請先登入')
+      }
+
+      const response = await fetch(`/api/notifications/${notificationId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (!response.ok) {
+        throw new Error('刪除通知失敗')
+      }
+
       commit('DELETE_NOTIFICATION', notificationId)
     } catch (error) {
+      console.error('刪除通知失敗:', error)
       commit('SET_ERROR', error.message || '刪除通知失敗')
     }
   },
