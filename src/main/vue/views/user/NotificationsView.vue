@@ -7,7 +7,7 @@
             <v-icon start size="large">mdi-bell</v-icon>
             通知中心
           </h1>
-          <div class="d-flex align-center gap-2">
+          <div class="d-flex align-center gap-3">
             <v-chip
               v-if="unreadCount > 0"
               color="error"
@@ -18,10 +18,13 @@
             </v-chip>
             <v-btn
               v-if="hasUnreadNotifications"
-              variant="text"
-              color="primary"
-              size="small"
+              variant="elevated"
+              color="secondary"
+              size="default"
+              prepend-icon="mdi-check-all"
               @click="markAllAsRead"
+              class="mark-all-read-btn"
+              elevation="2"
             >
               全部標為已讀
             </v-btn>
@@ -65,15 +68,46 @@
     <v-row v-else>
       <v-col cols="12">
         <!-- 篩選標籤 -->
-        <div class="mb-4">
+        <div class="mb-6">
+          <div class="d-flex align-center justify-space-between mb-3">
+            <h3 class="text-h6" style="color: #31525B">
+              <v-icon start>mdi-filter</v-icon>
+              篩選通知
+            </h3>
+          </div>
           <v-chip-group
             v-model="selectedFilter"
             color="primary"
             mandatory
+            class="filter-chip-group"
           >
-            <v-chip value="all">全部</v-chip>
-            <v-chip value="unread">未讀</v-chip>
-            <v-chip value="read">已讀</v-chip>
+            <v-chip 
+              value="all"
+              size="large"
+              variant="elevated"
+              class="filter-chip"
+            >
+              <v-icon start>mdi-bell</v-icon>
+              全部
+            </v-chip>
+            <v-chip 
+              value="unread"
+              size="large"
+              variant="elevated"
+              class="filter-chip"
+            >
+              <v-icon start>mdi-bell-alert</v-icon>
+              未讀
+            </v-chip>
+            <v-chip 
+              value="read"
+              size="large"
+              variant="elevated"
+              class="filter-chip"
+            >
+              <v-icon start>mdi-bell-check</v-icon>
+              已讀
+            </v-chip>
           </v-chip-group>
         </div>
 
@@ -160,13 +194,16 @@
         </v-card>
 
         <!-- 清空所有通知按鈕 -->
-        <div v-if="hasNotifications" class="text-center mt-6">
+        <div v-if="hasNotifications" class="text-center mt-8">
           <v-btn
-            variant="outlined"
+            variant="elevated"
             color="error"
+            size="large"
+            prepend-icon="mdi-delete-sweep"
             @click="showClearDialog = true"
+            class="clear-all-btn"
+            elevation="2"
           >
-            <v-icon start>mdi-delete-sweep</v-icon>
             清空所有通知
           </v-btn>
         </div>
@@ -360,6 +397,59 @@ export default {
   background-color: rgba(250, 230, 177, 0.15);
 }
 
+/* 按鈕樣式增強 */
+.mark-all-read-btn {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 6px rgba(255, 161, 1, 0.2);
+}
+
+.mark-all-read-btn:hover {
+  box-shadow: 0 6px 12px rgba(255, 161, 1, 0.3);
+  transform: translateY(-2px);
+}
+
+.clear-all-btn {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 6px rgba(244, 67, 54, 0.2);
+}
+
+.clear-all-btn:hover {
+  box-shadow: 0 6px 12px rgba(244, 67, 54, 0.3);
+  transform: translateY(-2px);
+}
+
+/* 篩選chip樣式增強 */
+.filter-chip-group {
+  gap: 12px;
+}
+
+.filter-chip {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
+}
+
+.filter-chip:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+/* 選中狀態的篩選chip */
+.filter-chip-group :deep(.v-chip--selected) {
+  border-color: #31525B;
+  box-shadow: 0 4px 8px rgba(49, 82, 91, 0.2);
+}
+
+.filter-chip-group :deep(.v-chip--selected:hover) {
+  box-shadow: 0 6px 12px rgba(49, 82, 91, 0.3);
+}
+
 /* 響應式調整 */
 @media (max-width: 600px) {
   .notifications-container {
@@ -368,6 +458,16 @@ export default {
   
   .notification-item .v-row {
     padding: 16px 12px;
+  }
+  
+  .filter-chip-group {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .filter-chip {
+    flex: 1;
+    min-width: 100px;
   }
 }
 </style>
