@@ -23,18 +23,6 @@
         <div class="current-price">
           NT$ {{ formatPrice(product.price) }}
         </div>
-        <div 
-          v-if="product.originalPrice && product.originalPrice > product.price"
-          class="original-price"
-        >
-          NT$ {{ formatPrice(product.originalPrice) }}
-        </div>
-        <div 
-          v-if="product.originalPrice && product.originalPrice > product.price"
-          class="discount-badge"
-        >
-          省 NT$ {{ formatPrice(product.originalPrice - product.price) }}
-        </div>
       </div>
     </div>
 
@@ -304,29 +292,12 @@ export default {
 .price-section {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
 }
 
 .current-price {
   font-size: 2rem;
   font-weight: 700;
   color: #FFA101;
-}
-
-.original-price {
-  font-size: 1.2rem;
-  color: #999;
-  text-decoration: line-through;
-}
-
-.discount-badge {
-  background: #ff4444;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  font-weight: 600;
 }
 
 
@@ -402,12 +373,6 @@ export default {
   
   .current-price {
     font-size: 1.75rem;
-  }
-  
-  .price-section {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
   }
   
   .quantity-controls {
