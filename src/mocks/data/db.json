@@ -518,7 +518,7 @@
       "shippingFee": 0,
       "discount": 2000,
       "total": 62900,
-      "status": "processing",
+      "status": "shipping",
       "statusHistory": [
         {
           "status": "pending",
@@ -526,14 +526,14 @@
           "description": "訂單已建立，等待付款確認"
         },
         {
-          "status": "paid",
+          "status": "shipped",
           "timestamp": "2024-01-08T14:25:00.000Z",
           "description": "付款已確認"
         },
         {
-          "status": "processing",
+          "status": "shipping",
           "timestamp": "2024-01-08T16:00:00.000Z",
-          "description": "商品準備中"
+          "description": "商品配送中"
         }
       ],
       "shippingAddress": {
@@ -574,7 +574,7 @@
       "shippingFee": 60,
       "discount": 500,
       "total": 30360,
-      "status": "shipped",
+      "status": "shipping",
       "statusHistory": [
         {
           "status": "pending",
@@ -582,19 +582,19 @@
           "description": "訂單已建立，等待付款確認"
         },
         {
-          "status": "paid",
+          "status": "shipped",
           "timestamp": "2024-01-05T09:20:00.000Z",
           "description": "付款已確認"
         },
         {
-          "status": "processing",
+          "status": "shipped",
           "timestamp": "2024-01-05T11:00:00.000Z",
           "description": "商品準備中"
         },
         {
-          "status": "shipped",
+          "status": "shipping",
           "timestamp": "2024-01-06T15:30:00.000Z",
-          "description": "商品已出貨"
+          "description": "商品配送中"
         }
       ],
       "shippingAddress": {
@@ -628,7 +628,7 @@
       "shippingFee": 60,
       "discount": 0,
       "total": 9060,
-      "status": "delivered",
+      "status": "completed",
       "statusHistory": [
         {
           "status": "pending",
@@ -636,24 +636,24 @@
           "description": "訂單已建立，等待付款確認"
         },
         {
-          "status": "paid",
+          "status": "shipped",
           "timestamp": "2024-01-03T13:50:00.000Z",
           "description": "付款已確認"
         },
         {
-          "status": "processing",
+          "status": "shipped",
           "timestamp": "2024-01-03T16:00:00.000Z",
           "description": "商品準備中"
         },
         {
-          "status": "shipped",
+          "status": "shipping",
           "timestamp": "2024-01-04T10:00:00.000Z",
-          "description": "商品已出貨"
+          "description": "商品配送中"
         },
         {
-          "status": "delivered",
+          "status": "completed",
           "timestamp": "2024-01-05T14:30:00.000Z",
-          "description": "商品已送達"
+          "description": "訂單已完成"
         }
       ],
       "shippingAddress": {
@@ -746,24 +746,24 @@
           "description": "訂單已建立，等待付款確認"
         },
         {
-          "status": "paid",
+          "status": "shipped",
           "timestamp": "2023-12-25T16:35:00.000Z",
           "description": "付款已確認"
         },
         {
-          "status": "processing",
+          "status": "shipped",
           "timestamp": "2023-12-26T09:00:00.000Z",
           "description": "商品準備中"
         },
         {
-          "status": "shipped",
+          "status": "shipping",
           "timestamp": "2023-12-27T14:00:00.000Z",
-          "description": "商品已出貨"
+          "description": "商品配送中"
         },
         {
-          "status": "delivered",
+          "status": "completed",
           "timestamp": "2023-12-28T11:30:00.000Z",
-          "description": "商品已送達"
+          "description": "訂單已完成"
         },
         {
           "status": "returned",
@@ -809,7 +809,7 @@
       "shippingFee": 60,
       "discount": 580,
       "total": 10960,
-      "status": "delivered",
+      "status": "completed",
       "statusHistory": [
         {
           "status": "pending",
@@ -817,24 +817,24 @@
           "description": "訂單已建立，等待付款確認"
         },
         {
-          "status": "paid",
+          "status": "shipped",
           "timestamp": "2024-01-12T12:20:00.000Z",
           "description": "付款已確認"
         },
         {
-          "status": "processing",
+          "status": "shipped",
           "timestamp": "2024-01-12T14:30:00.000Z",
           "description": "商品準備中"
         },
         {
-          "status": "shipped",
+          "status": "shipping",
           "timestamp": "2024-01-13T09:00:00.000Z",
-          "description": "商品已出貨"
+          "description": "商品配送中"
         },
         {
-          "status": "delivered",
+          "status": "completed",
           "timestamp": "2024-01-15T16:20:00.000Z",
-          "description": "商品已送達"
+          "description": "訂單已完成"
         }
       ],
       "shippingAddress": {
@@ -868,7 +868,7 @@
       "shippingFee": 0,
       "discount": 1000,
       "total": 20900,
-      "status": "processing",
+      "status": "shipped",
       "statusHistory": [
         {
           "status": "pending",
@@ -876,12 +876,12 @@
           "description": "訂單已建立，等待付款確認"
         },
         {
-          "status": "paid",
+          "status": "shipped",
           "timestamp": "2024-01-15T20:50:00.000Z",
           "description": "付款已確認"
         },
         {
-          "status": "processing",
+          "status": "shipped",
           "timestamp": "2024-01-16T08:00:00.000Z",
           "description": "商品準備中"
         }
@@ -924,7 +924,7 @@
       "shippingFee": 60,
       "discount": 0,
       "total": 6740,
-      "status": "shipped",
+      "status": "shipping",
       "statusHistory": [
         {
           "status": "pending",
@@ -932,19 +932,19 @@
           "description": "訂單已建立，等待付款確認"
         },
         {
-          "status": "paid",
+          "status": "shipped",
           "timestamp": "2024-01-18T14:25:00.000Z",
           "description": "付款已確認"
         },
         {
-          "status": "processing",
+          "status": "shipped",
           "timestamp": "2024-01-18T16:00:00.000Z",
           "description": "商品準備中"
         },
         {
-          "status": "shipped",
+          "status": "shipping",
           "timestamp": "2024-01-19T11:30:00.000Z",
-          "description": "商品已出貨"
+          "description": "商品配送中"
         }
       ],
       "shippingAddress": {
@@ -985,7 +985,7 @@
       "shippingFee": 60,
       "discount": 360,
       "total": 14060,
-      "status": "paid",
+      "status": "shipped",
       "statusHistory": [
         {
           "status": "pending",
@@ -993,7 +993,7 @@
           "description": "訂單已建立，等待付款確認"
         },
         {
-          "status": "paid",
+          "status": "shipped",
           "timestamp": "2024-01-20T19:35:00.000Z",
           "description": "付款已確認"
         }
