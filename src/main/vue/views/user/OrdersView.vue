@@ -15,110 +15,96 @@
           </div>
         </div>
 
-        <!-- 訂單統計卡片 -->
-        <v-row class="mb-6">
-          <v-col cols="6" sm="3">
-            <v-card class="stat-card text-center" elevation="2">
-              <v-card-text class="pa-4">
-                <v-icon size="32" color="primary" class="mb-2">mdi-clipboard-text</v-icon>
-                <div class="text-h6 font-weight-bold custom-dark">{{ orderStats?.total || 0 }}</div>
-                <div class="text-caption text--secondary">總訂單</div>
-              </v-card-text>
-            </v-card>
-          </v-col>
-          <v-col cols="6" sm="3">
-            <v-card class="stat-card text-center" elevation="2">
-              <v-card-text class="pa-4">
-                <v-icon size="32" color="warning" class="mb-2">mdi-clock-outline</v-icon>
-                <div class="text-h6 font-weight-bold custom-dark">{{ orderStats?.pending || 0 }}</div>
-                <div class="text-caption text--secondary">待付款</div>
-              </v-card-text>
-            </v-card>
-          </v-col>
-          <v-col cols="6" sm="3">
-            <v-card class="stat-card text-center" elevation="2">
-              <v-card-text class="pa-4">
-                <v-icon size="32" color="info" class="mb-2">mdi-truck-delivery</v-icon>
-                <div class="text-h6 font-weight-bold custom-dark">{{ orderStats?.shipped || 0 }}</div>
-                <div class="text-caption text--secondary">配送中</div>
-              </v-card-text>
-            </v-card>
-          </v-col>
-          <v-col cols="6" sm="3">
-            <v-card class="stat-card text-center" elevation="2">
-              <v-card-text class="pa-4">
-                <v-icon size="32" color="success" class="mb-2">mdi-check-circle</v-icon>
-                <div class="text-h6 font-weight-bold custom-dark">{{ orderStats?.delivered || 0 }}</div>
-                <div class="text-caption text--secondary">已完成</div>
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-
-        <!-- 篩選和搜尋工具列 -->
-        <v-card class="filter-card mb-6" elevation="2">
-          <v-card-text class="pa-4">
-            <v-row align="center">
-              <v-col cols="12" md="3">
-                <v-select
-                  v-model="filters.status"
-                  :items="statusOptions"
-                  label="訂單狀態"
-                  density="compact"
-                  variant="outlined"
-                  hide-details
-                  @update:model-value="applyFilters"
-                >
-                  <template #prepend-inner>
-                    <v-icon size="20">mdi-filter-variant</v-icon>
-                  </template>
-                </v-select>
-              </v-col>
-              <v-col cols="12" md="3">
-                <v-select
-                  v-model="filters.dateRange"
-                  :items="dateRangeOptions"
-                  label="時間範圍"
-                  density="compact"
-                  variant="outlined"
-                  hide-details
-                  @update:model-value="applyFilters"
-                >
-                  <template #prepend-inner>
-                    <v-icon size="20">mdi-calendar-range</v-icon>
-                  </template>
-                </v-select>
-              </v-col>
-              <v-col cols="12" md="4">
-                <v-text-field
-                  v-model="filters.keyword"
-                  label="搜尋訂單號或商品名稱"
-                  density="compact"
-                  variant="outlined"
-                  hide-details
-                  clearable
-                  @keyup.enter="applyFilters"
-                  @click:clear="clearSearch"
-                >
-                  <template #prepend-inner>
-                    <v-icon size="20">mdi-magnify</v-icon>
-                  </template>
-                </v-text-field>
-              </v-col>
-              <v-col cols="12" md="2">
-                <v-btn
-                  color="primary"
-                  variant="flat"
-                  block
-                  @click="applyFilters"
-                  :loading="loading"
-                >
-                  搜尋
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-card-text>
+        <!-- 訂單狀態頁籤 -->
+        <v-card class="mb-6" elevation="2">
+          <v-tabs
+            v-model="activeTab"
+            class="order-tabs"
+            align-tabs="start"
+            show-arrows
+            mobile-breakpoint="md"
+            @update:model-value="onTabChange"
+          >
+            <v-tab value="pending">
+              <v-icon size="20" class="mr-2">mdi-clock-outline</v-icon>
+              <span>待付款</span>
+              <v-chip 
+                v-if="orderStats?.pending" 
+                size="x-small" 
+                color="warning" 
+                class="ml-2"
+              >
+                {{ orderStats.pending }}
+              </v-chip>
+            </v-tab>
+            
+            <v-tab value="shipped">
+              <v-icon size="20" class="mr-2">mdi-package-variant</v-icon>
+              <span>待出貨</span>
+              <v-chip 
+                v-if="orderStats?.shipped" 
+                size="x-small" 
+                color="info" 
+                class="ml-2"
+              >
+                {{ orderStats.shipped }}
+              </v-chip>
+            </v-tab>
+            
+            <v-tab value="delivered">
+              <v-icon size="20" class="mr-2">mdi-truck-delivery</v-icon>
+              <span>待收貨</span>
+              <v-chip 
+                v-if="orderStats?.shipping" 
+                size="x-small" 
+                color="primary" 
+                class="ml-2"
+              >
+                {{ orderStats.shipping }}
+              </v-chip>
+            </v-tab>
+            
+            <v-tab value="completed">
+              <v-icon size="20" class="mr-2">mdi-check-circle</v-icon>
+              <span>已完成</span>
+              <v-chip 
+                v-if="orderStats?.completed" 
+                size="x-small" 
+                color="success" 
+                class="ml-2"
+              >
+                {{ orderStats.completed }}
+              </v-chip>
+            </v-tab>
+            
+            <v-tab value="returned">
+              <v-icon size="20" class="mr-2">mdi-keyboard-return</v-icon>
+              <span>退貨退款</span>
+              <v-chip 
+                v-if="orderStats?.returned" 
+                size="x-small" 
+                color="orange" 
+                class="ml-2"
+              >
+                {{ orderStats.returned }}
+              </v-chip>
+            </v-tab>
+            
+            <v-tab value="cancelled">
+              <v-icon size="20" class="mr-2">mdi-close-circle</v-icon>
+              <span>已取消</span>
+              <v-chip 
+                v-if="orderStats?.cancelled" 
+                size="x-small" 
+                color="error" 
+                class="ml-2"
+              >
+                {{ orderStats.cancelled }}
+              </v-chip>
+            </v-tab>
+          </v-tabs>
         </v-card>
+
 
         <!-- 訂單列表 -->
         <div v-if="loading && orders.length === 0" class="text-center pa-8">
@@ -456,14 +442,14 @@ export default {
     // 響應式數據
     const loading = ref(false)
     const orders = ref([])
+    const activeTab = ref('pending')
     const orderStats = ref({
-      total: 0,
       pending: 0,
-      processing: 0,
       shipped: 0,
-      delivered: 0,
-      cancelled: 0,
-      returned: 0
+      shipping: 0,
+      completed: 0,
+      returned: 0,
+      cancelled: 0
     })
     const currentPage = ref(1)
     const pagination = ref({
@@ -472,9 +458,9 @@ export default {
       itemsPerPage: 10
     })
 
-    // 篩選條件
+    // 篩選條件 (保留但簡化)
     const filters = reactive({
-      status: 'all',
+      status: 'pending',
       dateRange: 'all',
       keyword: ''
     })
@@ -492,24 +478,12 @@ export default {
       order: null
     })
 
-    // 篩選選項
-    const statusOptions = [
-      { title: '全部狀態', value: 'all' },
-      { title: '待付款', value: 'pending' },
-      { title: '已付款', value: 'paid' },
-      { title: '處理中', value: 'processing' },
-      { title: '已出貨', value: 'shipped' },
-      { title: '已送達', value: 'delivered' },
-      { title: '已取消', value: 'cancelled' },
-      { title: '已退貨', value: 'returned' }
-    ]
-
-    const dateRangeOptions = [
-      { title: '全部時間', value: 'all' },
-      { title: '最近7天', value: '7days' },
-      { title: '最近30天', value: '30days' },
-      { title: '最近90天', value: '90days' }
-    ]
+    // Tab切換事件
+    const onTabChange = (tabValue) => {
+      filters.status = tabValue
+      currentPage.value = 1
+      loadOrders(1)
+    }
 
     // 計算屬性
     const isLoggedIn = computed(() => store.getters['auth/isAuthenticated'])
@@ -527,7 +501,7 @@ export default {
         const params = {
           page,
           limit: 10,
-          status: filters.status === 'all' ? undefined : filters.status,
+          status: filters.status || undefined,
           dateRange: filters.dateRange === 'all' ? undefined : filters.dateRange,
           keyword: filters.keyword || undefined
         }
@@ -565,10 +539,6 @@ export default {
       loadOrders(1)
     }
 
-    const clearSearch = () => {
-      filters.keyword = ''
-      applyFilters()
-    }
 
     const viewOrderDetail = (order) => {
       detailDialog.order = order
@@ -688,18 +658,17 @@ export default {
       loading,
       orders,
       orderStats,
+      activeTab,
       currentPage,
       pagination,
       filters,
       cancelDialog,
       detailDialog,
-      statusOptions,
-      dateRangeOptions,
       
       // 方法
       loadOrders,
       applyFilters,
-      clearSearch,
+      onTabChange,
       viewOrderDetail,
       showCancelDialog,
       confirmCancel,
@@ -737,8 +706,17 @@ export default {
   transform: translateY(-2px);
 }
 
-.filter-card {
-  border-radius: 12px;
+.order-tabs .v-tab {
+  text-transform: none;
+  font-weight: 500;
+}
+
+.order-tabs .v-tab--selected {
+  color: #FFA101 !important;
+}
+
+.order-tabs .v-tab:hover {
+  background-color: rgba(250, 230, 177, 0.1);
 }
 
 .order-card {
@@ -791,6 +769,20 @@ export default {
   .v-card-actions {
     flex-direction: column;
     align-items: stretch !important;
+  }
+
+  /* 手機版頁籤樣式優化 */
+  .order-tabs .v-tab {
+    min-width: 100px;
+    padding: 0 12px;
+  }
+  
+  .order-tabs .v-tab .v-icon {
+    display: none;
+  }
+  
+  .order-tabs .v-tab span {
+    font-size: 14px;
   }
 }
 </style>
