@@ -32,7 +32,10 @@
       "Bash(npm run check-errors:*)",
       "Bash(grep:*)",
       "Bash(npm uninstall:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(cat:*)",
+      "Bash(git credential-manager:*)",
+      "Bash(git credential-manager-core:*)"
     ],
     "deny": []
   }
